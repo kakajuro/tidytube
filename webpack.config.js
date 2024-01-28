@@ -12,8 +12,8 @@ let options = {
   entry: {
     popup: './popup/index.js',
     options: './options/index.js',
-    background: './background/index.js',
-    'content-scripts': './content-scripts/index.js',
+    background: './scripts/background.js',
+    'content': './scripts/content.js',
   },
   output: {
     path: path.join(__dirname, '/dist'),

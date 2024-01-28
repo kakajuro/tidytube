@@ -26,8 +26,9 @@
   },
   "content_scripts": [
     {
+      "run_at": "document_end",
       "matches": ["*://*/*"],
-      "js": ["content-scripts.js"]
+      "js": ["content.js"]
     }
   ],
   "content_security_policy": {

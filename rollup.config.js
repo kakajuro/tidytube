@@ -47,6 +47,18 @@ const createConfig = (name, useSvelte = false, additionalPlugins = []) => {
   };
 };
 
+const createScript = (script) => {
+  return {
+    input: `src/scripts/${script}.js`,
+    output: {
+      format: 'iife',
+      file: `dist/${script}.js`,
+      script,
+      extend: true,
+    }
+  }
+}
+
 export default [
   createConfig('options', true, [
     del({
@@ -61,6 +73,8 @@ export default [
     }),
   ]),
   createConfig('popup', true),
-  createConfig('content-scripts', true),
-  createConfig('background'),
+  createScript('background'),
+  createScript('content')
+  //createConfig('content-scripts', true),
+  //createConfig('background'),
 ];

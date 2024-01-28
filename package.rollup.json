@@ -1,7 +1,7 @@
 {
-  "name": "chrome-extension-svelte-bolierplate",
+  "name": "simpletube",
   "version": "0.0.1",
-  "description": "A boilerplate for chrome extension with svelte",
+  "description": "An extension built to simplify Youtube by removing excess clutter",
   "scripts": {
     "build": "cross-env NODE_ENV=production rollup -c",
     "start": "rollup -c -w"
