@@ -1,11 +1,12 @@
-import '../styles/global.css';
-import App from './App.svelte';
+import '../app.css';
+import App from '../components/App.svelte';
 
-const app = new App({
-  target: document.body,
-  props: {
-    name: 'popup',
-  },
-});
+const target = document.getElementById('app');
 
-export default app;
+async function render() {
+  const {count} = await chrome.storage.sync.get({count: 0});
+
+  new App({target, props: {count}});
+}
+
+document.addEventListener('DOMContentLoaded', render);
