@@ -1,3 +1,6 @@
-<div class=" bg-blue-50 min-w-[20rem] p-4 flex flex-col gap-4">
-  <h1 class="font-bold">Test</h1>
-</div>
+<main class="container bg-custom-bg min-w-[20rem] p-4 flex flex-col">
+  <nav class="min-w-max flex flex-row items">
+    <h1 class="font-bold text-white text-2xl underline">simpletubee</h1>
+  </nav>
+  <h1 class=" text-white mb-[200px]">Sample text</h1>
+</main>
