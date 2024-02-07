@@ -16,7 +16,6 @@
 
   const themeSwitchClicked = () => {
     darkMode = !darkMode;
-    console.log(darkMode);
   }
 </script>
 
