@@ -1,4 +1,6 @@
 <script>
+  import { onMount } from "svelte";
+
   import Gear from "phosphor-svelte/lib/Gear";
   import ArrowClockwise from "phosphor-svelte/lib/ArrowClockwise";
   import Warning from "phosphor-svelte/lib/Warning";
@@ -10,13 +12,22 @@
     const manifestData = chrome.runtime.getManifest();
     return manifestData.version;
   }
-
+  
   let version = getVersion();
   let darkMode = true;
 
   const themeSwitchClicked = () => {
     darkMode = !darkMode;
   }
+
+  onMount(() => {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      darkMode = true;
+    } else {
+      darkMode = false;
+    }
+  })
+
 </script>
 
 <main class="container bg-custom-bg min-w-[20rem] p-4 flex flex-col select-none">
