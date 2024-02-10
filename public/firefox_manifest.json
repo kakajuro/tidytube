@@ -1,0 +1,22 @@
+{
+  "name": "simpletube",
+  "version": "0.0.1",
+  "description": "An extension built to simplify Youtube by removing excess clutter",
+  "permissions": [
+    "storage", 
+    "activeTab"
+  ],
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "browser_action": {
+    "default_popup": "popup.html"
+  }
+}

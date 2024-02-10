@@ -1,0 +1,20 @@
+Chrome Web Store & Mozilla Add-on Store & Microsoft Edge Add-on Store Privacy Policies.
+======================================================================================================
+
+Introduction
+============
+
+Introduce your web extension
+
+Information We Collect
+======================
+
+Does your web extension collect data?
+
+- I collect data
+- I don't collect data
+
+How it uses cookies
+========================
+
+If your web extension uses cookies, describe where your extension uses cookies and why?
