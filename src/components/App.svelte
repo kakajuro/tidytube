@@ -4,29 +4,22 @@
   import Gear from "phosphor-svelte/lib/Gear";
   import ArrowClockwise from "phosphor-svelte/lib/ArrowClockwise";
   import Warning from "phosphor-svelte/lib/Warning";
-
   import Sun from "phosphor-svelte/lib/Sun";
   import Moon from "phosphor-svelte/lib/Moon";
 
-  const getVersion = () => {
-    const manifestData = chrome.runtime.getManifest();
-    return manifestData.version;
-  }
+  import { getDarkModePreference } from "../util/getDarkMode";
+  import { getManifestVersion } from "../util/getManifestVersion";
   
-  let version = getVersion();
-  let darkMode = true;
+  let version = getManifestVersion();
+  let darkMode;
 
   const themeSwitchClicked = () => {
     darkMode = !darkMode;
   }
 
   onMount(() => {
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      darkMode = true;
-    } else {
-      darkMode = false;
-    }
-  })
+    darkMode = getDarkModePreference();
+  });
 
 </script>
 
