@@ -3,9 +3,12 @@
   "version": "0.0.1",
   "description": "An extension built to simplify Youtube by removing excess clutter",
   "permissions": [
+    "declarativeContent", 
+    "scripting",
     "storage", 
     "activeTab"
   ],
+  "content_security_policy": "script-src 'self' https://youtube.com https://youtube.com/*; object-src 'self'",
   "manifest_version": 2,
   "background": {
     "scripts": ["background.js"]

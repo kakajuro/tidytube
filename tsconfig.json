@@ -19,6 +19,7 @@
       "node",
       "svelte",
       "@testing-library/jest-dom"
-    ]
+    ],
+    "ignoreDeprecations": "5.0"
   },
 }

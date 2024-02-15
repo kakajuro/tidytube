@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
 
   import Gear from "phosphor-svelte/lib/Gear";
@@ -8,15 +8,15 @@
   import Moon from "phosphor-svelte/lib/Moon";
 
   import { getDarkModePreference } from "../util/getDarkMode";
-  import { getManifestVersion } from "../util/getManifestVersion";
+  import { getManifestVer } from "../util/getManifestVersion";
   
-  let version = getManifestVersion();
+  let version = getManifestVer();
   let darkMode;
 
   const themeSwitchClicked = () => {
     darkMode = !darkMode;
   }
-
+  
   onMount(() => {
     darkMode = getDarkModePreference();
   });

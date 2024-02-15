@@ -1,7 +1,6 @@
 import { browser } from "webextension-polyfill-ts";
 
-export const getManifestVerison = () => {
+export const getManifestVer = () => {
   const manifestVersion = browser.runtime.getManifest().version;
-
   return manifestVersion;
 }
