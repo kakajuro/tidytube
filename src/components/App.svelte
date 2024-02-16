@@ -1,8 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
+  import Toggle from "svelte-switcher";
+
   import Gear from "phosphor-svelte/lib/Gear";
-  import ArrowClockwise from "phosphor-svelte/lib/ArrowClockwise";
   import Warning from "phosphor-svelte/lib/Warning";
   import Sun from "phosphor-svelte/lib/Sun";
   import Moon from "phosphor-svelte/lib/Moon";
@@ -12,10 +13,7 @@
   
   let version = getManifestVer();
   let darkMode;
-
-  const themeSwitchClicked = () => {
-    darkMode = !darkMode;
-  }
+  let extensionRunningToggle;
   
   onMount(() => {
     darkMode = getDarkModePreference();
@@ -23,25 +21,33 @@
 
 </script>
 
-<main class="container bg-custom-bg min-w-[20rem] p-4 flex flex-col select-none">
-  <nav class="flex flex-row content-center justify-between w-full">
+<main class="container bg-custom-bg min-w-[21rem] p-4 flex flex-col select-none">
+  <nav class="flex flex-row content-center justify-between items-center w-full">
     <h1 class="font-bold text-white text-3xl underline">simpletube</h1>
     <div class="flex flex-row space-x-3 content-center pt-3">
       {#if darkMode}
-      <button class="w-[20px] h-[20px]" on:click={themeSwitchClicked}>
+      <button class="w-[20px] h-[20px]" on:click={() => darkMode = !darkMode}>
         <Sun class="hover:cursor-pointer" color="#FFFFFF" size="{20}"/>
       </button>
       {:else}
-      <button class="w-[20px] h-[20px]" on:click={themeSwitchClicked} >
+      <button class="w-[20px] h-[20px]" on:click={() => darkMode = !darkMode} >
         <Moon class="hover:cursor-pointer" color="#FFFFFF" size="{20}"/>
       </button>
-      {/if}
-      <ArrowClockwise class="hover:cursor-pointer" color="#FFFFFF" size="{20}"/>
+      {/if}   
       <Gear class="hover:cursor-pointer" color="#FFFFFF" size="{20}"/>
+      <Toggle 
+        id="extensionRunningToggle"
+        bind:checked={extensionRunningToggle}
+        defaultChecked={false}
+      />
     </div>
   </nav>
-  <p class="text-white font-semibold pt-[2px] pb-[2px]">Declutering Youtube</p>
-  <p class="text-custom-ver-text mb-8">Version {version}</p>
+  <div class="flex flex-row content-center justify-between w-full mt-2">
+    <div>
+      <p class="text-white font-semibold pt-[2px] pb-[1px]">Declutering Youtube</p>
+      <p class="text-custom-ver-text mb-4">Version {version}</p>
+    </div>
+  </div>
   <div class="flex flex-col content-center justify-center">
     <h1 class="text-white font-bold text-2xl mb-2 text-center">Sections removed:</h1>
     <h1 class="text-white font-bold text-6xl text-center">XXXXX</h1>
