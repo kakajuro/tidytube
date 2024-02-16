@@ -35,11 +35,13 @@
       </button>
       {/if}   
       <Gear class="hover:cursor-pointer" color="#FFFFFF" size="{20}"/>
-      <Toggle 
-        id="extensionRunningToggle"
-        bind:checked={extensionRunningToggle}
-        defaultChecked={false}
-      />
+      <div id="toggle-styles">
+          <Toggle 
+            id="extensionRunningToggle"
+            bind:checked={extensionRunningToggle}
+            defaultChecked={false}
+          />
+      </div>
     </div>
   </nav>
   <div class="flex flex-row content-center justify-between w-full mt-2">
@@ -64,3 +66,16 @@
     </button>
   </div>
 </main>
+
+<style>
+  #toggle-styles
+    > :global(.svelte-toggle.svelte-toggle--checked:hover:not(.svelte-toggle--disabled)
+      .svelte-toggle--track) {
+    background-color: #19ab27 !important;
+  }
+
+  #toggle-styles
+    > :global(.svelte-toggle:hover:not(.svelte-toggle--disabled) .svelte-toggle--track) {
+    background-color: #4d4d4d !important;
+  }
+</style>
