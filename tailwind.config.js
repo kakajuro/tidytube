@@ -6,7 +6,8 @@ module.exports = {
       colors: {
         "custom-dark": "#09090B",
         "custom-ver-text": "#96969E",
-        "custom-light-mode": "#111211"
+        "custom-light-mode-title": "#111211",
+        "custom-light-mode": "#333333"
       }
     },
   },
