@@ -4,8 +4,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        "custom-bg": "#09090B",
+        "custom-dark": "#09090B",
         "custom-ver-text": "#96969E",
+        "custom-light-mode": "#111211"
       }
     },
   },
