@@ -8,15 +8,20 @@
   import Sun from "phosphor-svelte/lib/Sun";
   import Moon from "phosphor-svelte/lib/Moon";
 
-  import { getDarkModePreference } from "../util/getDarkMode";
+  import { getDarkMode, setDarkMode } from "../util/darkMode";
   import { getManifestVer } from "../util/getManifestVersion";
   
   let version = getManifestVer();
   let darkMode;
   let extensionRunningToggle;
+
+  const handleDarkModeSwitch = () => {
+    darkMode = !darkMode;
+    setDarkMode(darkMode);
+  }
   
-  onMount(() => {
-    darkMode = getDarkModePreference();
+  onMount(async ()  => {
+    darkMode = await getDarkMode();
   });
 
 </script>
@@ -26,11 +31,11 @@
     <h1 class="font-bold text-white text-3xl underline">simpletube</h1>
     <div class="flex flex-row space-x-3 content-center pt-3">
       {#if darkMode}
-      <button class="w-[20px] h-[20px]" on:click={() => darkMode = !darkMode}>
+      <button class="w-[20px] h-[20px]" on:click={handleDarkModeSwitch}>
         <Sun class="hover:cursor-pointer" color="#FFFFFF" size="{20}"/>
       </button>
       {:else}
-      <button class="w-[20px] h-[20px]" on:click={() => darkMode = !darkMode} >
+      <button class="w-[20px] h-[20px]" on:click={handleDarkModeSwitch} >
         <Moon class="hover:cursor-pointer" color="#FFFFFF" size="{20}"/>
       </button>
       {/if}   
