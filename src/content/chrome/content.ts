@@ -1,21 +1,18 @@
 import { browser } from "webextension-polyfill-ts";
 
 import { getExtensionRunning } from "../../util/extensionRunning";
+import { checkScrollDirectionIsUp } from "../../util/checkScollDirection";
 
 // Remove Shorts on search page
-const removeShortsSearch = () => {
-  console.log("Remove shorts");
-
+const removeShortsFromSearch = () => {
   const shortsHomepageSections = document.querySelectorAll('ytd-reel-shelf-renderer');
   const shortsHomepageSectionsArray = [...shortsHomepageSections];
 
-  console.log(shortsHomepageSectionsArray);
-  
   shortsHomepageSectionsArray.forEach(div => {
     
     try {
       div.firstChild ? div.parentNode.removeChild(div) : null
-      console.log("Individual div removed");
+      console.log("Shorts removed");
     } catch (error) {
       console.log(`Error in removing div: ${error}`);
     }
@@ -23,21 +20,34 @@ const removeShortsSearch = () => {
   });
 }
 
+// Scroll event handler
+const handleScrollEvent = (returnedFunction) => {
+
+    let scrollableElement = document.body;
+
+    scrollableElement.addEventListener("wheel", (event) => {
+      if (!checkScrollDirectionIsUp(event)) {
+        returnedFunction();
+      }
+    });
+
+} 
+
 async function checkExtensionRunning () {
   let extensionRunning = await getExtensionRunning();
 
   if (extensionRunning) {
     console.log("simpletube content script now running...");
 
-    removeShortsSearch();
-    document.addEventListener('scroll', removeShortsSearch);
-    document.addEventListener('scrollend', removeShortsSearch);
+    removeShortsFromSearch();
+    document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
+    document.addEventListener('scrollend', removeShortsFromSearch);
   } else {
     console.log("paused simpletube content script");
 
     try {
-      document.removeEventListener('scroll', removeShortsSearch);
-      document.removeEventListener('scrollend', removeShortsSearch);
+      document.removeEventListener('scroll', () => handleScrollEvent(removeEventListener));
+      document.removeEventListener('scrollend', () => removeShortsFromSearch);
     } catch (error) {
       console.error(`Error removing CS event listeners (there may not have been any): ${error}`);
     }
