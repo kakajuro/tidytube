@@ -5,6 +5,7 @@
   "permissions": [
     "declarativeContent",
     "storage",
+    "tabs",
     "activeTab",
     "scripting"
   ],

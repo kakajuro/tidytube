@@ -1,6 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
+  import { browser } from "webextension-polyfill-ts";
+
   import Toggle from "svelte-switcher";
 
   import Gear from "phosphor-svelte/lib/Gear";
@@ -25,8 +27,21 @@
   const handleExtensionToggle = () => {
     extensionRunningToggle = !extensionRunningToggle;
     setExtensionRunning(extensionRunningToggle);
+
+    // Alert content script there has been a change to the extension state
+    // FIX THIS
+
+    browser.tabs.query({currentWindow: true, active: true})
+    .then((tabs) => {
+      let tab:number = tabs[0].id;
+
+      browser.tabs.sendMessage(tab, "extensionStateChanged")
+      .catch((error) => console.error(`Error sending message: ${error}`))
+    })
+    .catch((error) => console.error(`${error}`))
+
   }
-  
+
   onMount(async ()  => {
     darkMode = await getDarkMode();
     extensionRunningToggle = await getExtensionRunning();
