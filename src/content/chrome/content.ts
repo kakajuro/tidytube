@@ -12,6 +12,8 @@ const removeShortsFromSearch = () => {
     
     try {
       div.firstChild ? div.parentNode.removeChild(div) : null
+      // add to sections removed
+      // send message to update popup
       console.log("Shorts removed");
     } catch (error) {
       console.log(`Error in removing div: ${error}`);
@@ -23,16 +25,17 @@ const removeShortsFromSearch = () => {
 // Scroll event handler
 const handleScrollEvent = (returnedFunction) => {
 
-    let scrollableElement = document.body;
+  let scrollableElement = document.body;
 
-    scrollableElement.addEventListener("wheel", (event) => {
-      if (!checkScrollDirectionIsUp(event)) {
-        returnedFunction();
-      }
-    });
+  scrollableElement.addEventListener("wheel", (event) => {
+    if (!checkScrollDirectionIsUp(event)) {
+      returnedFunction();
+    }
+  });
 
 } 
 
+// Check extension is running
 async function checkExtensionRunning () {
   let extensionRunning = await getExtensionRunning();
 

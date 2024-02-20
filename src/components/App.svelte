@@ -28,9 +28,7 @@
     extensionRunningToggle = !extensionRunningToggle;
     setExtensionRunning(extensionRunningToggle);
 
-    // Alert content script there has been a change to the extension state
-    // FIX THIS
-
+    // Alert content script that extension state has changed
     browser.tabs.query({currentWindow: true, active: true})
     .then((tabs) => {
       let tab:number = tabs[0].id;
@@ -74,7 +72,7 @@
   </nav>
   <div class="flex flex-row content-center justify-between w-full mt-1">
     <div>
-      <p class="font-semibold pt-[2px] pb-[1px]" class:text-white={darkMode}>Declutering Youtube</p>
+      <p class="font-semibold pt-[2px] pb-[1px]" class:text-white={darkMode}>Decluttering Youtube</p>
       <p class="text-custom-ver-text mb-4">Version {version}</p>
     </div>
   </div>
