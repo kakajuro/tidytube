@@ -1,6 +1,7 @@
 import { browser } from "webextension-polyfill-ts";
 
 import { getExtensionRunning } from "../../util/extensionRunning";
+import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../../util/sectionsRemoved";
 import { checkScrollDirectionIsUp } from "../../util/checkScollDirection";
 
 // Remove Shorts on search page
@@ -11,9 +12,15 @@ const removeShortsFromSearch = () => {
   shortsHomepageSectionsArray.forEach(div => {
     
     try {
-      div.firstChild ? div.parentNode.removeChild(div) : null
-      // add to sections removed
-      // send message to update popup
+      if (div.firstChild) { div.parentNode.removeChild(div) }
+      (async () => {
+        let newSectionsRemovedPage = await getSectionsRemovedPage() + 1;
+        let newSectionsRemovedTotal = await getSectionsRemovedTotal() + 1;
+
+        setSectionsRemovedPage(newSectionsRemovedPage);
+        setSectionsRemovedTotal(newSectionsRemovedTotal);
+      });
+      handleSectionRemovedChange()
       console.log("Shorts removed");
     } catch (error) {
       console.log(`Error in removing div: ${error}`);
@@ -58,6 +65,22 @@ async function checkExtensionRunning () {
   }
 }
 
+// Handle sections remove change
+const handleSectionRemovedChange = (type?:String) => {
+  if (type === "Page") {
+    browser.runtime.sendMessage(null, `sectionsRemoved${type}Changed`) 
+  } else {
+    browser.runtime.sendMessage(null, `sectionsRemovedBothChanged`) 
+  }
+}
+
+// Add code to reset page sections removed on each URL change
+window.addEventListener("hashchange", () => {
+  setSectionsRemovedPage(0);
+  handleSectionRemovedChange("Page");
+});
+
+// Extension event listener
 browser.runtime.onMessage.addListener(msg => {
   
   (msg === "extensionStateChanged") ? checkExtensionRunning() : null
@@ -65,4 +88,6 @@ browser.runtime.onMessage.addListener(msg => {
 });
 
 checkExtensionRunning();
+setSectionsRemovedPage(0);
+handleSectionRemovedChange("Page");
 console.log("simpletube script running");

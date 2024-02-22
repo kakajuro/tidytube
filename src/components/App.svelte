@@ -1,4 +1,5 @@
 <script lang="ts">
+  //Debug sections removed numbers
   import { onMount } from "svelte";
 
   import { browser } from "webextension-polyfill-ts";
@@ -14,10 +15,13 @@
   import { getDarkMode, setDarkMode } from "../util/darkMode";
   import { getExtensionRunning, setExtensionRunning } from "../util/extensionRunning";
   import { getManifestVer } from "../util/getManifestVersion";
+  import { getSectionsRemovedPage, getSectionsRemovedTotal } from "../util/sectionsRemoved";
   
   let version = getManifestVer();
   let darkMode;
   let extensionRunningToggle;
+  let sectionsRemovedPage;
+  let sectionsRemovedTotal;
 
   const handleDarkModeSwitch = () => {
     darkMode = !darkMode;
@@ -43,7 +47,26 @@
   onMount(async ()  => {
     darkMode = await getDarkMode();
     extensionRunningToggle = await getExtensionRunning();
+    sectionsRemovedPage = await getSectionsRemovedPage();
+    sectionsRemovedTotal = await getSectionsRemovedTotal();
   });
+
+  // Extension event listener
+  browser.runtime.onMessage.addListener(msg => {
+
+    if (msg === "sectionsRemovedPageChanged") {
+      (async () => {
+        sectionsRemovedPage = await getSectionsRemovedPage();
+      })
+    } 
+
+    if (msg == "sectionsRemovedBothChanged") {
+      (async () => {
+        sectionsRemovedPage = await getSectionsRemovedPage();
+        sectionsRemovedTotal = await getSectionsRemovedTotal();
+      })
+    }
+  })
 
 </script>
 
@@ -79,11 +102,11 @@
   <div class="container">
     <div class="flex flex-col content-center justify-center">
       <h1 class="text-custom-light-mode font-bold text-2xl text-center" class:text-white={darkMode}>Sections removed:</h1>
-      <h1 class="text-custom-light-mode font-bold text-6xl text-center" class:text-white={darkMode}>XXXXX</h1>
+      <h1 class="text-custom-light-mode font-bold text-6xl text-center" class:text-white={darkMode}>{sectionsRemovedPage}</h1>
     </div>
     <div class="flex flex-col content-center justify-center mt-8">
       <h1 class="text-custom-light-mode font-bold text-2xl text-center" class:text-white={darkMode}>In total:</h1>
-      <h1 class="text-custom-light-mode font-bold text-6xl text-center" class:text-white={darkMode}>XXXXX</h1>
+      <h1 class="text-custom-light-mode font-bold text-6xl text-center" class:text-white={darkMode}>{sectionsRemovedTotal}</h1>
     </div>
   </div>
   <div class="mb-[50px]"/>
