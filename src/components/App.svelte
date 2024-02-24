@@ -1,5 +1,4 @@
 <script lang="ts">
-  //Debug sections removed numbers
   import { onMount } from "svelte";
 
   import { browser } from "webextension-polyfill-ts";
@@ -57,6 +56,8 @@
     if (msg === "sectionsRemovedPageChanged") {
       (async () => {
         sectionsRemovedPage = await getSectionsRemovedPage();
+
+        console.log(sectionsRemovedPage);
       })
     } 
 

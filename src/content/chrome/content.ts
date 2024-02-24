@@ -13,13 +13,7 @@ const removeShortsFromSearch = () => {
     
     try {
       if (div.firstChild) { div.parentNode.removeChild(div) }
-      (async () => {
-        let newSectionsRemovedPage = await getSectionsRemovedPage() + 1;
-        let newSectionsRemovedTotal = await getSectionsRemovedTotal() + 1;
-
-        setSectionsRemovedPage(newSectionsRemovedPage);
-        setSectionsRemovedTotal(newSectionsRemovedTotal);
-      });
+      updateSectionsRemoveCount();
       handleSectionRemovedChange()
       console.log("Shorts removed");
     } catch (error) {
@@ -72,6 +66,18 @@ const handleSectionRemovedChange = (type?:String) => {
   } else {
     browser.runtime.sendMessage(null, `sectionsRemovedBothChanged`) 
   }
+}
+
+// Update the sections removed ocunt when a section is removed
+const updateSectionsRemoveCount = async () => {
+  let newSectionsRemovedPage = await getSectionsRemovedPage();
+  let newSectionsRemovedTotal = await getSectionsRemovedTotal();
+
+  newSectionsRemovedPage = newSectionsRemovedPage + 1;
+  newSectionsRemovedTotal = newSectionsRemovedTotal + 1;
+
+  setSectionsRemovedPage(newSectionsRemovedPage);
+  setSectionsRemovedTotal(newSectionsRemovedTotal);
 }
 
 // Add code to reset page sections removed on each URL change
