@@ -6,20 +6,39 @@ import { checkScrollDirectionIsUp } from "../../util/checkScollDirection";
 
 // Remove Shorts on search page
 const removeShortsFromSearch = () => {
-  const shortsHomepageSections = document.querySelectorAll('ytd-reel-shelf-renderer');
-  const shortsHomepageSectionsArray = [...shortsHomepageSections];
+  const shortsSearchSections = document.querySelectorAll('ytd-reel-shelf-renderer');
+  const shortsSearchSectionsArray = [...shortsSearchSections];
 
-  shortsHomepageSectionsArray.forEach(div => {
+  shortsSearchSectionsArray.forEach(div => {
     
     try {
       if (div.firstChild) { div.parentNode.removeChild(div) }
       updateSectionsRemoveCount();
-      handleSectionRemovedChange()
+      handleSectionRemovedChange();
       console.log("Shorts removed");
     } catch (error) {
-      console.log(`Error in removing div: ${error}`);
+      console.log(`Error in removing shorts: ${error}`);
     }
     
+  });
+}
+
+// Remove ad slots on search page
+const removeAdsFromSearch = () => {
+  const adsSeachSections = document.querySelectorAll('ytd-ad-slot-renderer');
+  const adSearchSectionsArray = [...adsSeachSections];
+
+  adSearchSectionsArray.forEach(div => {
+
+    try {
+      if (div.firstChild) { div.parentNode.removeChild(div) }
+      updateSectionsRemoveCount();
+      handleSectionRemovedChange();
+      console.log("Ad removed");
+    } catch (error) {
+      console.log(`Error removing ad sections`);
+    }
+
   });
 }
 
@@ -35,29 +54,6 @@ const handleScrollEvent = (returnedFunction) => {
   });
 
 } 
-
-// Check extension is running
-async function checkExtensionRunning () {
-  let extensionRunning = await getExtensionRunning();
-
-  if (extensionRunning) {
-    console.log("simpletube content script now running...");
-
-    removeShortsFromSearch();
-    document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
-    document.addEventListener('scrollend', removeShortsFromSearch);
-  } else {
-    console.log("paused simpletube content script");
-
-    try {
-      document.removeEventListener('scroll', () => handleScrollEvent(removeEventListener));
-      document.removeEventListener('scrollend', () => removeShortsFromSearch);
-    } catch (error) {
-      console.error(`Error removing CS event listeners (there may not have been any): ${error}`);
-    }
-  
-  }
-}
 
 // Handle sections remove change
 const handleSectionRemovedChange = (type?:String) => {
@@ -81,10 +77,45 @@ const updateSectionsRemoveCount = async () => {
 }
 
 // Add code to reset page sections removed on each URL change
+// DOESNT WORK PROPERLY STORE CURRENT LINK IN STATE
 window.addEventListener("hashchange", () => {
   setSectionsRemovedPage(0);
   handleSectionRemovedChange("Page");
 });
+
+// Check extension is running
+async function checkExtensionRunning () {
+  let extensionRunning = await getExtensionRunning();
+
+  if (extensionRunning) {
+    console.log("simpletube content script now running...");
+
+    // Remove shorts from search
+    removeShortsFromSearch();
+    document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
+    document.addEventListener('scrollend', removeShortsFromSearch);
+
+    // Remove ads from search
+    removeAdsFromSearch();
+    document.addEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
+    document.addEventListener('scrollend', removeAdsFromSearch);
+  } else {
+    console.log("paused simpletube content script");
+
+    try {
+      // Remove shorts from search
+      document.removeEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
+      document.removeEventListener('scrollend', () => removeShortsFromSearch);
+
+      // Remove ads from search
+      document.removeEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
+      document.removeEventListener('scrollend', removeAdsFromSearch);
+    } catch (error) {
+      console.error(`Error removing CS event listeners (there may not have been any): ${error}`);
+    }
+  
+  }
+}
 
 // Extension event listener
 browser.runtime.onMessage.addListener(msg => {

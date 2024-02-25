@@ -22,7 +22,6 @@ export async function getSectionsRemovedPage() {
 
 export async function setSectionsRemovedPage(value:number) {
   browser.storage.local.set({"sectionsRemovedPage": value})
-  .then(() => console.log("Success storing sections removed (page) to storage"))
   .catch((error) => console.error(`An error occurred when trying to store sections removed (page): ${error}`))
 }
 
@@ -48,7 +47,6 @@ export async function getSectionsRemovedTotal() {
 
 export async function setSectionsRemovedTotal(value:number) {
   browser.storage.local.set({"sectionsRemovedTotal": value})
-  .then(() => console.log("Success storing sections removed (total) to storage"))
   .catch((error) => console.error(`An error occurred when trying to store sections removed (total): ${error}`))
 }
 
