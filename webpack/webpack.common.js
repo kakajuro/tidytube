@@ -10,6 +10,7 @@ const SRC_DIR_NAME = 'src';
 module.exports = {
   entry: {
     popup: path.join(__dirname, `../${SRC_DIR_NAME}/popup.ts`),
+    options: path.join(__dirname, `../${SRC_DIR_NAME}/options.ts`),
     background: path.join(__dirname, `../${SRC_DIR_NAME}/background/${browser}/background.ts`),
     content: path.join(__dirname, `../${SRC_DIR_NAME}/content/${browser}/content.ts`)
   },
@@ -56,6 +57,7 @@ module.exports = {
       patterns: [
         //{ from: './images', to: `../${BUILD_DIR_NAME}/images`, context: 'public' },
         { from: './popup.html', to: `../${BUILD_DIR_NAME}/popup.html`, context: 'public' },
+        { from: './options.html', to: `../${BUILD_DIR_NAME}/options.html`, context: 'public' },
         { from: `${browser}_manifest.json`, to: `../${BUILD_DIR_NAME}/manifest.json`, context: 'public' },
       ],
     }),

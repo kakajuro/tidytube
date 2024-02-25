@@ -13,6 +13,9 @@
   "background": {
     "service_worker": "background.js"
   },
+  "options_ui": {
+    "page": "options.html"
+  },
   "content_security_policy": {
     "extension_page": "script-src 'self' 'sha256-ClANdr6bWuUdXWELI09IBiITbU5zbvg6V1dZp9mr55Q='"
   },

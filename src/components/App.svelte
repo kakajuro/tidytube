@@ -43,6 +43,10 @@
 
   }
 
+  const handleOptionsClicked = () => {
+    browser.tabs.create({ url: "./options.html" })
+  }
+
   onMount(async ()  => {
     darkMode = await getDarkMode();
     extensionRunningToggle = await getExtensionRunning();
@@ -56,8 +60,6 @@
     if (msg === "sectionsRemovedPageChanged") {
       (async () => {
         sectionsRemovedPage = await getSectionsRemovedPage();
-
-        console.log(sectionsRemovedPage);
       })
     } 
 
@@ -83,8 +85,10 @@
       <button class="w-[20px] h-[20px]" on:click={handleDarkModeSwitch} >
         <Moon class="hover:cursor-pointer" color={darkMode ? "#FFFFFF" : "#09090B"} size="{20}"/>
       </button>
-      {/if}   
-      <Gear class="hover:cursor-pointer" color={darkMode ? "#FFFFFF" : "#09090B"} size="{20}"/>
+      {/if}
+      <button class="w-[20px] h-[20px]" on:click={handleOptionsClicked}>
+        <Gear class="hover:cursor-pointer" color={darkMode ? "#FFFFFF" : "#09090B"} size="{20}"/>
+      </button>   
       <ToggleWrapper>
           <Toggle 
             id="extensionRunningToggle"
@@ -103,11 +107,11 @@
   <div class="container">
     <div class="flex flex-col content-center justify-center">
       <h1 class="text-custom-light-mode font-bold text-2xl text-center" class:text-white={darkMode}>Sections removed:</h1>
-      <h1 class="text-custom-light-mode font-bold text-6xl text-center" class:text-white={darkMode}>{sectionsRemovedPage}</h1>
+      <h1 class="text-custom-light-mode font-bold text-4xl text-center" class:text-white={darkMode}>{sectionsRemovedPage}</h1>
     </div>
     <div class="flex flex-col content-center justify-center mt-8">
       <h1 class="text-custom-light-mode font-bold text-2xl text-center" class:text-white={darkMode}>In total:</h1>
-      <h1 class="text-custom-light-mode font-bold text-6xl text-center" class:text-white={darkMode}>{sectionsRemovedTotal}</h1>
+      <h1 class="text-custom-light-mode font-bold text-4xl text-center" class:text-white={darkMode}>{sectionsRemovedTotal}</h1>
     </div>
   </div>
   <div class="mb-[50px]"/>
