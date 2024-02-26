@@ -107,11 +107,19 @@
   <div class="container">
     <div class="flex flex-col content-center justify-center">
       <h1 class="text-custom-light-mode font-bold text-2xl text-center" class:text-white={darkMode}>Sections removed:</h1>
-      <h1 class="text-custom-light-mode font-bold text-4xl text-center" class:text-white={darkMode}>{sectionsRemovedPage}</h1>
+      {#if sectionsRemovedPage === undefined}
+        <div class="mb-16" />
+      {:else}
+        <h1 class="text-custom-light-mode font-bold text-4xl text-center" class:text-white={darkMode}>{sectionsRemovedPage}</h1>
+      {/if}
     </div>
     <div class="flex flex-col content-center justify-center mt-8">
       <h1 class="text-custom-light-mode font-bold text-2xl text-center" class:text-white={darkMode}>In total:</h1>
-      <h1 class="text-custom-light-mode font-bold text-4xl text-center" class:text-white={darkMode}>{sectionsRemovedTotal}</h1>
+      {#if sectionsRemovedTotal === undefined}
+        <div class="mb-4" />
+      {:else}
+        <h1 class="text-custom-light-mode font-bold text-4xl text-center" class:text-white={darkMode}>{sectionsRemovedTotal}</h1>
+      {/if}
     </div>
   </div>
   <div class="mb-[50px]"/>

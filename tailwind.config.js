@@ -10,6 +10,9 @@ module.exports = {
         "custom-light-mode": "#333333"
       }
     },
+    fontFamily: {
+      "jost": ["Jost", "sans-serif"]
+    }
   },
   plugins: [],
 };
