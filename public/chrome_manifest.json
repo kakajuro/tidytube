@@ -9,6 +9,9 @@
     "activeTab",
     "scripting"
   ],
+  "host_permissions": [
+    "https://*/*"
+],
   "manifest_version": 3,
   "background": {
     "service_worker": "background.js"
@@ -21,8 +24,9 @@
   },
   "content_scripts": [
     {
-      "matches": ["https://youtube.com/*"],
-      "js": ["content.js"]
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
     }
   ],
   "action": {

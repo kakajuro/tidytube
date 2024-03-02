@@ -47,14 +47,14 @@
     browser.tabs.create({ url: "./options.html" })
   }
 
-  onMount(async ()  => {
+  onMount(async ()  => {    
     darkMode = await getDarkMode();
     extensionRunningToggle = await getExtensionRunning();
     sectionsRemovedPage = await getSectionsRemovedPage();
     sectionsRemovedTotal = await getSectionsRemovedTotal();
   });
 
-  // Extension event listener
+  // Popup event listener
   browser.runtime.onMessage.addListener(msg => {
 
     if (msg === "sectionsRemovedPageChanged") {

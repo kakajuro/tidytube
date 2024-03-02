@@ -89,16 +89,7 @@ async function checkExtensionRunning () {
 
   if (extensionRunning) {
     console.log("simpletube content script now running...");
-
-    // Remove shorts from search
-    removeShortsFromSearch();
-    document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
-    document.addEventListener('scrollend', removeShortsFromSearch);
-
-    // Remove ads from search
-    removeAdsFromSearch();
-    document.addEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
-    document.addEventListener('scrollend', removeAdsFromSearch);
+    runExtension();
   } else {
     console.log("paused simpletube content script");
 
@@ -117,7 +108,20 @@ async function checkExtensionRunning () {
   }
 }
 
-// Extension event listener
+// Do Youtube Blocking
+function runExtension() {
+  // Remove shorts from search
+  removeShortsFromSearch();
+  document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
+  document.addEventListener('scrollend', removeShortsFromSearch);
+
+  // Remove ads from search
+  removeAdsFromSearch();
+  document.addEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
+  document.addEventListener('scrollend', removeAdsFromSearch);
+}
+
+// Content script event listener
 browser.runtime.onMessage.addListener(msg => {
   
   (msg === "extensionStateChanged") ? checkExtensionRunning() : null
