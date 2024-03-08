@@ -1,7 +1,7 @@
 import { browser } from "webextension-polyfill-ts";
 
 let defaults = {
-  "removeShortFromSearch": true,
+  "removeShortsFromSearch": true,
   "removeAdsFromSearch": true
 }
 

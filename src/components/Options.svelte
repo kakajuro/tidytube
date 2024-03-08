@@ -1,19 +1,35 @@
-<script>
+<script lang="ts">
   import { onMount } from "svelte";
+
+  import { browser } from "webextension-polyfill-ts";
   
   import { getDarkMode } from "../util/darkMode";
+  import { getSettings, setSettings } from "../util/settingsHandler";
 
+  let settings;
   let darkMode;
 
-  let removeShortsFromSearchToggle = true;
-  let removeAdsFromSeachToggle = true;
+  let removeShortsFromSearchToggle;
+  let removeAdsFromSeachToggle;
 
-  const handleRemoveShortsFromSearchToggle = () => removeShortsFromSearchToggle = !removeShortsFromSearchToggle;
-  const handleRemoveAdsFromSearchToggle = () => removeAdsFromSeachToggle = !removeAdsFromSeachToggle;
+  const handleRemoveShortsFromSearchToggle = () => {
+    removeShortsFromSearchToggle = !removeShortsFromSearchToggle;
+    setSettings({"removeShortsFromSearch": removeShortsFromSearchToggle});
+  }
+  const handleRemoveAdsFromSearchToggle = () => {
+    removeAdsFromSeachToggle = !removeAdsFromSeachToggle;
+    setSettings({"removeAdsFromSearch": removeAdsFromSeachToggle});
+  }
 
   onMount(async () => {
+    settings = await getSettings();
+
+    removeShortsFromSearchToggle = settings.removeShortsFromSearch;
+    removeAdsFromSeachToggle = settings.removeAdsFromSearch;
+
     darkMode = await getDarkMode();
   });
+
 </script>
 
 <main class="w-full h-screen p-4 flex flex-col items-center select-none font-jost" class:bg-custom-dark={darkMode}>

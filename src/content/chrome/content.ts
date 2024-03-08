@@ -1,6 +1,7 @@
 import { browser } from "webextension-polyfill-ts";
 
 import { getExtensionRunning } from "../../util/extensionRunning";
+import { getSettings } from "../../util/settingsHandler";
 import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../../util/sectionsRemoved";
 import { checkScrollDirectionIsUp } from "../../util/checkScollDirection";
 
@@ -86,10 +87,24 @@ window.addEventListener("hashchange", () => {
 // Check extension is running
 async function checkExtensionRunning () {
   let extensionRunning = await getExtensionRunning();
+  let settings = await getSettings();
 
   if (extensionRunning) {
     console.log("simpletube content script now running...");
-    runExtension();
+    
+    // Remove shorts from search
+    if (settings.removeShortsFromSearch) {
+      removeShortsFromSearch();
+      document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
+      document.addEventListener('scrollend', removeShortsFromSearch);
+    }
+    
+    // Remove ads from search
+    if (settings.removeAdsFromSearch) {
+      removeAdsFromSearch();
+      document.addEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
+      document.addEventListener('scrollend', removeAdsFromSearch);
+    }
   } else {
     console.log("paused simpletube content script");
 
@@ -102,27 +117,22 @@ async function checkExtensionRunning () {
       document.removeEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
       document.removeEventListener('scrollend', removeAdsFromSearch);
     } catch (error) {
-      console.error(`Error removing CS event listeners (there may not have been any): ${error}`);
+      console.error(`Error removing event listeners (there may not have been any): ${error}`);
     }
   
   }
 }
 
-// Do Youtube Blocking
-function runExtension() {
-  // Remove shorts from search
-  removeShortsFromSearch();
-  document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
-  document.addEventListener('scrollend', removeShortsFromSearch);
-
-  // Remove ads from search
-  removeAdsFromSearch();
-  document.addEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
-  document.addEventListener('scrollend', removeAdsFromSearch);
-}
-
 // Content script event listener
 browser.runtime.onMessage.addListener(msg => {
+
+  let obj = msg;
+
+  let key = Object.keys(obj)[0];
+  let value = obj[key];
+
+  console.log(key, value);
+
   
   (msg === "extensionStateChanged") ? checkExtensionRunning() : null
 
@@ -131,4 +141,5 @@ browser.runtime.onMessage.addListener(msg => {
 checkExtensionRunning();
 setSectionsRemovedPage(0);
 handleSectionRemovedChange("Page");
+
 console.log("simpletube script running");
