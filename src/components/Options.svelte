@@ -1,7 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
 
-  import { browser } from "webextension-polyfill-ts";
+  import Toastify from 'toastify-js'
+  import "toastify-js/src/toastify.css"
   
   import { getDarkMode } from "../util/darkMode";
   import { getSettings, setSettings } from "../util/settingsHandler";
@@ -12,13 +13,31 @@
   let removeShortsFromSearchToggle;
   let removeAdsFromSeachToggle;
 
+  const toast = Toastify({
+    text: "Settings updated. Reload Youtube for changes to take effect.",
+    duration: 2500,
+    close: true,
+    gravity: "bottom",
+    position: "center",
+    stopOnFocus: true,
+    style: {
+      background: "#ff0000",
+      fontWeight: "500",
+      borderRadius: "3px",
+      color: "white",
+      boxShadow: "0px 10px 38px -3px rgba(0,0,0,0.1)"
+    }
+  });
+
   const handleRemoveShortsFromSearchToggle = () => {
     removeShortsFromSearchToggle = !removeShortsFromSearchToggle;
     setSettings({"removeShortsFromSearch": removeShortsFromSearchToggle});
+    toast.showToast();
   }
   const handleRemoveAdsFromSearchToggle = () => {
     removeAdsFromSeachToggle = !removeAdsFromSeachToggle;
     setSettings({"removeAdsFromSearch": removeAdsFromSeachToggle});
+    toast.showToast();
   }
 
   onMount(async () => {
