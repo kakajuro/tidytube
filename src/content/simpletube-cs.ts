@@ -59,9 +59,11 @@ const handleScrollEvent = (returnedFunction) => {
 // Handle sections remove change
 const handleSectionRemovedChange = (type?:String) => {
   if (type === "Page") {
-    browser.runtime.sendMessage(null, `sectionsRemoved${type}Changed`) 
+    browser.runtime.sendMessage(null, `sectionsRemoved${type}Changed`)
+    .catch((error) => console.warn("Could not establish connection. Receiving end does not exist - from HSRC (ignore)")) 
   } else {
     browser.runtime.sendMessage(null, `sectionsRemovedBothChanged`) 
+    .catch((error) => console.warn("Could not establish connection. Receiving end does not exist - from HSRC (ignore)")) 
   }
 }
 

@@ -12,7 +12,7 @@ module.exports = {
     popup: path.join(__dirname, `../${SRC_DIR_NAME}/popup.ts`),
     options: path.join(__dirname, `../${SRC_DIR_NAME}/options.ts`),
     background: path.join(__dirname, `../${SRC_DIR_NAME}/background/${browser}/background.ts`),
-    content: path.join(__dirname, `../${SRC_DIR_NAME}/content/simpletube-cs.ts`)
+    "simpletube-cs": path.join(__dirname, `../${SRC_DIR_NAME}/content/simpletube-cs.ts`)
   },
   output: {
     path: path.join(__dirname, `../${BUILD_DIR_NAME}`),
