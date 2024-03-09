@@ -1,9 +1,9 @@
 import { browser } from "webextension-polyfill-ts";
 
-import { getExtensionRunning } from "../../util/extensionRunning";
-import { getSettings } from "../../util/settingsHandler";
-import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../../util/sectionsRemoved";
-import { checkScrollDirectionIsUp } from "../../util/checkScollDirection";
+import { getExtensionRunning } from "../util/extensionRunning";
+import { getSettings } from "../util/settingsHandler";
+import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../util/sectionsRemoved";
+import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
 
 // Remove Shorts on search page
 const removeShortsFromSearch = () => {
@@ -125,17 +125,7 @@ async function checkExtensionRunning () {
 
 // Content script event listener
 browser.runtime.onMessage.addListener(msg => {
-
-  let obj = msg;
-
-  let key = Object.keys(obj)[0];
-  let value = obj[key];
-
-  console.log(key, value);
-
-  
   (msg === "extensionStateChanged") ? checkExtensionRunning() : null
-
 });
 
 checkExtensionRunning();

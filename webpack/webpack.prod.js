@@ -14,11 +14,11 @@ module.exports = merge(common, {
           loader: 'svelte-loader',
           options: {
             compilerOptions: {
-              dev: false
+              dev: false,
             },
             emitCss: true,
             hotReload: false,
-            preprocess: svelteConfig.preprocess
+            preprocess: sveltePreprocess()
           }
         }
       },
