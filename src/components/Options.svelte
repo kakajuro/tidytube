@@ -34,6 +34,7 @@
     setSettings({"removeShortsFromSearch": removeShortsFromSearchToggle});
     toast.showToast();
   }
+  
   const handleRemoveAdsFromSearchToggle = () => {
     removeAdsFromSeachToggle = !removeAdsFromSeachToggle;
     setSettings({"removeAdsFromSearch": removeAdsFromSeachToggle});

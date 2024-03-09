@@ -4,6 +4,7 @@ import { getExtensionRunning } from "../util/extensionRunning";
 import { getSettings } from "../util/settingsHandler";
 import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../util/sectionsRemoved";
 import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
+import { throttle } from "../util/throttle"
 
 // Remove Shorts on search page
 const removeShortsFromSearch = () => {
@@ -99,6 +100,7 @@ async function checkExtensionRunning () {
       removeShortsFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
       document.addEventListener('scrollend', removeShortsFromSearch);
+      document.addEventListener('mousemove', throttle(removeShortsFromSearch, 200));
     }
     
     // Remove ads from search
@@ -106,6 +108,7 @@ async function checkExtensionRunning () {
       removeAdsFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
       document.addEventListener('scrollend', removeAdsFromSearch);
+      document.addEventListener('mousemove', throttle(removeAdsFromSearch, 200));
     }
   } else {
     console.log("paused simpletube content script");
@@ -114,10 +117,12 @@ async function checkExtensionRunning () {
       // Remove shorts from search
       document.removeEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
       document.removeEventListener('scrollend', () => removeShortsFromSearch);
+      document.removeEventListener('mousemove', throttle(removeShortsFromSearch, 200));
 
       // Remove ads from search
       document.removeEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
       document.removeEventListener('scrollend', removeAdsFromSearch);
+      document.removeEventListener('mousemove', throttle(removeAdsFromSearch, 200));
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);
     }
