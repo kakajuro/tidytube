@@ -27,8 +27,8 @@ const removeShortsFromSearch = () => {
 
 // Remove ad slots on search page
 const removeAdsFromSearch = () => {
-  const adsSeachSections = document.querySelectorAll('ytd-ad-slot-renderer');
-  const adSearchSectionsArray = [...adsSeachSections];
+  const adsSearchSections = document.querySelectorAll('ytd-ad-slot-renderer');
+  const adSearchSectionsArray = [...adsSearchSections];
 
   adSearchSectionsArray.forEach(div => {
 
@@ -40,6 +40,30 @@ const removeAdsFromSearch = () => {
     } catch (error) {
       console.log(`Error removing ad sections`);
     }
+
+  });
+}
+
+// Remove "Channels new to you" from search
+const removeNewChannelsFromSearch = () => {
+  const allShelfRenderers = document.querySelectorAll("ytd-shelf-renderer");
+  const allShelfRenderersArray = [...allShelfRenderers];
+
+  allShelfRenderersArray.forEach(div => {
+
+    let spans = div.querySelectorAll("span");
+    [...spans].forEach((span) => {
+      if (span.innerText.includes("Channels new to you")) {
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount();
+          handleSectionRemovedChange();
+          console.log("New Channels section removed");
+        } catch (error) {
+          console.log(`Error removing New Channels sections`);
+        }
+      } 
+    });
 
   });
 }
@@ -100,7 +124,7 @@ async function checkExtensionRunning () {
       removeShortsFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
       document.addEventListener('scrollend', removeShortsFromSearch);
-      document.addEventListener('mousemove', throttle(removeShortsFromSearch, 200));
+      document.addEventListener('mousemove', throttle(removeShortsFromSearch, 100));
     }
     
     // Remove ads from search
@@ -108,21 +132,36 @@ async function checkExtensionRunning () {
       removeAdsFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
       document.addEventListener('scrollend', removeAdsFromSearch);
-      document.addEventListener('mousemove', throttle(removeAdsFromSearch, 200));
+      document.addEventListener('mousemove', throttle(removeAdsFromSearch, 100));
     }
+
+    // Remove "Channels new to you" from search
+    if (settings.removeNewChannelsFromSearch) {
+      removeNewChannelsFromSearch();
+      document.addEventListener('scroll', () => handleScrollEvent(removeNewChannelsFromSearch));
+      document.addEventListener('scrollend', removeNewChannelsFromSearch);
+      document.addEventListener('mousemove', throttle(removeNewChannelsFromSearch, 100));
+    }
+
   } else {
     console.log("paused simpletube content script");
 
     try {
-      // Remove shorts from search
+      // [REMOVE EVENT LISTENER] Remove shorts from search
       document.removeEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
       document.removeEventListener('scrollend', () => removeShortsFromSearch);
-      document.removeEventListener('mousemove', throttle(removeShortsFromSearch, 200));
+      document.removeEventListener('mousemove', throttle(removeShortsFromSearch, 100));
 
-      // Remove ads from search
+      // [REMOVE EVENT LISTENER] Remove ads from search
       document.removeEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
       document.removeEventListener('scrollend', removeAdsFromSearch);
-      document.removeEventListener('mousemove', throttle(removeAdsFromSearch, 200));
+      document.removeEventListener('mousemove', throttle(removeAdsFromSearch, 100));
+
+      // [REMOVE EVENT LISTENER] Remove "Channels new to you" from search
+      document.removeEventListener('scroll', () => handleScrollEvent(removeNewChannelsFromSearch));
+      document.removeEventListener('scrollend', removeNewChannelsFromSearch);
+      document.removeEventListener('mousemove', throttle(removeNewChannelsFromSearch, 100));
+
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);
     }
@@ -135,8 +174,10 @@ browser.runtime.onMessage.addListener(msg => {
   (msg === "extensionStateChanged") ? checkExtensionRunning() : null
 });
 
-checkExtensionRunning();
-setSectionsRemovedPage(0);
-handleSectionRemovedChange("Page");
+window.onload = () => {
+  checkExtensionRunning();
+  setSectionsRemovedPage(0);
+  handleSectionRemovedChange("Page");
 
-console.log("simpletube script running");
+  console.log("simpletube script running");
+}

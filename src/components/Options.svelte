@@ -7,11 +7,14 @@
   import { getDarkMode } from "../util/darkMode";
   import { getSettings, setSettings } from "../util/settingsHandler";
 
-  let settings;
+  import type settingsType from "../types/types";
+
+  let settings:settingsType;
   let darkMode;
 
   let removeShortsFromSearchToggle;
   let removeAdsFromSeachToggle;
+  let removeNewChannelsFromSearchToggle;
 
   const toast = Toastify({
     text: "Settings updated. Reload Youtube for changes to take effect.",
@@ -34,10 +37,16 @@
     setSettings({"removeShortsFromSearch": removeShortsFromSearchToggle});
     toast.showToast();
   }
-  
+
   const handleRemoveAdsFromSearchToggle = () => {
     removeAdsFromSeachToggle = !removeAdsFromSeachToggle;
     setSettings({"removeAdsFromSearch": removeAdsFromSeachToggle});
+    toast.showToast();
+  }
+
+  const handleRemoveNewChannelsFromSearch = () => {
+    removeNewChannelsFromSearchToggle = !removeNewChannelsFromSearchToggle;
+    setSettings({"removeNewChannelsFromSearch": removeNewChannelsFromSearchToggle});
     toast.showToast();
   }
 
@@ -46,6 +55,7 @@
 
     removeShortsFromSearchToggle = settings.removeShortsFromSearch;
     removeAdsFromSeachToggle = settings.removeAdsFromSearch;
+    removeNewChannelsFromSearchToggle = settings.removeNewChannelsFromSearch;
 
     darkMode = await getDarkMode();
   });
@@ -58,7 +68,7 @@
   <div class="flex flex-col mb-6">
     <div class="space-x-2">
       <input
-        id="shortFromSearch" 
+        id="shortsFromSearch" 
         type="checkbox"
         class="w-4 h-4 rounded-sm accent-[#FF0000]"
         checked={removeShortsFromSearchToggle}
@@ -90,5 +100,24 @@
       </label>
     </div>
     <p class="font-bold" class:text-white={darkMode}>Stops ads from appearing in the search page</p>
+  </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="newChannelsFromSearch"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removeNewChannelsFromSearchToggle}
+        on:change={handleRemoveNewChannelsFromSearch}
+      />
+      <label
+        for="newChannelsFromSearch"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Remove <em>Channels New To You</em>
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Stops new unwanted channels being suggested <br /> in the search page</p>
+    </div>
   </div>
 </main>

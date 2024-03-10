@@ -1,11 +1,14 @@
 import { browser } from "webextension-polyfill-ts";
 
-let defaults = {
+import type settingsType from "../types/types";
+
+let defaults:settingsType = {
   "removeShortsFromSearch": true,
-  "removeAdsFromSearch": true
+  "removeAdsFromSearch": true,
+  "removeNewChannelsFromSearch": true,
 }
 
-export async function getSettings() {
+export async function getSettings():Promise<settingsType> {
   try {
     let { settings } = await browser.storage.local.get("settings");
 

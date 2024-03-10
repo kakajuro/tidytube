@@ -26,7 +26,7 @@
     {
       "matches": ["<all_urls>"],
       "js": ["simpletube-cs.js"],
-      "run_at": "document_start"
+      "run_at": "document_idle"
     }
   ],
   "action": {
