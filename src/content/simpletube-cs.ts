@@ -4,7 +4,7 @@ import { getExtensionRunning } from "../util/extensionRunning";
 import { getSettings } from "../util/settingsHandler";
 import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../util/sectionsRemoved";
 import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
-import { throttle } from "../util/throttle"
+import { throttle, delay } from "../util/helpers"
 
 // Remove Shorts on search page
 const removeShortsFromSearch = () => {
@@ -94,13 +94,13 @@ const handleSectionRemovedChange = (type?:String) => {
 
 // Update the sections removed ocunt when a section is removed
 const updateSectionsRemoveCount = async () => {
-  let newSectionsRemovedPage = await getSectionsRemovedPage();
-  let newSectionsRemovedTotal = await getSectionsRemovedTotal();
-
-  newSectionsRemovedPage = newSectionsRemovedPage + 1;
-  newSectionsRemovedTotal = newSectionsRemovedTotal + 1;
+  let newSectionsRemovedPage = await getSectionsRemovedPage() + 1;
+  await delay(200);
+  let newSectionsRemovedTotal = await getSectionsRemovedTotal() + 1;
+  await delay(200);
 
   setSectionsRemovedPage(newSectionsRemovedPage);
+  await delay(200);
   setSectionsRemovedTotal(newSectionsRemovedTotal);
 }
 
