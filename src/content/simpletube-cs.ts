@@ -26,7 +26,7 @@ const removeShortsFromSearch = () => {
 }
 
 // Remove ad slots on search page
-const removeAdsFromSearch = () => {
+const removeAdsFromReccomendations = () => {
   const adsSearchSections = document.querySelectorAll('ytd-ad-slot-renderer');
   const adSearchSectionsArray = [...adsSearchSections];
 
@@ -176,11 +176,11 @@ async function checkExtensionRunning () {
     }
     
     // Remove ads from search
-    if (settings.removeAdsFromSearch) {
-      removeAdsFromSearch();
-      document.addEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
-      document.addEventListener('scrollend', removeAdsFromSearch);
-      document.addEventListener('mousemove', throttle(removeAdsFromSearch, 100));
+    if (settings.removeAdsFromReccomendations) {
+      removeAdsFromReccomendations();
+      document.addEventListener('scroll', () => handleScrollEvent(removeAdsFromReccomendations));
+      document.addEventListener('scrollend', removeAdsFromReccomendations);
+      document.addEventListener('mousemove', throttle(removeAdsFromReccomendations, 100));
     }
 
     // Remove "Channels new to you" from search
@@ -217,9 +217,9 @@ async function checkExtensionRunning () {
       document.removeEventListener('mousemove', throttle(removeShortsFromSearch, 100));
 
       // [REMOVE EVENT LISTENER] Remove ads from search
-      document.removeEventListener('scroll', () => handleScrollEvent(removeAdsFromSearch));
-      document.removeEventListener('scrollend', removeAdsFromSearch);
-      document.removeEventListener('mousemove', throttle(removeAdsFromSearch, 100));
+      document.removeEventListener('scroll', () => handleScrollEvent(removeAdsFromReccomendations));
+      document.removeEventListener('scrollend', removeAdsFromReccomendations);
+      document.removeEventListener('mousemove', throttle(removeAdsFromReccomendations, 100));
 
       // [REMOVE EVENT LISTENER] Remove "Channels new to you" from search
       document.removeEventListener('scroll', () => handleScrollEvent(removeNewChannelsFromSearch));

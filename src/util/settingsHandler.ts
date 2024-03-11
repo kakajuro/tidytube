@@ -4,7 +4,7 @@ import type settingsType from "../types/types";
 
 let defaults:settingsType = {
   "removeShortsFromSearch": true,
-  "removeAdsFromSearch": true,
+  "removeAdsFromReccomendations": true,
   "removeNewChannelsFromSearch": true,
   "removeLatestPostsFromSearch": false,
   "removeLastestVideosFromSearch": false,
@@ -38,5 +38,6 @@ export async function setSettings(data:object) {
 
 export async function clearSettings() {
   browser.storage.local.remove("settings")
-  .catch((error) => console.error(`An error occurred removing settings from storage: ${error}`))
+  .catch((error) => console.error(`An error occurred removing settings from storage: ${error}`));
+  await getSettings();
 }

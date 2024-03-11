@@ -1,6 +1,6 @@
 interface settingsType {
   "removeShortsFromSearch": boolean,
-  "removeAdsFromSearch": boolean,
+  "removeAdsFromReccomendations": boolean,
   "removeNewChannelsFromSearch": boolean,
   "removeLatestPostsFromSearch": boolean,
   "removeLastestVideosFromSearch": boolean,
