@@ -15,6 +15,8 @@
   let removeShortsFromSearchToggle;
   let removeAdsFromSeachToggle;
   let removeNewChannelsFromSearchToggle;
+  let removeLatestPostsFromSearchToggle;
+  let removeLastestVideosFromSearchToggle;
 
   const toast = Toastify({
     text: "Settings updated. Reload Youtube for changes to take effect.",
@@ -32,21 +34,33 @@
     }
   });
 
-  const handleRemoveShortsFromSearchToggle = () => {
-    removeShortsFromSearchToggle = !removeShortsFromSearchToggle;
-    setSettings({"removeShortsFromSearch": removeShortsFromSearchToggle});
-    toast.showToast();
-  }
+  function handleSettingsChanged(setting:string) {
 
-  const handleRemoveAdsFromSearchToggle = () => {
-    removeAdsFromSeachToggle = !removeAdsFromSeachToggle;
-    setSettings({"removeAdsFromSearch": removeAdsFromSeachToggle});
-    toast.showToast();
-  }
+    switch (setting) {
+      case "removeShortsFromSearch":
+        removeShortsFromSearchToggle = !removeShortsFromSearchToggle;
+        setSettings({"removeShortsFromSearch": removeShortsFromSearchToggle});
+        break;
+      case "removeAdsFromSearch":
+        removeAdsFromSeachToggle = !removeAdsFromSeachToggle;
+        setSettings({"removeAdsFromSearch": removeAdsFromSeachToggle});
+        break;
+      case "removeNewChannelsFromSearch":
+        removeNewChannelsFromSearchToggle = !removeNewChannelsFromSearchToggle;
+        setSettings({"removeNewChannelsFromSearch": removeNewChannelsFromSearchToggle});
+        break;
+      case "removeLatestPostsFromSearch":
+        removeLatestPostsFromSearchToggle = !removeLatestPostsFromSearchToggle;
+        setSettings({"removeLatestPostsFromSearch": removeLatestPostsFromSearchToggle});
+        break;
+      case "removeLastestVideosFromSearch":
+        removeLastestVideosFromSearchToggle = !removeLastestVideosFromSearchToggle;
+        setSettings({"removeLastestVideosFromSearch": removeLastestVideosFromSearchToggle});
+        break;
+      default:
+        break;
+    }
 
-  const handleRemoveNewChannelsFromSearch = () => {
-    removeNewChannelsFromSearchToggle = !removeNewChannelsFromSearchToggle;
-    setSettings({"removeNewChannelsFromSearch": removeNewChannelsFromSearchToggle});
     toast.showToast();
   }
 
@@ -56,6 +70,8 @@
     removeShortsFromSearchToggle = settings.removeShortsFromSearch;
     removeAdsFromSeachToggle = settings.removeAdsFromSearch;
     removeNewChannelsFromSearchToggle = settings.removeNewChannelsFromSearch;
+    removeLatestPostsFromSearchToggle = settings.removeLatestPostsFromSearch;
+    removeLastestVideosFromSearchToggle = settings.removeLastestVideosFromSearch;
 
     darkMode = await getDarkMode();
   });
@@ -72,7 +88,7 @@
         type="checkbox"
         class="w-4 h-4 rounded-sm accent-[#FF0000]"
         checked={removeShortsFromSearchToggle}
-        on:change={handleRemoveShortsFromSearchToggle}
+        on:change={() => handleSettingsChanged("removeShortsFromSearch")}
       />
       <label 
         for="shortsFromSearch"
@@ -90,7 +106,7 @@
         type="checkbox"
         class="w-4 h-4 rounded-sm accent-[#FF0000]"
         checked={removeAdsFromSeachToggle}
-        on:change={handleRemoveAdsFromSearchToggle}
+        on:change={() => handleSettingsChanged("removeAdsFromSearch")}
       />
       <label 
         for="adsFromSearch"
@@ -108,7 +124,7 @@
         type="checkbox"
         class="w-4 h-4 rounded-sm accent-[#FF0000]"
         checked={removeNewChannelsFromSearchToggle}
-        on:change={handleRemoveNewChannelsFromSearch}
+        on:change={() => handleSettingsChanged("removeNewChannelsFromSearch")}
       />
       <label
         for="newChannelsFromSearch"
@@ -118,6 +134,44 @@
         Remove <em>Channels New To You</em>
       </label>
       <p class="font-bold text-center" class:text-white={darkMode}>Stops new unwanted channels being suggested <br /> in the search page</p>
+    </div>
+  </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="newChannelsFromSearch"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removeLatestPostsFromSearchToggle}
+        on:change={() => handleSettingsChanged("removeLatestPostsFromSearch")}
+      />
+      <label
+        for="latestPostsFromSearch"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Remove <em>Latest Posts from ...</em>
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Removes the lastest community posts from <br /> channels appearing in the search page</p>
+    </div>
+  </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="latestVideosFromSearch"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removeLastestVideosFromSearchToggle}
+        on:change={() => handleSettingsChanged("removeLastestVideosFromSearch")}
+      />
+      <label
+        for="latestVideosFromSearch"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Remove <em>Latest Videos from ...</em>
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Removes the lastest videos from <br /> channels appearing in the search page</p>
     </div>
   </div>
 </main>

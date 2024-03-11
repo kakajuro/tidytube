@@ -68,6 +68,54 @@ const removeNewChannelsFromSearch = () => {
   });
 }
 
+// Remove "Latest Posts from ..." from search
+const removeLatestPostsFromSearch = () => {
+  const allShelfRenderers = document.querySelectorAll("ytd-shelf-renderer");
+  const allShelfRenderersArray = [...allShelfRenderers];
+
+  allShelfRenderersArray.forEach(div => {
+
+    let spans = div.querySelectorAll("span");
+    [...spans].forEach((span) => {
+      if (span.innerText.includes("Latest posts from")) {
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount();
+          handleSectionRemovedChange();
+          console.log("Latest posts section removed");
+        } catch (error) {
+          console.log(`Error removing latest posts sections`);
+        }
+      } 
+    });
+
+  });
+}
+
+// Remove "Latest Videos from ..." from search
+const removeLatestVideosFromSearch = () => {
+  const allShelfRenderers = document.querySelectorAll("ytd-shelf-renderer");
+  const allShelfRenderersArray = [...allShelfRenderers];
+
+  allShelfRenderersArray.forEach(div => {
+
+    let spans = div.querySelectorAll("span");
+    [...spans].forEach((span) => {
+      if (span.innerText.includes("Latest from")) {
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount();
+          handleSectionRemovedChange();
+          console.log("Latest videos section removed");
+        } catch (error) {
+          console.log(`Error removing latest sections`);
+        }
+      } 
+    });
+
+  });
+}
+
 // Scroll event handler
 const handleScrollEvent = (returnedFunction) => {
 
@@ -143,6 +191,22 @@ async function checkExtensionRunning () {
       document.addEventListener('mousemove', throttle(removeNewChannelsFromSearch, 100));
     }
 
+    // Remove "Latest Posts from ..." from search
+    if (settings.removeLatestPostsFromSearch) {
+      removeLatestPostsFromSearch();
+      document.addEventListener('scroll', () => handleScrollEvent(removeLatestPostsFromSearch));
+      document.addEventListener('scrollend', removeLatestPostsFromSearch);
+      document.addEventListener('mousemove', throttle(removeLatestPostsFromSearch, 100));
+    }
+
+    // Remove "Latest Videos from ..." from search
+    if (settings.removeLastestVideosFromSearch) {
+      removeLatestVideosFromSearch();
+      document.addEventListener('scroll', () => handleScrollEvent(removeLatestVideosFromSearch));
+      document.addEventListener('scrollend', removeLatestVideosFromSearch);
+      document.addEventListener('mousemove', throttle(removeLatestVideosFromSearch, 100));
+    }
+
   } else {
     console.log("paused simpletube content script");
 
@@ -162,6 +226,16 @@ async function checkExtensionRunning () {
       document.removeEventListener('scrollend', removeNewChannelsFromSearch);
       document.removeEventListener('mousemove', throttle(removeNewChannelsFromSearch, 100));
 
+      // [REMOVE EVENT LISTENER] Remove "Latest posts from .." from search
+      document.removeEventListener('scroll', () => handleScrollEvent(removeLatestPostsFromSearch));
+      document.removeEventListener('scrollend', removeLatestPostsFromSearch);
+      document.removeEventListener('mousemove', throttle(removeLatestPostsFromSearch, 100));
+
+      // [REMOVE EVENT LISTENER] Remove "Latest videos from..."" from search
+      document.removeEventListener('scroll', () => handleScrollEvent(removeLatestVideosFromSearch));
+      document.removeEventListener('scrollend', removeLatestVideosFromSearch);
+      document.removeEventListener('mousemove', throttle(removeLatestVideosFromSearch, 100));
+
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);
     }
@@ -178,6 +252,8 @@ window.onload = () => {
   checkExtensionRunning();
   setSectionsRemovedPage(0);
   handleSectionRemovedChange("Page");
+
+  setTimeout(checkExtensionRunning, 1000);
 
   console.log("simpletube script running");
 }

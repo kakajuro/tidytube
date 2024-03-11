@@ -6,6 +6,8 @@ let defaults:settingsType = {
   "removeShortsFromSearch": true,
   "removeAdsFromSearch": true,
   "removeNewChannelsFromSearch": true,
+  "removeLatestPostsFromSearch": false,
+  "removeLastestVideosFromSearch": false,
 }
 
 export async function getSettings():Promise<settingsType> {
