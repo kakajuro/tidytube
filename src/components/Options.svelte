@@ -18,6 +18,9 @@
   let removeNewChannelsFromSearchToggle;
   let removeLatestPostsFromSearchToggle;
   let removeLastestVideosFromSearchToggle;
+  let removePreviouslyWatchedFromSearchToggle;
+  let removeForYouFromSearchToggle;
+  let removePeopleAlsoWatchedFromSearchToggle;
 
   async function optionsOpened() {
     await delay(500);
@@ -28,6 +31,9 @@
     removeNewChannelsFromSearchToggle = settings.removeNewChannelsFromSearch;
     removeLatestPostsFromSearchToggle = settings.removeLatestPostsFromSearch;
     removeLastestVideosFromSearchToggle = settings.removeLastestVideosFromSearch;
+    removePreviouslyWatchedFromSearchToggle = settings.removePreviouslyWatchedFromSearch;
+    removeForYouFromSearchToggle = settings.removeForYouFromSearch;
+    removePeopleAlsoWatchedFromSearchToggle = settings.removePeopleAlsoWatchedFromSearch;
 
     darkMode = await getDarkMode();
   }
@@ -83,6 +89,18 @@
         removeLastestVideosFromSearchToggle = !removeLastestVideosFromSearchToggle;
         setSettings({"removeLastestVideosFromSearch": removeLastestVideosFromSearchToggle});
         break;
+      case "removePreviouslyWatchedFromSearch":
+        removePreviouslyWatchedFromSearchToggle = !removePreviouslyWatchedFromSearchToggle;
+        setSettings({"removePreviouslyWatchedFromSearch": removePreviouslyWatchedFromSearchToggle});
+        break;
+      case "removeForYouFromSearch":
+        removeForYouFromSearchToggle = !removeForYouFromSearchToggle;
+        setSettings({"removeForYouFromSearch": removeForYouFromSearchToggle});
+        break;
+      case "removePeopleAlsoWatchedFromSearch":
+        removePeopleAlsoWatchedFromSearchToggle = !removePeopleAlsoWatchedFromSearchToggle;
+        setSettings({"removePeopleAlsoWatchedFromSearch": removePeopleAlsoWatchedFromSearchToggle});
+        break;
       default:
         break;
     }
@@ -96,7 +114,7 @@
 
 </script>
 
-<main class="w-full h-screen p-4 flex flex-col items-center select-none font-jost" class:bg-custom-dark={darkMode}>
+<main class="w-full p-4 flex flex-col items-center select-none font-jost text-center" class:bg-custom-dark={darkMode}>
   <h1 class="font-semibold text-5xl mt-12 pb-4" class:text-white={darkMode}>Options</h1>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>General</h2>
   <div class="flex flex-col mb-6 pb-4">
@@ -191,6 +209,63 @@
         Remove <em>Latest Videos from ...</em>
       </label>
       <p class="font-bold text-center" class:text-white={darkMode}>Removes the lastest videos from <br /> channels appearing in the search page</p>
+    </div>
+  </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="removePreviouslyWatchedFromSearch"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removePreviouslyWatchedFromSearchToggle}
+        on:change={() => handleSettingsChanged("removePreviouslyWatchedFromSearchToggle")}
+      />
+      <label
+        for="removePreviouslyWatchedFromSearch"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Remove <em>Previously Watched</em>
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Removes previously watched videos <br /> from appearing in the search page</p>
+    </div>
+  </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="removeForYouFromSearch"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removeForYouFromSearchToggle}
+        on:change={() => handleSettingsChanged("removeForYouFromSearch")}
+      />
+      <label
+        for="removeForYouFromSearch"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Remove <em>For You</em>
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Removes general Youtube reccomendations <br /> from appearing in the search page</p>
+    </div>
+  </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="removePeopleAlsoWatchedFromSearch"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removePeopleAlsoWatchedFromSearchToggle}
+        on:change={() => handleSettingsChanged("removePeopleAlsoWatchedFromSearch")}
+      />
+      <label
+        for="removePeopleAlsoWatchedFromSearch"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Remove <em>People Also Watched</em>
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Removes videos the people also watched <br /> from appearing in the search page</p>
     </div>
   </div>
   <button class:text-white={darkMode} on:click={handleResetSettings}>
