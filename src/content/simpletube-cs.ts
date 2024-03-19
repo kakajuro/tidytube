@@ -130,7 +130,7 @@ const removePreviouslyWatchedFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          console.log("Latest videos section removed");
+          console.log("Previously watched videos section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
         }
@@ -149,12 +149,12 @@ const removeForYouFromSearch = () => {
 
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
-      if (span.innerText.includes("For You")) {
+      if (span.innerText.includes("For you")) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          console.log("Latest videos section removed");
+          console.log("For you section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
         }
@@ -173,7 +173,7 @@ const removePeopleAlsoWatchedFromSearch = () => {
 
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
-      if (span.innerText.includes("People Also Watched")) {
+      if (span.innerText.includes("People also watched")) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
@@ -287,6 +287,7 @@ async function checkExtensionRunning () {
       document.addEventListener('mousemove', throttle(removePreviouslyWatchedFromSearch, 100));
     }
 
+    // Remove "For You" from search
     if (settings.removeForYouFromSearch) {
       removeForYouFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removeForYouFromSearch));
@@ -294,6 +295,7 @@ async function checkExtensionRunning () {
       document.addEventListener('mousemove', throttle(removeForYouFromSearch, 100));
     }
 
+    // Remove "People also watched" from search
     if (settings.removePeopleAlsoWatchedFromSearch) {
       removePeopleAlsoWatchedFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removePeopleAlsoWatchedFromSearch));
@@ -357,12 +359,10 @@ browser.runtime.onMessage.addListener(msg => {
   (msg === "extensionStateChanged") ? checkExtensionRunning() : null
 });
 
-window.onload = () => {
-  checkExtensionRunning();
-  setSectionsRemovedPage(0);
-  handleSectionRemovedChange("Page");
+checkExtensionRunning();
+setSectionsRemovedPage(0);
+handleSectionRemovedChange("Page");
 
-  setTimeout(checkExtensionRunning, 1000);
+setTimeout(checkExtensionRunning, 1000);
 
-  console.log("simpletube script running");
-}
+console.log("simpletube script running");
