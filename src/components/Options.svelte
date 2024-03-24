@@ -21,6 +21,8 @@
   let removePreviouslyWatchedFromSearchToggle;
   let removeForYouFromSearchToggle;
   let removePeopleAlsoWatchedFromSearchToggle;
+  let removeFromRelatedSearchedToggle;
+  let removePeopleAlsoSearchForToggle;
 
   async function optionsOpened() {
     await delay(500);
@@ -34,6 +36,8 @@
     removePreviouslyWatchedFromSearchToggle = settings.removePreviouslyWatchedFromSearch;
     removeForYouFromSearchToggle = settings.removeForYouFromSearch;
     removePeopleAlsoWatchedFromSearchToggle = settings.removePeopleAlsoWatchedFromSearch;
+    removeFromRelatedSearchedToggle = settings.removeFromRelatedSearches;
+    removePeopleAlsoSearchForToggle = settings.removePeopleAlsoSearchFor;
 
     darkMode = await getDarkMode();
   }
@@ -101,6 +105,14 @@
         removePeopleAlsoWatchedFromSearchToggle = !removePeopleAlsoWatchedFromSearchToggle;
         setSettings({"removePeopleAlsoWatchedFromSearch": removePeopleAlsoWatchedFromSearchToggle});
         break;
+      case "removeFromRelatedSearches":
+        removeFromRelatedSearchedToggle = !removeFromRelatedSearchedToggle;
+        setSettings({"removeFromRelatedSearches": removeFromRelatedSearchedToggle});
+        break;
+      case "removePeopleAlsoSearchFor":
+        removePeopleAlsoSearchForToggle = !removePeopleAlsoSearchForToggle;
+        setSettings({"removePeopleAlsoSearchFor": removePeopleAlsoSearchForToggle});
+        break;
       default:
         break;
     }
@@ -133,7 +145,7 @@
         Remove ads from reccomendations
       </label>
     </div>
-    <p class="font-bold" class:text-white={darkMode}>Stops ads from appearing in the search page and homepage</p>
+    <p class="font-bold" class:text-white={darkMode}>Stops ads from appearing in the search page and homepage (does not block ads during video playback)</p>
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Search</h2>
   <div class="flex flex-col mb-6">
@@ -170,7 +182,7 @@
       >
         Remove <em>Channels New To You</em>
       </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Stops new unwanted channels being suggested <br /> in the search page</p>
+      <p class="font-bold text-center" class:text-white={darkMode}>Stops new unrelated channels being suggested <br /> in the search page</p>
     </div>
   </div>
   <div class="flex flex-col mb-6">
@@ -266,6 +278,44 @@
         Remove <em>People Also Watched</em>
       </label>
       <p class="font-bold text-center" class:text-white={darkMode}>Removes videos the people also watched <br /> from appearing in the search page</p>
+    </div>
+  </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="removeFromRelatedSearches"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removeFromRelatedSearchedToggle}
+        on:change={() => handleSettingsChanged("removeFromRelatedSearches")}
+      />
+      <label
+        for="removeFromRelatedSearches"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Remove <em>From Related Searches</em>
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Removes videos suggested from related searches <br /> from appearing in the search page</p>
+    </div>
+  </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="removePeopleAlsoSearchFor"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removeFromRelatedSearchedToggle}
+        on:change={() => handleSettingsChanged("removePeopleAlsoSearchFor")}
+      />
+      <label
+        for="removePeopleAlsoSearchFor"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Remove <em>People Also Search For</em>
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Removes videos people also search for <br /> from appearing in the search page</p>
     </div>
   </div>
   <button class:text-white={darkMode} on:click={handleResetSettings}>

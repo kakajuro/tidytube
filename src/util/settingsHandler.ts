@@ -10,7 +10,9 @@ let defaults:settingsType = {
   "removeLastestVideosFromSearch": false,
   "removePreviouslyWatchedFromSearch": true,
   "removeForYouFromSearch": true,
-  "removePeopleAlsoWatchedFromSearch": true
+  "removePeopleAlsoWatchedFromSearch": true,
+  "removeFromRelatedSearches": true,
+  "removePeopleAlsoSearchFor": true
 }
 
 export async function getSettings():Promise<settingsType> {

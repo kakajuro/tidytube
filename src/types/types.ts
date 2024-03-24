@@ -6,7 +6,9 @@ interface settingsType {
   "removeLastestVideosFromSearch": boolean,
   "removePreviouslyWatchedFromSearch": boolean,
   "removeForYouFromSearch": boolean,
-  "removePeopleAlsoWatchedFromSearch": boolean
+  "removePeopleAlsoWatchedFromSearch": boolean,
+  "removeFromRelatedSearches": boolean,
+  "removePeopleAlsoSearchFor": boolean 
 }
 
 export default settingsType;

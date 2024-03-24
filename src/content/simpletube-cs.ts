@@ -164,7 +164,7 @@ const removeForYouFromSearch = () => {
   });
 }
 
-// Remove "People ALso Watched" from search
+// Remove "People Also Watched" from search
 const removePeopleAlsoWatchedFromSearch = () => {
   const allShelfRenderers = document.querySelectorAll("ytd-shelf-renderer");
   const allShelfRenderersArray = [...allShelfRenderers];
@@ -178,7 +178,7 @@ const removePeopleAlsoWatchedFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          console.log("Latest videos section removed");
+          console.log("People also watched section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
         }
@@ -187,6 +187,55 @@ const removePeopleAlsoWatchedFromSearch = () => {
 
   });
 }
+
+// Remove "From Related Searches" from search
+const removeFromRelatedSearches = () => {
+  const allShelfRenderers = document.querySelectorAll("ytd-shelf-renderer");
+  const allShelfRenderersArray = [...allShelfRenderers];
+
+  allShelfRenderersArray.forEach(div => {
+
+    let spans = div.querySelectorAll("span");
+    [...spans].forEach((span) => {
+      if (span.innerText.includes("From related searches")) {
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount();
+          handleSectionRemovedChange();
+          console.log("From related searches removed");
+        } catch (error) {
+          console.log(`Error removing latest sections`);
+        }
+      } 
+    });
+
+  });
+}
+
+// Remove "People Also Search For" from search
+const removePeopleAlsoSearchFor = () => {
+  const allShelfRenderers = document.querySelectorAll("ytd-shelf-renderer");
+  const allShelfRenderersArray = [...allShelfRenderers];
+
+  allShelfRenderersArray.forEach(div => {
+
+    let spans = div.querySelectorAll("span");
+    [...spans].forEach((span) => {
+      if (span.innerText.includes("People also search for")) {
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount();
+          handleSectionRemovedChange();
+          console.log("People also search for section removed");
+        } catch (error) {
+          console.log(`Error removing latest sections`);
+        }
+      } 
+    });
+
+  });
+}
+
 
 // Scroll event handler
 const handleScrollEvent = (returnedFunction) => {
@@ -244,7 +293,7 @@ async function checkExtensionRunning () {
       removeShortsFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
       document.addEventListener('scrollend', removeShortsFromSearch);
-      document.addEventListener('mousemove', throttle(removeShortsFromSearch, 100));
+      document.addEventListener('mousemove', throttle(removeShortsFromSearch, 500));
     }
     
     // Remove ads from search
@@ -252,7 +301,7 @@ async function checkExtensionRunning () {
       removeAdsFromReccomendations();
       document.addEventListener('scroll', () => handleScrollEvent(removeAdsFromReccomendations));
       document.addEventListener('scrollend', removeAdsFromReccomendations);
-      document.addEventListener('mousemove', throttle(removeAdsFromReccomendations, 100));
+      document.addEventListener('mousemove', throttle(removeAdsFromReccomendations, 500));
     }
 
     // Remove "Channels new to you" from search
@@ -260,7 +309,7 @@ async function checkExtensionRunning () {
       removeNewChannelsFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removeNewChannelsFromSearch));
       document.addEventListener('scrollend', removeNewChannelsFromSearch);
-      document.addEventListener('mousemove', throttle(removeNewChannelsFromSearch, 100));
+      document.addEventListener('mousemove', throttle(removeNewChannelsFromSearch, 500));
     }
 
     // Remove "Latest Posts from ..." from search
@@ -268,7 +317,7 @@ async function checkExtensionRunning () {
       removeLatestPostsFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removeLatestPostsFromSearch));
       document.addEventListener('scrollend', removeLatestPostsFromSearch);
-      document.addEventListener('mousemove', throttle(removeLatestPostsFromSearch, 100));
+      document.addEventListener('mousemove', throttle(removeLatestPostsFromSearch, 500));
     }
 
     // Remove "Latest Videos from ..." from search
@@ -276,7 +325,7 @@ async function checkExtensionRunning () {
       removeLatestVideosFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removeLatestVideosFromSearch));
       document.addEventListener('scrollend', removeLatestVideosFromSearch);
-      document.addEventListener('mousemove', throttle(removeLatestVideosFromSearch, 100));
+      document.addEventListener('mousemove', throttle(removeLatestVideosFromSearch, 500));
     }
 
     // Remove "Previously watched" from search
@@ -284,7 +333,7 @@ async function checkExtensionRunning () {
       removePreviouslyWatchedFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removePreviouslyWatchedFromSearch));
       document.addEventListener('scrollend', removePreviouslyWatchedFromSearch);
-      document.addEventListener('mousemove', throttle(removePreviouslyWatchedFromSearch, 100));
+      document.addEventListener('mousemove', throttle(removePreviouslyWatchedFromSearch, 500));
     }
 
     // Remove "For You" from search
@@ -292,7 +341,7 @@ async function checkExtensionRunning () {
       removeForYouFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removeForYouFromSearch));
       document.addEventListener('scrollend', removeForYouFromSearch);
-      document.addEventListener('mousemove', throttle(removeForYouFromSearch, 100));
+      document.addEventListener('mousemove', throttle(removeForYouFromSearch, 500));
     }
 
     // Remove "People also watched" from search
@@ -300,8 +349,25 @@ async function checkExtensionRunning () {
       removePeopleAlsoWatchedFromSearch();
       document.addEventListener('scroll', () => handleScrollEvent(removePeopleAlsoWatchedFromSearch));
       document.addEventListener('scrollend', removePeopleAlsoWatchedFromSearch);
-      document.addEventListener('mousemove', throttle(removePeopleAlsoWatchedFromSearch, 100));
+      document.addEventListener('mousemove', throttle(removePeopleAlsoWatchedFromSearch, 500));
     }
+
+    // Remove "From Related Searches" from search
+    if (settings.removeFromRelatedSearches) {
+      removeFromRelatedSearches();
+      document.addEventListener('scroll', () => handleScrollEvent(removeFromRelatedSearches));
+      document.addEventListener('scrollend', removeFromRelatedSearches);
+      document.addEventListener('mousemove', throttle(removeFromRelatedSearches, 500));
+    }
+
+    // Remove "People Also Search For" from search
+    if (settings.removePeopleAlsoSearchFor) {
+      removePeopleAlsoSearchFor();
+      document.addEventListener('scroll', () => handleScrollEvent(removePeopleAlsoSearchFor));
+      document.addEventListener('scrollend', removePeopleAlsoSearchFor);
+      document.addEventListener('mousemove', throttle(removePeopleAlsoSearchFor, 500));
+    }
+
 
   } else {
     console.log("paused simpletube content script");
@@ -310,42 +376,52 @@ async function checkExtensionRunning () {
       // [REMOVE EVENT LISTENER] Remove shorts from search
       document.removeEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
       document.removeEventListener('scrollend', () => removeShortsFromSearch);
-      document.removeEventListener('mousemove', throttle(removeShortsFromSearch, 100));
+      document.removeEventListener('mousemove', throttle(removeShortsFromSearch, 500));
 
       // [REMOVE EVENT LISTENER] Remove ads from search
       document.removeEventListener('scroll', () => handleScrollEvent(removeAdsFromReccomendations));
       document.removeEventListener('scrollend', removeAdsFromReccomendations);
-      document.removeEventListener('mousemove', throttle(removeAdsFromReccomendations, 100));
+      document.removeEventListener('mousemove', throttle(removeAdsFromReccomendations, 500));
 
       // [REMOVE EVENT LISTENER] Remove "Channels new to you" from search
       document.removeEventListener('scroll', () => handleScrollEvent(removeNewChannelsFromSearch));
       document.removeEventListener('scrollend', removeNewChannelsFromSearch);
-      document.removeEventListener('mousemove', throttle(removeNewChannelsFromSearch, 100));
+      document.removeEventListener('mousemove', throttle(removeNewChannelsFromSearch, 500));
 
       // [REMOVE EVENT LISTENER] Remove "Latest posts from .." from search
       document.removeEventListener('scroll', () => handleScrollEvent(removeLatestPostsFromSearch));
       document.removeEventListener('scrollend', removeLatestPostsFromSearch);
-      document.removeEventListener('mousemove', throttle(removeLatestPostsFromSearch, 100));
+      document.removeEventListener('mousemove', throttle(removeLatestPostsFromSearch, 500));
 
       // [REMOVE EVENT LISTENER] Remove "Latest videos from..." from search
       document.removeEventListener('scroll', () => handleScrollEvent(removeLatestVideosFromSearch));
       document.removeEventListener('scrollend', removeLatestVideosFromSearch);
-      document.removeEventListener('mousemove', throttle(removeLatestVideosFromSearch, 100));
+      document.removeEventListener('mousemove', throttle(removeLatestVideosFromSearch, 500));
 
       // [REMOVE EVENT LISTENER] Remove "Previously watched" from search
       document.removeEventListener('scroll', () => handleScrollEvent(removePreviouslyWatchedFromSearch));
       document.removeEventListener('scrollend', removePreviouslyWatchedFromSearch);
-      document.removeEventListener('mousemove', throttle(removePreviouslyWatchedFromSearch, 100));
+      document.removeEventListener('mousemove', throttle(removePreviouslyWatchedFromSearch, 500));
 
       // [REMOVE EVENT LISTENER] Remove "For You" from search
       document.removeEventListener('scroll', () => handleScrollEvent(removeForYouFromSearch));
       document.removeEventListener('scrollend', removeForYouFromSearch);
-      document.removeEventListener('mousemove', throttle(removeForYouFromSearch, 100));
+      document.removeEventListener('mousemove', throttle(removeForYouFromSearch, 500));
 
       // [REMOVE EVENT LISTENER] Remove "People Also Watched" from search
       document.removeEventListener('scroll', () => handleScrollEvent(removePeopleAlsoWatchedFromSearch));
       document.removeEventListener('scrollend', removePeopleAlsoWatchedFromSearch);
-      document.removeEventListener('mousemove', throttle(removePeopleAlsoWatchedFromSearch, 100));
+      document.removeEventListener('mousemove', throttle(removePeopleAlsoWatchedFromSearch, 500));
+
+      // [REMOVE EVENT LISTENER] Remove "From Related Searches" from search
+      document.removeEventListener('scroll', () => handleScrollEvent(removeFromRelatedSearches));
+      document.removeEventListener('scrollend', removeFromRelatedSearches);
+      document.removeEventListener('mousemove', throttle(removeFromRelatedSearches, 500));
+
+      // [REMOVE EVENT LISTENER] Remove "People Also Search For" from search
+      document.removeEventListener('scroll', () => handleScrollEvent(removePeopleAlsoSearchFor));
+      document.removeEventListener('scrollend', removePeopleAlsoSearchFor);
+      document.removeEventListener('mousemove', throttle(removePeopleAlsoSearchFor, 500));
 
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);
