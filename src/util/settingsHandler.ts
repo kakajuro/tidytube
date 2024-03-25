@@ -4,6 +4,8 @@ import type settingsType from "../types/types";
 
 let defaults:settingsType = {
   "removeShortsFromSearch": true,
+  "removeShortsFromSite": false,
+  "removeShortsPlayback": false,
   "removeAdsFromReccomendations": true,
   "removeNewChannelsFromSearch": true,
   "removeLatestPostsFromSearch": false,

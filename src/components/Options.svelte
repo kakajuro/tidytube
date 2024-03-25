@@ -14,6 +14,9 @@
   let darkMode;
 
   let removeShortsFromSearchToggle;
+  let removeShortsFromSiteToggle;
+  let removeShortsPlaybackToggle;
+
   let removeAdsFromReccomenationsToggle;
   let removeNewChannelsFromSearchToggle;
   let removeLatestPostsFromSearchToggle;
@@ -29,6 +32,9 @@
     settings = await getSettings();
 
     removeShortsFromSearchToggle = settings.removeShortsFromSearch;
+    removeShortsFromSiteToggle = settings.removeShortsFromSite;
+    removeShortsPlaybackToggle = settings.removeShortsPlayback;
+
     removeAdsFromReccomenationsToggle = settings.removeAdsFromReccomendations;
     removeNewChannelsFromSearchToggle = settings.removeNewChannelsFromSearch;
     removeLatestPostsFromSearchToggle = settings.removeLatestPostsFromSearch;
@@ -112,6 +118,14 @@
       case "removePeopleAlsoSearchFor":
         removePeopleAlsoSearchForToggle = !removePeopleAlsoSearchForToggle;
         setSettings({"removePeopleAlsoSearchFor": removePeopleAlsoSearchForToggle});
+        break;
+      case "removeShortsFromSite":
+        removeShortsFromSiteToggle = !removeShortsFromSiteToggle;
+        setSettings({"removeShortsFromSite": removeShortsFromSiteToggle});
+        break;
+      case "removeShortsPlayback":
+        removeShortsPlaybackToggle = !removeShortsPlaybackToggle;
+        setSettings({"removeShortsPlayback": removeShortsPlaybackToggle});
         break;
       default:
         break;
@@ -316,6 +330,44 @@
         Remove <em>People Also Search For</em>
       </label>
       <p class="font-bold text-center" class:text-white={darkMode}>Removes videos people also search for <br /> from appearing in the search page</p>
+    </div>
+  </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="removeShortsFromSite"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removeShortsFromSiteToggle}
+        on:change={() => handleSettingsChanged("removeShortsFromSite")}
+      />
+      <label
+        for="removeShortsFromSite"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Remove Shorts From Site
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Removes Shorts from being displayed anywhere on the site</p>
+    </div>
+  </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="removeShortsPlayback"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removeShortsPlaybackToggle}
+        on:change={() => handleSettingsChanged("removeShortsPlayback")}
+      />
+      <label
+        for="removeShortsPlayback"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Prevent Shorts Playback
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Prevents all Shorts videos from playing once clicked</p>
     </div>
   </div>
   <button class:text-white={darkMode} on:click={handleResetSettings}>

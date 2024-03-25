@@ -25,6 +25,88 @@ const removeShortsFromSearch = () => {
   });
 }
 
+// Remove Shorts from the whole site
+const removeShortsFromSite = () => {
+  const navButtons = document.querySelectorAll('[title="Shorts"]');
+  const navButtonsArray = [...navButtons];
+
+  navButtonsArray.forEach(div => {
+
+    try {
+      if (div.firstChild) { div.parentNode.removeChild(div) }
+      updateSectionsRemoveCount();
+      handleSectionRemovedChange();
+      console.log("Shorts Nav Icon");
+    } catch (error) {
+      console.log(`Error in removing shorts: ${error}`);
+    }
+    
+  });
+
+  const shortsSiteSections = document.querySelectorAll('ytd-rich-section-renderer');
+  const shortsSiteSectionsArray = [...shortsSiteSections];
+
+  shortsSiteSectionsArray.forEach(div => {
+    
+    try {
+      if (div.firstChild) { div.parentNode.removeChild(div) }
+      updateSectionsRemoveCount();
+      handleSectionRemovedChange();
+      console.log("Shorts section removed");
+    } catch (error) {
+      console.log(`Error in removing shorts: ${error}`);
+    }
+    
+  });
+}
+
+// Prevent Shorts Playback
+const preventShortsPlayback = () => {
+  const shortsIndividual = document.querySelectorAll('ytd-reel-video-renderer');
+  const shortsIndividualArray = [...shortsIndividual];
+
+  shortsIndividualArray.forEach(div => {
+    
+    try {
+      if (div.firstChild) { div.parentNode.removeChild(div) }
+      updateSectionsRemoveCount();
+      handleSectionRemovedChange();
+      console.log("Indiviual Short removed");
+    } catch (error) {
+      console.log(`Error in removing shorts: ${error}`);
+    }
+    
+  });
+
+  const actionContainer = document.querySelectorAll('div.action-container');
+  const actionContainerArray = [...actionContainer];
+
+  actionContainerArray.forEach(div => {
+    
+    try {
+      if (div.firstChild) { div.parentNode.removeChild(div) }
+      console.log("Shorts Playback Prevented");
+    } catch (error) {
+      console.log(`Error in removing shorts: ${error}`);
+    }
+    
+  });
+
+  const shortsSiteSections = document.querySelectorAll('ytd-shorts');
+  const shortsSiteSectionsArray = [...shortsSiteSections];
+
+  shortsSiteSectionsArray.forEach(div => {
+    
+    try {
+      if (div.firstChild) { div.parentNode.removeChild(div) }
+      console.log("Shorts Playback Prevented");
+    } catch (error) {
+      console.log(`Error in removing shorts: ${error}`);
+    }
+    
+  });
+}
+
 // Remove ad slots on search page
 const removeAdsFromReccomendations = () => {
   const adsSearchSections = document.querySelectorAll('ytd-ad-slot-renderer');
@@ -368,6 +450,21 @@ async function checkExtensionRunning () {
       document.addEventListener('mousemove', throttle(removePeopleAlsoSearchFor, 500));
     }
 
+    // Remove Shorts From Site
+    if (settings.removeShortsFromSite) {
+      removeShortsFromSite();
+      document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSite));
+      document.addEventListener('scrollend', removeShortsFromSite);
+      document.addEventListener('mousemove', throttle(removeShortsFromSite, 500));
+    }
+
+    // Prevent Shorts Playback
+    if (settings.removeShortsPlayback) {
+      preventShortsPlayback();
+      document.addEventListener('scroll', () => handleScrollEvent(preventShortsPlayback));
+      document.addEventListener('scrollend', preventShortsPlayback);
+      document.addEventListener('mousemove', throttle(preventShortsPlayback, 500));
+    }
 
   } else {
     console.log("paused simpletube content script");
@@ -423,6 +520,16 @@ async function checkExtensionRunning () {
       document.removeEventListener('scrollend', removePeopleAlsoSearchFor);
       document.removeEventListener('mousemove', throttle(removePeopleAlsoSearchFor, 500));
 
+      // [REMOVE EVENT LISTENER] Remove Shorts From Site
+      document.removeEventListener('scroll', () => handleScrollEvent(removeShortsFromSite));
+      document.removeEventListener('scrollend', removeShortsFromSite);
+      document.removeEventListener('mousemove', throttle(removeShortsFromSite, 500));
+       
+      // [REMOVE EVENT LISTENER] Prevent Shorts Playback
+      document.removeEventListener('scroll', () => handleScrollEvent(preventShortsPlayback));
+      document.removeEventListener('scrollend', preventShortsPlayback);
+      document.removeEventListener('mousemove', throttle(preventShortsPlayback, 500));
+
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);
     }
@@ -432,7 +539,8 @@ async function checkExtensionRunning () {
 
 // Content script event listener
 browser.runtime.onMessage.addListener(msg => {
-  (msg === "extensionStateChanged") ? checkExtensionRunning() : null
+  (msg === "extensionStateChanged") ? checkExtensionRunning() : null;
+  (msg === "tidyWhileLoading") ? checkExtensionRunning() : null;
 });
 
 checkExtensionRunning();
