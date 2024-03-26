@@ -6,125 +6,51 @@ import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage
 import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
 import { throttle, delay } from "../util/helpers"
 
-// Remove Shorts on search page
-const removeShortsFromSearch = () => {
-  const shortsSearchSections = document.querySelectorAll('ytd-reel-shelf-renderer');
-  const shortsSearchSectionsArray = [...shortsSearchSections];
+// General remove element function
+const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:string, customSectionUpdates?:Function) => {
 
-  shortsSearchSectionsArray.forEach(div => {
+  const elements = document.querySelectorAll(elementName);
+  const elementsArray = [...elements];
+
+  elementsArray.forEach(div => {
     
     try {
       if (div.firstChild) { div.parentNode.removeChild(div) }
-      updateSectionsRemoveCount();
-      handleSectionRemovedChange();
-      console.log("Shorts removed");
+
+      if (!customSectionUpdates) {
+        updateSectionsRemoveCount();
+        handleSectionRemovedChange();
+      } else {
+        customSectionUpdates();
+      }
+
+      console.log(sucessMsg);
     } catch (error) {
-      console.log(`Error in removing shorts: ${error}`);
+      console.warn(`${errorMsg}: ${error}`);
     }
     
   });
+
 }
+
+// Remove Shorts on search page
+const removeShortsFromSearch = () => generalRemoveElement('ytd-reel-shelf-renderer', "Shorts removed", "Error removing shorts");
 
 // Remove Shorts from the whole site
 const removeShortsFromSite = () => {
-  const navButtons = document.querySelectorAll('[title="Shorts"]');
-  const navButtonsArray = [...navButtons];
-
-  navButtonsArray.forEach(div => {
-
-    try {
-      if (div.firstChild) { div.parentNode.removeChild(div) }
-      updateSectionsRemoveCount();
-      handleSectionRemovedChange();
-      console.log("Shorts Nav Icon");
-    } catch (error) {
-      console.log(`Error in removing shorts: ${error}`);
-    }
-    
-  });
-
-  const shortsSiteSections = document.querySelectorAll('ytd-rich-section-renderer');
-  const shortsSiteSectionsArray = [...shortsSiteSections];
-
-  shortsSiteSectionsArray.forEach(div => {
-    
-    try {
-      if (div.firstChild) { div.parentNode.removeChild(div) }
-      updateSectionsRemoveCount();
-      handleSectionRemovedChange();
-      console.log("Shorts section removed");
-    } catch (error) {
-      console.log(`Error in removing shorts: ${error}`);
-    }
-    
-  });
+  generalRemoveElement('[title="Shorts"]', "Shorts nav icon Removed", "Error removing Shorts nav icon");
+  generalRemoveElement('ytd-rich-section-renderer', "Shorts section removed", "Error removing Shorts section");
 }
 
 // Prevent Shorts Playback
 const preventShortsPlayback = () => {
-  const shortsIndividual = document.querySelectorAll('ytd-reel-video-renderer');
-  const shortsIndividualArray = [...shortsIndividual];
-
-  shortsIndividualArray.forEach(div => {
-    
-    try {
-      if (div.firstChild) { div.parentNode.removeChild(div) }
-      updateSectionsRemoveCount();
-      handleSectionRemovedChange();
-      console.log("Indiviual Short removed");
-    } catch (error) {
-      console.log(`Error in removing shorts: ${error}`);
-    }
-    
-  });
-
-  const actionContainer = document.querySelectorAll('div.action-container');
-  const actionContainerArray = [...actionContainer];
-
-  actionContainerArray.forEach(div => {
-    
-    try {
-      if (div.firstChild) { div.parentNode.removeChild(div) }
-      console.log("Shorts Playback Prevented");
-    } catch (error) {
-      console.log(`Error in removing shorts: ${error}`);
-    }
-    
-  });
-
-  const shortsSiteSections = document.querySelectorAll('ytd-shorts');
-  const shortsSiteSectionsArray = [...shortsSiteSections];
-
-  shortsSiteSectionsArray.forEach(div => {
-    
-    try {
-      if (div.firstChild) { div.parentNode.removeChild(div) }
-      console.log("Shorts Playback Prevented");
-    } catch (error) {
-      console.log(`Error in removing shorts: ${error}`);
-    }
-    
-  });
+  generalRemoveElement('ytd-reel-video-renderer', "Individual short removed", "Error removing short");
+  generalRemoveElement('div.action-container', "Shorts Playback Prevented", "Error preventing Shorts playback", () => { return null });
+  generalRemoveElement('ytd-shorts', "Shorts Playback Prevented", "Error preventing Shorts playback", () => { return null });
 }
 
 // Remove ad slots on search page
-const removeAdsFromReccomendations = () => {
-  const adsSearchSections = document.querySelectorAll('ytd-ad-slot-renderer');
-  const adSearchSectionsArray = [...adsSearchSections];
-
-  adSearchSectionsArray.forEach(div => {
-
-    try {
-      if (div.firstChild) { div.parentNode.removeChild(div) }
-      updateSectionsRemoveCount();
-      handleSectionRemovedChange();
-      console.log("Ad removed");
-    } catch (error) {
-      console.log(`Error removing ad sections`);
-    }
-
-  });
-}
+const removeAdsFromReccomendations = () => generalRemoveElement('ytd-ad-slot-renderer', "Ad removed", "Error removing ad section");
 
 // Remove "Channels new to you" from search
 const removeNewChannelsFromSearch = () => {
@@ -316,8 +242,28 @@ const removePeopleAlsoSearchFor = () => {
     });
 
   });
-}
 
+  const cardListRenderers = document.querySelectorAll("ytd-horizontal-card-list-renderer");
+  const cardListRenderersArray = [...cardListRenderers];
+
+  cardListRenderersArray.forEach(div => {
+
+    let spans = div.querySelectorAll("span");
+    [...spans].forEach((span) => {
+      if (span.innerText.includes("People also search for")) {
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount();
+          handleSectionRemovedChange();
+          console.log("People also search for section removed");
+        } catch (error) {
+          console.log(`Error removing latest sections`);
+        }
+      } 
+    });
+
+  });
+}
 
 // Scroll event handler
 const handleScrollEvent = (returnedFunction) => {
