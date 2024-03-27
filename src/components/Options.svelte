@@ -13,9 +13,12 @@
   let settings:settingsType;
   let darkMode;
 
+  let preventShortsToggle;
   let removeShortsFromSearchToggle;
   let removeShortsFromSiteToggle;
   let removeShortsPlaybackToggle;
+
+  let shortsOptionsDisabled;
 
   let removeAdsFromReccomenationsToggle;
   let removeNewChannelsFromSearchToggle;
@@ -31,9 +34,12 @@
     await delay(500);
     settings = await getSettings();
 
+    preventShortsToggle = settings.preventShorts;
     removeShortsFromSearchToggle = settings.removeShortsFromSearch;
     removeShortsFromSiteToggle = settings.removeShortsFromSite;
     removeShortsPlaybackToggle = settings.removeShortsPlayback;
+
+    shortsOptionsDisabled = settings.shortsOptionsDisabled;
 
     removeAdsFromReccomenationsToggle = settings.removeAdsFromReccomendations;
     removeNewChannelsFromSearchToggle = settings.removeNewChannelsFromSearch;
@@ -76,9 +82,27 @@
     makeToast("Settings reset to default. Reload Youtube for changes to take effect.").showToast();
   }
 
+  const handlePreventShortsChange = async () => {
+    await delay(500);
+    let newSettings = await getSettings();
+
+    await setSettings({"removeShortsFromSearch": true});
+    await setSettings({"removeShortsFromSite": true});
+    await setSettings({"removeShortsPlayback": true});
+
+    (newSettings.preventShorts) ? setSettings({"shortsOptionsDisabled": true}) : setSettings({"shortsOptionsDisabled": false});
+
+    await delay(500);
+    await optionsOpened();
+  }
+
   function handleSettingsChanged(setting:string) {
 
     switch (setting) {
+      case "preventShorts":
+        preventShortsToggle = !preventShortsToggle;
+        setSettings({"preventShorts": preventShortsToggle});
+        break;
       case "removeShortsFromSearch":
         removeShortsFromSearchToggle = !removeShortsFromSearchToggle;
         setSettings({"removeShortsFromSearch": removeShortsFromSearchToggle});
@@ -159,9 +183,30 @@
         Remove ads from reccomendations
       </label>
     </div>
-    <p class="font-bold" class:text-white={darkMode}>Stops ads from appearing in the search page and homepage (does not block ads during video playback)</p>
+    <p class="font-bold" class:text-white={darkMode}>Stops ads from appearing in the search page and homepage <br /> (does not block ads during video playback)</p>
   </div>
-  <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Search</h2>
+  <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Shorts</h2>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input
+        id="shortsFromSearch" 
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={preventShortsToggle}
+        on:change={() => {
+          handleSettingsChanged("preventShorts");
+          handlePreventShortsChange();
+        }}
+      />
+      <label 
+        for="shortsFromSearch"
+        class="text-xl" 
+        class:text-white={darkMode}>
+        Block Shorts
+      </label>
+    </div>
+    <p class="font-bold" class:text-white={darkMode}>Completely block Shorts from the site</p>
+  </div>
   <div class="flex flex-col mb-6">
     <div class="space-x-2">
       <input
@@ -169,6 +214,7 @@
         type="checkbox"
         class="w-4 h-4 rounded-sm accent-[#FF0000]"
         checked={removeShortsFromSearchToggle}
+        disabled={shortsOptionsDisabled}
         on:change={() => handleSettingsChanged("removeShortsFromSearch")}
       />
       <label 
@@ -180,6 +226,47 @@
     </div>
     <p class="font-bold" class:text-white={darkMode}>Stops Shorts from appearing in the search page</p>
   </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="removeShortsFromSite"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removeShortsFromSiteToggle}
+        disabled={shortsOptionsDisabled}
+        on:change={() => handleSettingsChanged("removeShortsFromSite")}
+      />
+      <label
+        for="removeShortsFromSite"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Remove Shorts from site
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Removes Shorts from being displayed anywhere on the site</p>
+    </div>
+  </div>
+  <div class="flex flex-col mb-6">
+    <div class="space-x-2">
+      <input 
+        id="removeShortsPlayback"
+        type="checkbox"
+        class="w-4 h-4 rounded-sm accent-[#FF0000]"
+        checked={removeShortsPlaybackToggle}
+        disabled={shortsOptionsDisabled}
+        on:change={() => handleSettingsChanged("removeShortsPlayback")}
+      />
+      <label
+        for="removeShortsPlayback"
+        class="text-xl"
+        class:text-white={darkMode}
+      >
+        Prevent Shorts Playback
+      </label>
+      <p class="font-bold text-center" class:text-white={darkMode}>Prevents all Shorts videos from playing once clicked</p>
+    </div>
+  </div>
+  <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Search</h2>
   <div class="flex flex-col mb-6">
     <div class="space-x-2">
       <input 
@@ -330,44 +417,6 @@
         Remove <em>People Also Search For</em>
       </label>
       <p class="font-bold text-center" class:text-white={darkMode}>Removes videos people also search for <br /> from appearing in the search page</p>
-    </div>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="removeShortsFromSite"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeShortsFromSiteToggle}
-        on:change={() => handleSettingsChanged("removeShortsFromSite")}
-      />
-      <label
-        for="removeShortsFromSite"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Remove Shorts From Site
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Removes Shorts from being displayed anywhere on the site</p>
-    </div>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="removeShortsPlayback"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeShortsPlaybackToggle}
-        on:change={() => handleSettingsChanged("removeShortsPlayback")}
-      />
-      <label
-        for="removeShortsPlayback"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Prevent Shorts Playback
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Prevents all Shorts videos from playing once clicked</p>
     </div>
   </div>
   <button class:text-white={darkMode} on:click={handleResetSettings}>

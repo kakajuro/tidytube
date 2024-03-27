@@ -1,7 +1,11 @@
 interface settingsType {
+  "preventShorts": boolean,
   "removeShortsFromSearch": boolean,
   "removeShortsFromSite": boolean,
   "removeShortsPlayback": boolean,
+
+  "shortsOptionsDisabled": boolean,
+
   "removeAdsFromReccomendations": boolean,
   "removeNewChannelsFromSearch": boolean,
   "removeLatestPostsFromSearch": boolean,

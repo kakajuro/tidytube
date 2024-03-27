@@ -3,9 +3,13 @@ import { browser } from "webextension-polyfill-ts";
 import type settingsType from "../types/types";
 
 let defaults:settingsType = {
+  "preventShorts": false,
   "removeShortsFromSearch": true,
   "removeShortsFromSite": false,
   "removeShortsPlayback": false,
+
+  "shortsOptionsDisabled": false,
+
   "removeAdsFromReccomendations": true,
   "removeNewChannelsFromSearch": true,
   "removeLatestPostsFromSearch": false,
