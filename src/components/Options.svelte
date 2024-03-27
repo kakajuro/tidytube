@@ -419,7 +419,7 @@
       <p class="font-bold text-center" class:text-white={darkMode}>Removes videos people also search for <br /> from appearing in the search page</p>
     </div>
   </div>
-  <button class:text-white={darkMode} on:click={handleResetSettings}>
+  <button class="w-48 h-8 border border-black rounded transition-all hover:scale-105 ease-in-out duration-300" class:border-white={darkMode} class:text-white={darkMode} on:click={handleResetSettings}>
     Reset settings to default
   </button>
 </main>
