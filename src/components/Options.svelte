@@ -9,6 +9,8 @@
 
   import type settingsType from "../types/types";
   import { delay } from "../util/helpers";
+  
+  import OptionsCard from "./OptionsCard.svelte";
 
   let settings:settingsType;
   let darkMode;
@@ -167,257 +169,105 @@
 <main class="w-full p-4 flex flex-col items-center select-none font-jost text-center" class:bg-custom-dark={darkMode}>
   <h1 class="font-semibold text-5xl mt-12 pb-4" class:text-white={darkMode}>Options</h1>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>General</h2>
-  <div class="flex flex-col mb-6 pb-4">
-    <div class="space-x-2">
-      <input
-        id="adsFromReccomendations" 
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeAdsFromReccomenationsToggle}
-        on:change={() => handleSettingsChanged("removeAdsFromReccomendations")}
-      />
-      <label 
-        for="adsFromReccomendations"
-        class="text-xl" 
-        class:text-white={darkMode}>
-        Remove ads from reccomendations
-      </label>
-    </div>
-    <p class="font-bold" class:text-white={darkMode}>Stops ads from appearing in the search page and homepage <br /> (does not block ads during video playback)</p>
-  </div>
+  <OptionsCard 
+    {darkMode} 
+    toggle={removeAdsFromReccomenationsToggle} 
+    handleChange={() => handleSettingsChanged("removeAdsFromReccomendations")}
+    optionName="Remove ads from reccomendations"
+    optionsDesc="Stops ads from appearing in the search page and homepage (does not block ads during video playback)"
+  />
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Shorts</h2>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input
-        id="shortsFromSearch" 
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={preventShortsToggle}
-        on:change={() => {
-          handleSettingsChanged("preventShorts");
-          handlePreventShortsChange();
-        }}
-      />
-      <label 
-        for="shortsFromSearch"
-        class="text-xl" 
-        class:text-white={darkMode}>
-        Block Shorts
-      </label>
-    </div>
-    <p class="font-bold" class:text-white={darkMode}>Completely block Shorts from the site</p>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input
-        id="shortsFromSearch" 
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeShortsFromSearchToggle}
-        disabled={shortsOptionsDisabled}
-        on:change={() => handleSettingsChanged("removeShortsFromSearch")}
-      />
-      <label 
-        for="shortsFromSearch"
-        class="text-xl" 
-        class:text-white={darkMode}>
-        Remove Shorts from search
-      </label>
-    </div>
-    <p class="font-bold" class:text-white={darkMode}>Stops Shorts from appearing in the search page</p>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="removeShortsFromSite"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeShortsFromSiteToggle}
-        disabled={shortsOptionsDisabled}
-        on:change={() => handleSettingsChanged("removeShortsFromSite")}
-      />
-      <label
-        for="removeShortsFromSite"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Remove Shorts from site
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Removes Shorts from being displayed anywhere on the site</p>
-    </div>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="removeShortsPlayback"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeShortsPlaybackToggle}
-        disabled={shortsOptionsDisabled}
-        on:change={() => handleSettingsChanged("removeShortsPlayback")}
-      />
-      <label
-        for="removeShortsPlayback"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Prevent Shorts Playback
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Prevents all Shorts videos from playing once clicked</p>
-    </div>
+  <div class="grid gap-y-1 gap-x-1 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+    <OptionsCard 
+      {darkMode} 
+      toggle={preventShortsToggle} 
+      handleChange={() => {
+        handleSettingsChanged("preventShorts");
+        handlePreventShortsChange();
+      }}
+      optionName="Block Shorts"
+      optionsDesc="Completely block Shorts from the site"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeShortsFromSearchToggle} 
+      handleChange={() => handleSettingsChanged("removeShortsFromSearch")}
+      optionName="Remove Shorts from search"
+      optionsDesc="Stops Shorts from appearing in the search page"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeShortsFromSiteToggle} 
+      handleChange={() => handleSettingsChanged("removeShortsFromSite")}
+      optionName="Remove Shorts from site"
+      optionsDesc="Removes Shorts from being displayed anywhere on the site"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeShortsPlaybackToggle} 
+      handleChange={() => handleSettingsChanged("removeShortsPlayback")}
+      optionName="Prevent Shorts Playback"
+      optionsDesc="Prevents all Shorts videos from playing once clicked"
+    />
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Search</h2>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="newChannelsFromSearch"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeNewChannelsFromSearchToggle}
-        on:change={() => handleSettingsChanged("removeNewChannelsFromSearch")}
-      />
-      <label
-        for="newChannelsFromSearch"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Remove <em>Channels New To You</em>
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Stops new unrelated channels being suggested <br /> in the search page</p>
-    </div>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="newChannelsFromSearch"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeLatestPostsFromSearchToggle}
-        on:change={() => handleSettingsChanged("removeLatestPostsFromSearch")}
-      />
-      <label
-        for="latestPostsFromSearch"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Remove <em>Latest Posts from ...</em>
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Removes the lastest community posts from <br /> channels appearing in the search page</p>
-    </div>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="latestVideosFromSearch"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeLastestVideosFromSearchToggle}
-        on:change={() => handleSettingsChanged("removeLastestVideosFromSearch")}
-      />
-      <label
-        for="latestVideosFromSearch"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Remove <em>Latest Videos from ...</em>
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Removes the lastest videos from <br /> channels appearing in the search page</p>
-    </div>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="removePreviouslyWatchedFromSearch"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removePreviouslyWatchedFromSearchToggle}
-        on:change={() => handleSettingsChanged("removePreviouslyWatchedFromSearchToggle")}
-      />
-      <label
-        for="removePreviouslyWatchedFromSearch"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Remove <em>Previously Watched</em>
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Removes previously watched videos <br /> from appearing in the search page</p>
-    </div>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="removeForYouFromSearch"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeForYouFromSearchToggle}
-        on:change={() => handleSettingsChanged("removeForYouFromSearch")}
-      />
-      <label
-        for="removeForYouFromSearch"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Remove <em>For You</em>
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Removes general Youtube reccomendations <br /> from appearing in the search page</p>
-    </div>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="removePeopleAlsoWatchedFromSearch"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removePeopleAlsoWatchedFromSearchToggle}
-        on:change={() => handleSettingsChanged("removePeopleAlsoWatchedFromSearch")}
-      />
-      <label
-        for="removePeopleAlsoWatchedFromSearch"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Remove <em>People Also Watched</em>
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Removes videos the people also watched <br /> from appearing in the search page</p>
-    </div>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="removeFromRelatedSearches"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeFromRelatedSearchedToggle}
-        on:change={() => handleSettingsChanged("removeFromRelatedSearches")}
-      />
-      <label
-        for="removeFromRelatedSearches"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Remove <em>From Related Searches</em>
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Removes videos suggested from related searches <br /> from appearing in the search page</p>
-    </div>
-  </div>
-  <div class="flex flex-col mb-6">
-    <div class="space-x-2">
-      <input 
-        id="removePeopleAlsoSearchFor"
-        type="checkbox"
-        class="w-4 h-4 rounded-sm accent-[#FF0000]"
-        checked={removeFromRelatedSearchedToggle}
-        on:change={() => handleSettingsChanged("removePeopleAlsoSearchFor")}
-      />
-      <label
-        for="removePeopleAlsoSearchFor"
-        class="text-xl"
-        class:text-white={darkMode}
-      >
-        Remove <em>People Also Search For</em>
-      </label>
-      <p class="font-bold text-center" class:text-white={darkMode}>Removes videos people also search for <br /> from appearing in the search page</p>
-    </div>
+  <div class="grid gap-y-1 gap-x-1 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeNewChannelsFromSearchToggle} 
+      handleChange={() => handleSettingsChanged("removeNewChannelsFromSearch")}
+      optionName="Remove <em>Channels New To You </em>"
+      optionsDesc="Stops ads from appearing in the search page and homepage (does not block ads during video playback)"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeLatestPostsFromSearchToggle} 
+      handleChange={() => handleSettingsChanged("removeLatestPostsFromSearch")}
+      optionName="Remove <em>Latest Posts from ...</em>"
+      optionsDesc="Removes the lastest community posts from <br /> channels appearing in the search page"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeLastestVideosFromSearchToggle} 
+      handleChange={() => handleSettingsChanged("removeLastestVideosFromSearch")}
+      optionName="Remove <em>Latest Videos from ...</em>"
+      optionsDesc="Removes the lastest videos from <br /> channels appearing in the search page"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removePreviouslyWatchedFromSearchToggle} 
+      handleChange={() => handleSettingsChanged("removePreviouslyWatchedFromSearchToggle")}
+      optionName="Remove <em>Previously Watched</em>"
+      optionsDesc="Removes previously watched videos <br /> from appearing in the search page"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeForYouFromSearchToggle} 
+      handleChange={() => handleSettingsChanged("removeForYouFromSearch")}
+      optionName="Remove <em>For You</em>"
+      optionsDesc="Removes general Youtube reccomendations <br /> from appearing in the search page"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removePeopleAlsoWatchedFromSearchToggle} 
+      handleChange={() => handleSettingsChanged("removePeopleAlsoWatchedFromSearch")}
+      optionName="Remove <em>People Also Watched</em>"
+      optionsDesc="Removes videos the people also watched <br /> from appearing in the search page"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeFromRelatedSearchedToggle} 
+      handleChange={() => handleSettingsChanged("removeFromRelatedSearches")}
+      optionName="Remove <em>From Related Searches</em>"
+      optionsDesc="Removes videos suggested from related searches <br /> from appearing in the search page"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeFromRelatedSearchedToggle} 
+      handleChange={() => handleSettingsChanged("removePeopleAlsoSearchFor")}
+      optionName="Remove <em>People Also Search For</em>"
+      optionsDesc="Removes videos people also search for <br /> from appearing in the search page"
+    />
   </div>
   <button class="w-48 h-8 border border-black rounded transition-all hover:scale-105 ease-in-out duration-300" class:border-white={darkMode} class:text-white={darkMode} on:click={handleResetSettings}>
     Reset settings to default
