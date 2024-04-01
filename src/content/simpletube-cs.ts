@@ -50,7 +50,31 @@ const preventShortsPlayback = () => {
 }
 
 // Remove ad slots on search page
-const removeAdsFromReccomendations = () => generalRemoveElement('ytd-ad-slot-renderer', "Ad removed", "Error removing ad section");
+const removeAdsFromReccomendations = () => {
+  const adSections = document.querySelectorAll('ytd-ad-slot-renderer');
+  const adSectionsArray = [...adSections];
+
+  adSectionsArray.forEach(div => {
+    
+    try {
+      if (div.firstChild) {
+        const adContainer = div.parentNode.parentNode; 
+        
+        adContainer.parentNode.removeChild(adContainer);
+        div.parentNode.removeChild(div);
+        console.log(adContainer);
+      }
+
+      updateSectionsRemoveCount();
+      handleSectionRemovedChange();
+
+      console.log("Ad removed");
+    } catch (error) {
+      console.warn(`Error removing ad section: ${error}`);
+    }
+    
+  });
+}
 
 // Remove "Channels new to you" from search
 const removeNewChannelsFromSearch = () => {
