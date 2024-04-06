@@ -3,8 +3,64 @@ import { browser } from "webextension-polyfill-ts";
 import { getExtensionRunning } from "../util/extensionRunning";
 import { getSettings } from "../util/settingsHandler";
 import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../util/sectionsRemoved";
+import { updateTabStore, removeTabFromStore, getTabStore } from "../util/tabStore"; 
 import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
 import { throttle, delay } from "../util/helpers"
+
+// Function to handle persisting sections removed on each tab
+const handleUpdateTabStore = async () => {
+
+  console.log("HandleTabYodatesFunction");
+
+  let sectionsRemovedOnPage = await getSectionsRemovedPage();
+  delay(500);
+  let store = await getTabStore();
+  delay(1000);
+
+  console.log(`Store: ${store.tabStore}`);
+
+  browser.tabs.query({active: true, currentWindow: true})
+  .then((tabs) => {
+    let tab:number = tabs[0].id;
+    console.log("Current tab id:" + tab);
+
+    updateTabStore({"tab": tab, "sectionsRemovedPage": sectionsRemovedOnPage});
+  });
+
+}
+
+// When tab closed remove value from tab store
+window.addEventListener('beforeunload', () => {
+  
+  browser.tabs.query({active: true, currentWindow: true})
+  .then((tabs) => {
+    let tab:number = tabs[0].id;
+    console.log("Tab id closed" + tab);
+
+    removeTabFromStore(tab);
+  });
+
+});
+
+// On url change get tab id and set sections removed for that page
+window.addEventListener("hashchange", async () => {
+  console.log("URL CHANGE EVENT");
+  let tabStore = await getTabStore();
+  console.log("Store in URL change event: " + tabStore);
+  delay(500);
+
+  browser.tabs.query({active: true, currentWindow: true})
+  .then((tabs) => {
+    let tab:number = tabs[0].id;
+
+    console.log("Stored value for sections removed page" + tabStore[tab]);
+
+    setSectionsRemovedPage(tabStore[tab]);
+
+  });
+
+  handleSectionRemovedChange("Page");
+});
 
 // General remove element function
 const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:string, customSectionUpdates?:Function) => {
@@ -20,6 +76,7 @@ const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:str
       if (!customSectionUpdates) {
         updateSectionsRemoveCount();
         handleSectionRemovedChange();
+        handleUpdateTabStore();
       } else {
         customSectionUpdates();
       }
@@ -38,6 +95,11 @@ const removeShortsFromSearch = () => generalRemoveElement('ytd-reel-shelf-render
 
 // Remove Shorts from the whole site
 const removeShortsFromSite = () => {
+  // Remove shorts that appear next to playing videos
+  if (document.location.href.includes("https://www.youtube.com/watch")) {
+    generalRemoveElement('ytd-reel-shelf-renderer', "Shorts section removed", "Error removing Shorts section");
+  }
+
   generalRemoveElement('[title="Shorts"]', "Shorts nav icon Removed", "Error removing Shorts nav icon");
   generalRemoveElement('ytd-rich-section-renderer', "Shorts section removed", "Error removing Shorts section");
 }
@@ -62,11 +124,11 @@ const removeAdsFromReccomendations = () => {
         
         adContainer.parentNode.removeChild(adContainer);
         div.parentNode.removeChild(div);
-        console.log(adContainer);
       }
 
       updateSectionsRemoveCount();
       handleSectionRemovedChange();
+      handleUpdateTabStore();
 
       console.log("Ad removed");
     } catch (error) {
@@ -90,6 +152,7 @@ const removeNewChannelsFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
+          handleUpdateTabStore();
           console.log("New Channels section removed");
         } catch (error) {
           console.log(`Error removing New Channels sections`);
@@ -114,6 +177,7 @@ const removeLatestPostsFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
+          handleUpdateTabStore();
           console.log("Latest posts section removed");
         } catch (error) {
           console.log(`Error removing latest posts sections`);
@@ -138,6 +202,7 @@ const removeLatestVideosFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
+          handleUpdateTabStore();
           console.log("Latest videos section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -162,6 +227,7 @@ const removePreviouslyWatchedFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
+          handleUpdateTabStore();
           console.log("Previously watched videos section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -186,6 +252,7 @@ const removeForYouFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
+          handleUpdateTabStore();
           console.log("For you section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -210,6 +277,7 @@ const removePeopleAlsoWatchedFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
+          handleUpdateTabStore();
           console.log("People also watched section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -234,6 +302,7 @@ const removeFromRelatedSearches = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
+          handleUpdateTabStore();
           console.log("From related searches removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -258,6 +327,7 @@ const removePeopleAlsoSearchFor = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
+          handleUpdateTabStore();
           console.log("People also search for section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -279,6 +349,7 @@ const removePeopleAlsoSearchFor = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
+          handleUpdateTabStore();
           console.log("People also search for section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -324,13 +395,6 @@ const updateSectionsRemoveCount = async () => {
   await delay(200);
   setSectionsRemovedTotal(newSectionsRemovedTotal);
 }
-
-// Add code to reset page sections removed on each URL change
-// DOESNT WORK PROPERLY STORE CURRENT LINK IN STATE
-window.addEventListener("hashchange", () => {
-  setSectionsRemovedPage(0);
-  handleSectionRemovedChange("Page");
-});
 
 // Check extension is running
 async function checkExtensionRunning () {
@@ -519,4 +583,4 @@ handleSectionRemovedChange("Page");
 
 setTimeout(checkExtensionRunning, 1000);
 
-console.log("simpletube script running");
+console.log("simpletube script initialised...");
