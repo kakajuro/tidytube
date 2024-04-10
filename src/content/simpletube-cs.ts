@@ -3,64 +3,18 @@ import { browser } from "webextension-polyfill-ts";
 import { getExtensionRunning } from "../util/extensionRunning";
 import { getSettings } from "../util/settingsHandler";
 import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../util/sectionsRemoved";
-import { updateTabStore, removeTabFromStore, getTabStore } from "../util/tabStore"; 
 import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
 import { throttle, delay } from "../util/helpers"
 
+
+let current = 0; 
+// MARK: handleTabStuff
 // Function to handle persisting sections removed on each tab
 const handleUpdateTabStore = async () => {
 
-  console.log("HandleTabYodatesFunction");
-
-  let sectionsRemovedOnPage = await getSectionsRemovedPage();
-  delay(500);
-  let store = await getTabStore();
-  delay(1000);
-
-  console.log(`Store: ${store.tabStore}`);
-
-  browser.tabs.query({active: true, currentWindow: true})
-  .then((tabs) => {
-    let tab:number = tabs[0].id;
-    console.log("Current tab id:" + tab);
-
-    updateTabStore({"tab": tab, "sectionsRemovedPage": sectionsRemovedOnPage});
-  });
+  //console.log("poass");
 
 }
-
-// When tab closed remove value from tab store
-window.addEventListener('beforeunload', () => {
-  
-  browser.tabs.query({active: true, currentWindow: true})
-  .then((tabs) => {
-    let tab:number = tabs[0].id;
-    console.log("Tab id closed" + tab);
-
-    removeTabFromStore(tab);
-  });
-
-});
-
-// On url change get tab id and set sections removed for that page
-window.addEventListener("hashchange", async () => {
-  console.log("URL CHANGE EVENT");
-  let tabStore = await getTabStore();
-  console.log("Store in URL change event: " + tabStore);
-  delay(500);
-
-  browser.tabs.query({active: true, currentWindow: true})
-  .then((tabs) => {
-    let tab:number = tabs[0].id;
-
-    console.log("Stored value for sections removed page" + tabStore[tab]);
-
-    setSectionsRemovedPage(tabStore[tab]);
-
-  });
-
-  handleSectionRemovedChange("Page");
-});
 
 // General remove element function
 const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:string, customSectionUpdates?:Function) => {
@@ -374,6 +328,7 @@ const handleScrollEvent = (returnedFunction) => {
 } 
 
 // Handle sections remove change
+//MARK: sectionsremovedChanged
 const handleSectionRemovedChange = (type?:String) => {
   if (type === "Page") {
     browser.runtime.sendMessage(null, `sectionsRemoved${type}Changed`)
@@ -385,15 +340,20 @@ const handleSectionRemovedChange = (type?:String) => {
 }
 
 // Update the sections removed ocunt when a section is removed
+// MARK: updateSectionsRemoveCOunt
 const updateSectionsRemoveCount = async () => {
-  let newSectionsRemovedPage = await getSectionsRemovedPage() + 1;
-  await delay(200);
-  let newSectionsRemovedTotal = await getSectionsRemovedTotal() + 1;
-  await delay(200);
+  current+=1;
+  let newSectionsRemovedPage = await getSectionsRemovedPage();
+  let newSectionsRemovedTotal = await getSectionsRemovedTotal();
+
+  newSectionsRemovedPage +=1;
+  newSectionsRemovedTotal +=1;
 
   setSectionsRemovedPage(newSectionsRemovedPage);
-  await delay(200);
   setSectionsRemovedTotal(newSectionsRemovedTotal);
+
+  console.log(newSectionsRemovedPage, newSectionsRemovedTotal);
+  browser.runtime.sendMessage(null, {message: "handleUpdateTabStore"})
 }
 
 // Check extension is running
@@ -582,5 +542,22 @@ setSectionsRemovedPage(0);
 handleSectionRemovedChange("Page");
 
 setTimeout(checkExtensionRunning, 1000);
+// setInterval(async () => {
 
-console.log("simpletube script initialised...");
+//   let sectionsPage = await getSectionsRemovedPage();
+//   let sectionsTotal = await getSectionsRemovedTotal();
+
+//   let newSectionsPage = sectionsPage += current;
+//   let newSectionsTotal = sectionsTotal += current;
+
+//   setSectionsRemovedPage(newSectionsPage);
+//   setSectionsRemovedTotal(newSectionsTotal);
+
+//   console.log(newSectionsPage, newSectionsTotal);
+  
+//   current = 0;
+
+
+// }, 10000)
+
+console.log("simpletube loaded");

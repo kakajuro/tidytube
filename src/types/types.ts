@@ -1,4 +1,4 @@
-interface settingsType {
+export interface settingsType {
   "preventShorts": boolean,
   "removeShortsFromSearch": boolean,
   "removeShortsFromSite": boolean,
@@ -17,4 +17,7 @@ interface settingsType {
   "removePeopleAlsoSearchFor": boolean 
 }
 
-export default settingsType;
+export interface tabData {
+  tab: number,
+  sectionsRemovedPage: number
+}

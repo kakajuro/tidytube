@@ -1,6 +1,6 @@
 import { browser } from "webextension-polyfill-ts";
 
-import type settingsType from "../types/types";
+import type { settingsType } from "../types/types";
 
 let defaults:settingsType = {
   "preventShorts": false,

@@ -1,5 +1,7 @@
 import { browser } from "webextension-polyfill-ts";
 
+import type { tabData } from "../types/types";
+
 export async function getTabStore() {
   try {
     
@@ -20,10 +22,11 @@ export async function getTabStore() {
 
 }
 
-export async function updateTabStore(data:object) {
+export async function updateTabStore(data:tabData) {
 
   let { tabStore } = await browser.storage.local.get("tabStore");
-  let newTabStore = {...tabStore, ...data};
+  let newTabStore = {...tabStore};
+  newTabStore[data.tab] = data.sectionsRemovedPage;
   
   browser.storage.local.set({"tabStore": newTabStore})
   .catch(error => console.log(`Error updating tab store: ${error}`))

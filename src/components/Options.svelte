@@ -7,7 +7,7 @@
   import { getDarkMode } from "../util/darkMode";
   import { clearSettings, getSettings, setSettings } from "../util/settingsHandler";
 
-  import type settingsType from "../types/types";
+  import type { settingsType } from "../types/types";
   import { delay } from "../util/helpers";
   
   import OptionsCard from "./OptionsCard.svelte";

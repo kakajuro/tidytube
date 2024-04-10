@@ -14,13 +14,16 @@
   import { getDarkMode, setDarkMode } from "../util/darkMode";
   import { getExtensionRunning, setExtensionRunning } from "../util/extensionRunning";
   import { getManifestVer } from "../util/getManifestVersion";
-  import { getSectionsRemovedPage, getSectionsRemovedTotal } from "../util/sectionsRemoved";
+  import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage } from "../util/sectionsRemoved";
+  import { getTabStore } from "../util/tabStore";
   
   let version = getManifestVer();
   let darkMode;
   let extensionRunningToggle;
   let sectionsRemovedPage;
   let sectionsRemovedTotal;
+  let tabStore;
+
 
   const handleDarkModeSwitch = () => {
     darkMode = !darkMode;
@@ -47,11 +50,38 @@
     browser.tabs.create({ url: "./options.html" })
   }
 
-  onMount(async ()  => {    
+  onMount(async ()  => {
+
     darkMode = await getDarkMode();
     extensionRunningToggle = await getExtensionRunning();
     sectionsRemovedPage = await getSectionsRemovedPage();
     sectionsRemovedTotal = await getSectionsRemovedTotal();
+    tabStore = await getTabStore();
+  });
+
+  onMount(async () => {
+    
+    console.log("2nd mount detected");
+
+    let { previousTab } = await browser.storage.local.get("previousTab");
+    let tabStore = await getTabStore();
+
+    browser.tabs.query({active: true, currentWindow:true})
+    .then((tabs) => {
+      let currentTab = tabs[0].id;
+
+      if (previousTab != currentTab) {
+        if (tabStore[currentTab]) {
+          setSectionsRemovedPage(tabStore[currentTab]);
+          console.log("Done" + tabStore[currentTab]);
+        } else {
+          setSectionsRemovedPage(0);
+          console.log("done wrong");
+        }
+
+      }
+    })
+
   });
 
   // Popup event listener
@@ -63,10 +93,18 @@
       })
     } 
 
-    if (msg == "sectionsRemovedBothChanged") {
+    if (msg === "sectionsRemovedBothChanged") {
       (async () => {
         sectionsRemovedPage = await getSectionsRemovedPage();
         sectionsRemovedTotal = await getSectionsRemovedTotal();
+      })
+    }
+
+    if (msg === "resetSectionsRemovedPage") {
+      (async () => {
+        console.log("recieved reset sections removed page event");
+        setSectionsRemovedPage(0);
+        sectionsRemovedPage = 0;
       })
     }
   })

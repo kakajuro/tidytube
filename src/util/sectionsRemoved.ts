@@ -20,7 +20,7 @@ export async function getSectionsRemovedPage() {
   }
 }
 
-export async function setSectionsRemovedPage(value:number) {
+export function setSectionsRemovedPage(value:number) {
   browser.storage.local.set({"sectionsRemovedPage": value})
   .catch((error) => console.error(`An error occurred when trying to store sections removed (page): ${error}`))
 }
@@ -45,18 +45,18 @@ export async function getSectionsRemovedTotal() {
   }
 }
 
-export async function setSectionsRemovedTotal(value:number) {
+export function setSectionsRemovedTotal(value:number) {
   browser.storage.local.set({"sectionsRemovedTotal": value})
   .catch((error) => console.error(`An error occurred when trying to store sections removed (total): ${error}`))
 }
 
-export async function clearSectionsRemovedPage() {
+export function clearSectionsRemovedPage() {
   browser.storage.local.remove("sectionsRemovedPage")
   .then(() => console.log("Success clearing sections removed (page) preference from storage"))
   .catch((error) => console.error(`An error occurred when trying to clear sections removed (page) from storage: ${error}`))
 }
 
-export async function clearSectionsRemovedTotal() {
+export function clearSectionsRemovedTotal() {
   browser.storage.local.remove("sectionsRemovedTotal")
   .then(() => console.log("Success clearing sections removed (total) preference from storage"))
   .catch((error) => console.error(`An error occurred when trying to clear sections removed (total) from storage: ${error}`))
