@@ -51,7 +51,6 @@
   }
 
   onMount(async ()  => {
-
     darkMode = await getDarkMode();
     extensionRunningToggle = await getExtensionRunning();
     sectionsRemovedPage = await getSectionsRemovedPage();
@@ -97,14 +96,6 @@
       (async () => {
         sectionsRemovedPage = await getSectionsRemovedPage();
         sectionsRemovedTotal = await getSectionsRemovedTotal();
-      })
-    }
-
-    if (msg === "resetSectionsRemovedPage") {
-      (async () => {
-        console.log("recieved reset sections removed page event");
-        setSectionsRemovedPage(0);
-        sectionsRemovedPage = 0;
       })
     }
   })

@@ -2,7 +2,7 @@
 
 import { browser } from "webextension-polyfill-ts";
 import { getTabStore, removeTabFromStore, updateTabStore } from "../../util/tabStore";
-import { getSectionsRemovedPage } from "../../util/sectionsRemoved";
+import { setSectionsRemovedPage, getSectionsRemovedPage } from "../../util/sectionsRemoved";
 
 chrome.runtime.onInstalled.addListener(function () {
   // Make extension work on all pages
@@ -18,7 +18,9 @@ chrome.runtime.onInstalled.addListener(function () {
 
 // Tab reload event
 browser.tabs.onUpdated.addListener(async function(tabId, changeInfo, tab) {
-  if (changeInfo.status == "loading") {    
+  if (changeInfo.status == "loading") {
+    setSectionsRemovedPage(0);
+    console.log("SectionsREmovedPage Reset here");  
     try {
       browser.tabs.sendMessage(tabId, "tidyWhileLoading");
       setTimeout(null, 1000);
@@ -27,29 +29,28 @@ browser.tabs.onUpdated.addListener(async function(tabId, changeInfo, tab) {
       null;
     }
   }
-
-  browser.runtime.sendMessage(null, "resetSectionsRemovedPage");
-
 });
 
 // Switch tab event (send message to popup to change sectionsRemovedPageValue)
 browser.tabs.onActivated.addListener(async function (activeInfo) {
-  console.log("Tab switch detected");
 
-  console.log(`Tab ID: ${activeInfo.tabId}`);
+  console.log(`Tab switch detected from Tab ID: ${activeInfo.tabId}`);
   await browser.storage.local.set({"previousTab": activeInfo.previousTabId});
   let tabStore = await getTabStore();
-  console.log(tabStore);
 
-  if (tabStore) {
+  if (tabStore[activeInfo.tabId]) {
+    setSectionsRemovedPage(tabStore[activeInfo.tabId]);
+    console.log("Set sections removed page value to " + tabStore[activeInfo.tabId]);
+
     browser.runtime.sendMessage(null, "sectionsRemovedPageChanged");
     browser.runtime.sendMessage(null, "resetSectionsRemovedPage");
-    console.log("Update message sent to CS");
+  } else {
+    setSectionsRemovedPage(0);
   }
 
 });
 
-// Browser close event (remove data for closed tab from tab store) [WORKING]
+// Tab close event (remove data for closed tab from tab store) [WORKING]
 browser.tabs.onRemoved.addListener(async function(tabId, removeInfo) {
   
   let tabStore = await getTabStore();
@@ -59,23 +60,23 @@ browser.tabs.onRemoved.addListener(async function(tabId, removeInfo) {
     console.log("Tab removed from tabStore");
   }
 
-
 });
 
-// 
-browser.runtime.onMessage.addListener(async function (message, sender) {
-  if (message.message === "handleUpdateTabStore") {
+const tabStoreUpdate = async () => {
+  let sectionsRemovedPage = await getSectionsRemovedPage();
 
-    let sectionsRemovedPage = await getSectionsRemovedPage();
+  browser.tabs.query({active:true, currentWindow:true})
+  .then((tabs) => {
+    let tab:number = tabs[0].id;
 
-    browser.tabs.query({active: true, currentWindow: true})
-    .then((tabs) => {
-      let tab:number = tabs[0].id;
-      console.log("inside actual function");
+    updateTabStore({"tab": tab, "sectionsRemovedPage": sectionsRemovedPage})
+  })
+}; 
 
-      updateTabStore({"tab": tab, "sectionsRemovedPage": sectionsRemovedPage});
-      console.log("Update tab store");
-    });
-
+// Message listners
+browser.runtime.onMessage.addListener((msg, sender) => {
+  if (msg === "BGupdateTabStore") {
+    console.log("BGupdateTabStore");
+    tabStoreUpdate();
   }
 })

@@ -3,18 +3,16 @@ import { browser } from "webextension-polyfill-ts";
 import { getExtensionRunning } from "../util/extensionRunning";
 import { getSettings } from "../util/settingsHandler";
 import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../util/sectionsRemoved";
+import { updateTabStore } from "../util/tabStore";
 import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
 import { throttle, delay } from "../util/helpers"
 
-
-let current = 0; 
-// MARK: handleTabStuff
-// Function to handle persisting sections removed on each tab
-const handleUpdateTabStore = async () => {
-
-  //console.log("poass");
+// Update tab store
+const handleTabStore = async () => {
+  
 
 }
+
 
 // General remove element function
 const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:string, customSectionUpdates?:Function) => {
@@ -30,7 +28,7 @@ const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:str
       if (!customSectionUpdates) {
         updateSectionsRemoveCount();
         handleSectionRemovedChange();
-        handleUpdateTabStore();
+        handleTabStore();
       } else {
         customSectionUpdates();
       }
@@ -82,7 +80,7 @@ const removeAdsFromReccomendations = () => {
 
       updateSectionsRemoveCount();
       handleSectionRemovedChange();
-      handleUpdateTabStore();
+      handleTabStore();
 
       console.log("Ad removed");
     } catch (error) {
@@ -106,7 +104,8 @@ const removeNewChannelsFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          handleUpdateTabStore();
+          handleTabStore();
+
           console.log("New Channels section removed");
         } catch (error) {
           console.log(`Error removing New Channels sections`);
@@ -131,7 +130,8 @@ const removeLatestPostsFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          handleUpdateTabStore();
+          handleTabStore();
+
           console.log("Latest posts section removed");
         } catch (error) {
           console.log(`Error removing latest posts sections`);
@@ -156,7 +156,8 @@ const removeLatestVideosFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          handleUpdateTabStore();
+          handleTabStore();
+
           console.log("Latest videos section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -181,7 +182,8 @@ const removePreviouslyWatchedFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          handleUpdateTabStore();
+          handleTabStore();
+
           console.log("Previously watched videos section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -206,7 +208,8 @@ const removeForYouFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          handleUpdateTabStore();
+          handleTabStore();
+
           console.log("For you section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -231,7 +234,8 @@ const removePeopleAlsoWatchedFromSearch = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          handleUpdateTabStore();
+          handleTabStore();
+
           console.log("People also watched section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -256,7 +260,8 @@ const removeFromRelatedSearches = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          handleUpdateTabStore();
+          handleTabStore();
+
           console.log("From related searches removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -281,7 +286,8 @@ const removePeopleAlsoSearchFor = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          handleUpdateTabStore();
+          handleTabStore();
+
           console.log("People also search for section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -303,7 +309,8 @@ const removePeopleAlsoSearchFor = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
           handleSectionRemovedChange();
-          handleUpdateTabStore();
+          handleTabStore();
+
           console.log("People also search for section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
@@ -342,7 +349,6 @@ const handleSectionRemovedChange = (type?:String) => {
 // Update the sections removed ocunt when a section is removed
 // MARK: updateSectionsRemoveCOunt
 const updateSectionsRemoveCount = async () => {
-  current+=1;
   let newSectionsRemovedPage = await getSectionsRemovedPage();
   let newSectionsRemovedTotal = await getSectionsRemovedTotal();
 
@@ -353,7 +359,8 @@ const updateSectionsRemoveCount = async () => {
   setSectionsRemovedTotal(newSectionsRemovedTotal);
 
   console.log(newSectionsRemovedPage, newSectionsRemovedTotal);
-  browser.runtime.sendMessage(null, {message: "handleUpdateTabStore"})
+  
+  browser.runtime.sendMessage("BGupdateTabStore");
 }
 
 // Check extension is running
@@ -542,22 +549,4 @@ setSectionsRemovedPage(0);
 handleSectionRemovedChange("Page");
 
 setTimeout(checkExtensionRunning, 1000);
-// setInterval(async () => {
-
-//   let sectionsPage = await getSectionsRemovedPage();
-//   let sectionsTotal = await getSectionsRemovedTotal();
-
-//   let newSectionsPage = sectionsPage += current;
-//   let newSectionsTotal = sectionsTotal += current;
-
-//   setSectionsRemovedPage(newSectionsPage);
-//   setSectionsRemovedTotal(newSectionsTotal);
-
-//   console.log(newSectionsPage, newSectionsTotal);
-  
-//   current = 0;
-
-
-// }, 10000)
-
 console.log("simpletube loaded");
