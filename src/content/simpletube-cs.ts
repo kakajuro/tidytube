@@ -7,12 +7,6 @@ import { updateTabStore } from "../util/tabStore";
 import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
 import { throttle, delay } from "../util/helpers"
 
-// Update tab store
-const handleTabStore = async () => {
-  
-
-}
-
 
 // General remove element function
 const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:string, customSectionUpdates?:Function) => {
@@ -27,8 +21,7 @@ const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:str
 
       if (!customSectionUpdates) {
         updateSectionsRemoveCount();
-        handleSectionRemovedChange();
-        handleTabStore();
+        handleSectionRemovedChange();        
       } else {
         customSectionUpdates();
       }
@@ -79,8 +72,7 @@ const removeAdsFromReccomendations = () => {
       }
 
       updateSectionsRemoveCount();
-      handleSectionRemovedChange();
-      handleTabStore();
+      handleSectionRemovedChange();      
 
       console.log("Ad removed");
     } catch (error) {
@@ -103,8 +95,7 @@ const removeNewChannelsFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
-          handleSectionRemovedChange();
-          handleTabStore();
+          handleSectionRemovedChange();          
 
           console.log("New Channels section removed");
         } catch (error) {
@@ -129,8 +120,7 @@ const removeLatestPostsFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
-          handleSectionRemovedChange();
-          handleTabStore();
+          handleSectionRemovedChange();          
 
           console.log("Latest posts section removed");
         } catch (error) {
@@ -155,8 +145,7 @@ const removeLatestVideosFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
-          handleSectionRemovedChange();
-          handleTabStore();
+          handleSectionRemovedChange();          
 
           console.log("Latest videos section removed");
         } catch (error) {
@@ -181,8 +170,7 @@ const removePreviouslyWatchedFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
-          handleSectionRemovedChange();
-          handleTabStore();
+          handleSectionRemovedChange();          
 
           console.log("Previously watched videos section removed");
         } catch (error) {
@@ -207,8 +195,7 @@ const removeForYouFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
-          handleSectionRemovedChange();
-          handleTabStore();
+          handleSectionRemovedChange();          
 
           console.log("For you section removed");
         } catch (error) {
@@ -233,8 +220,7 @@ const removePeopleAlsoWatchedFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
-          handleSectionRemovedChange();
-          handleTabStore();
+          handleSectionRemovedChange();          
 
           console.log("People also watched section removed");
         } catch (error) {
@@ -259,8 +245,7 @@ const removeFromRelatedSearches = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
-          handleSectionRemovedChange();
-          handleTabStore();
+          handleSectionRemovedChange();          
 
           console.log("From related searches removed");
         } catch (error) {
@@ -285,8 +270,7 @@ const removePeopleAlsoSearchFor = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
-          handleSectionRemovedChange();
-          handleTabStore();
+          handleSectionRemovedChange();          
 
           console.log("People also search for section removed");
         } catch (error) {
@@ -308,8 +292,7 @@ const removePeopleAlsoSearchFor = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount();
-          handleSectionRemovedChange();
-          handleTabStore();
+          handleSectionRemovedChange();          
 
           console.log("People also search for section removed");
         } catch (error) {
