@@ -59,9 +59,6 @@
   });
 
   onMount(async () => {
-    
-    console.log("2nd mount detected");
-
     let { previousTab } = await browser.storage.local.get("previousTab");
     let tabStore = await getTabStore();
 
@@ -72,10 +69,8 @@
       if (previousTab != currentTab) {
         if (tabStore[currentTab]) {
           setSectionsRemovedPage(tabStore[currentTab]);
-          console.log("Done" + tabStore[currentTab]);
         } else {
           setSectionsRemovedPage(0);
-          console.log("done wrong");
         }
 
       }

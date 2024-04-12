@@ -5,6 +5,7 @@
   export let handleChange:Function;
   export let optionName:string;
   export let optionsDesc:string;
+  export let disabled:boolean = null;
 
   let id = optionName.trim();
 
@@ -20,6 +21,7 @@
       on:change={() => {
         handleChange();
       }}
+      disabled={disabled}
     />
     <label 
       for={id}

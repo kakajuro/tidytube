@@ -3,10 +3,8 @@ import { browser } from "webextension-polyfill-ts";
 import { getExtensionRunning } from "../util/extensionRunning";
 import { getSettings } from "../util/settingsHandler";
 import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../util/sectionsRemoved";
-import { updateTabStore } from "../util/tabStore";
 import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
-import { throttle, delay } from "../util/helpers"
-
+import { throttle } from "../util/helpers"
 
 // General remove element function
 const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:string, customSectionUpdates?:Function) => {

@@ -5,6 +5,7 @@
   import "toastify-js/src/toastify.css"
   
   import { getDarkMode } from "../util/darkMode";
+  import { getManifestVer } from "../util/getManifestVersion";
   import { clearSettings, getSettings, setSettings } from "../util/settingsHandler";
 
   import type { settingsType } from "../types/types";
@@ -14,6 +15,7 @@
 
   let settings:settingsType;
   let darkMode;
+  let version = getManifestVer();
 
   let preventShortsToggle;
   let removeShortsFromSearchToggle;
@@ -91,10 +93,9 @@
     await setSettings({"removeShortsFromSearch": true});
     await setSettings({"removeShortsFromSite": true});
     await setSettings({"removeShortsPlayback": true});
+    
+    setSettings({"shortsOptionsDisabled": newSettings.preventShorts});
 
-    (newSettings.preventShorts) ? setSettings({"shortsOptionsDisabled": true}) : setSettings({"shortsOptionsDisabled": false});
-
-    await delay(500);
     await optionsOpened();
   }
 
@@ -192,6 +193,7 @@
       {darkMode} 
       toggle={removeShortsFromSearchToggle} 
       handleChange={() => handleSettingsChanged("removeShortsFromSearch")}
+      disabled={shortsOptionsDisabled}
       optionName="Remove Shorts from search"
       optionsDesc="Stops Shorts from appearing in the search page"
     />
@@ -199,6 +201,7 @@
       {darkMode} 
       toggle={removeShortsFromSiteToggle} 
       handleChange={() => handleSettingsChanged("removeShortsFromSite")}
+      disabled={shortsOptionsDisabled}
       optionName="Remove Shorts from site"
       optionsDesc="Removes Shorts from being displayed anywhere on the site"
     />
@@ -206,6 +209,7 @@
       {darkMode} 
       toggle={removeShortsPlaybackToggle} 
       handleChange={() => handleSettingsChanged("removeShortsPlayback")}
+      disabled={shortsOptionsDisabled}
       optionName="Prevent Shorts Playback"
       optionsDesc="Prevents all Shorts videos from playing once clicked"
     />
@@ -269,7 +273,10 @@
       optionsDesc="Removes videos people also search for <br /> from appearing in the search page"
     />
   </div>
-  <button class="w-48 h-8 border border-black rounded transition-all hover:scale-105 ease-in-out duration-300" class:border-white={darkMode} class:text-white={darkMode} on:click={handleResetSettings}>
-    Reset settings to default
-  </button>
+  <div class="mt-6">
+    <button class="w-48 h-8 border border-black rounded transition-all hover:scale-105 ease-in-out duration-300" class:border-white={darkMode} class:text-white={darkMode} on:click={handleResetSettings}>
+      Reset settings to default
+    </button>
+    <p class="mt-5 text-custom-ver-text">Version: {version}</p>
+  </div>
 </main>
