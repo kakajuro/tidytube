@@ -24,7 +24,6 @@
   let sectionsRemovedTotal;
   let tabStore;
 
-
   const handleDarkModeSwitch = () => {
     darkMode = !darkMode;
     setDarkMode(darkMode);
