@@ -302,6 +302,13 @@ const removePeopleAlsoSearchFor = () => {
   });
 }
 
+// Remove featured banners
+const removeFeaturedBanners = () => {
+  generalRemoveElement("ytd-statement-banner-renderer", "Featured Banner removed", "Error removing featured banner");
+  generalRemoveElement("ytd-brand-video-shelf-renderer", "Featured Banner removed", "Error removing featured banner");
+}
+
+
 // Scroll event handler
 const handleScrollEvent = (returnedFunction) => {
 
@@ -447,6 +454,13 @@ async function checkExtensionRunning () {
       document.addEventListener('scrollend', preventShortsPlayback);
       document.addEventListener('mousemove', throttle(preventShortsPlayback, 500));
     }
+    // Remove featured banners
+    if (settings.removeFeaturedBanners) {
+      removeFeaturedBanners();
+      document.addEventListener('scroll', () => handleScrollEvent(removeFeaturedBanners));
+      document.addEventListener('scrollend', () => handleScrollEvent(removeFeaturedBanners));
+      document.addEventListener('mousemove', throttle(removeFeaturedBanners, 500));
+    }
 
   } else {
     console.log("paused simpletube content script");
@@ -511,6 +525,11 @@ async function checkExtensionRunning () {
       document.removeEventListener('scroll', () => handleScrollEvent(preventShortsPlayback));
       document.removeEventListener('scrollend', preventShortsPlayback);
       document.removeEventListener('mousemove', throttle(preventShortsPlayback, 500));
+
+      // [REMOVE EVENT LISTENER] Remove Featured Banners
+      document.removeEventListener('scroll', () => handleScrollEvent(removeFeaturedBanners));
+      document.removeEventListener('scrollend', removeFeaturedBanners);
+      document.removeEventListener('mousemove', throttle(removeFeaturedBanners, 500));
 
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);

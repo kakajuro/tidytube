@@ -14,7 +14,8 @@ export interface settingsType {
   "removeForYouFromSearch": boolean,
   "removePeopleAlsoWatchedFromSearch": boolean,
   "removeFromRelatedSearches": boolean,
-  "removePeopleAlsoSearchFor": boolean 
+  "removePeopleAlsoSearchFor": boolean,
+  "removeFeaturedBanners": boolean
 }
 
 export interface tabData {

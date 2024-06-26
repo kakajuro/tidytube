@@ -33,6 +33,7 @@
   let removePeopleAlsoWatchedFromSearchToggle;
   let removeFromRelatedSearchedToggle;
   let removePeopleAlsoSearchForToggle;
+  let removeFeaturedBannersToggle;
 
   async function optionsOpened() {
     await delay(500);
@@ -54,6 +55,7 @@
     removePeopleAlsoWatchedFromSearchToggle = settings.removePeopleAlsoWatchedFromSearch;
     removeFromRelatedSearchedToggle = settings.removeFromRelatedSearches;
     removePeopleAlsoSearchForToggle = settings.removePeopleAlsoSearchFor;
+    removeFeaturedBannersToggle = settings.removeFeaturedBanners;
 
     darkMode = await getDarkMode();
   }
@@ -154,6 +156,10 @@
         removeShortsPlaybackToggle = !removeShortsPlaybackToggle;
         setSettings({"removeShortsPlayback": removeShortsPlaybackToggle});
         break;
+      case "removeFeaturedBanners":
+        removeFeaturedBannersToggle = !removeFeaturedBannersToggle;
+        setSettings({"removeFeaturedBanners": removeFeaturedBannersToggle});
+        break;
       default:
         break;
     }
@@ -176,6 +182,13 @@
     handleChange={() => handleSettingsChanged("removeAdsFromReccomendations")}
     optionName="Remove ads from reccomendations"
     optionsDesc="Stops ads from appearing in the search page and homepage (does not block ads during video playback)"
+  />
+  <OptionsCard 
+    {darkMode} 
+    toggle={removeFeaturedBannersToggle} 
+    handleChange={() => handleSettingsChanged("removeFeaturedBanners")}
+    optionName="Remove featured banners"
+    optionsDesc="Stops featured banners from appearing on the homepage of search"
   />
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Shorts</h2>
   <div class="grid gap-y-1 gap-x-1 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
