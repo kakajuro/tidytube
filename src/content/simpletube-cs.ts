@@ -34,7 +34,11 @@ const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:str
 }
 
 // Remove Shorts on search page
-const removeShortsFromSearch = () => generalRemoveElement('ytd-reel-shelf-renderer', "Shorts removed", "Error removing shorts");
+const removeShortsFromSearch = () => {
+  if (window.location.href.includes("https://www.youtube.com/results")) {
+      generalRemoveElement('ytd-reel-shelf-renderer', "Shorts removed", "Error removing shorts");
+  }
+}
 
 // Remove Shorts from the whole site
 const removeShortsFromSite = () => {
@@ -323,7 +327,6 @@ const handleScrollEvent = (returnedFunction) => {
 } 
 
 // Handle sections remove change
-//MARK: sectionsremovedChanged
 const handleSectionRemovedChange = (type?:String) => {
   if (type === "Page") {
     browser.runtime.sendMessage(null, `sectionsRemoved${type}Changed`)
@@ -335,7 +338,6 @@ const handleSectionRemovedChange = (type?:String) => {
 }
 
 // Update the sections removed ocunt when a section is removed
-// MARK: updateSectionsRemoveCOunt
 const updateSectionsRemoveCount = async () => {
   let newSectionsRemovedPage = await getSectionsRemovedPage();
   let newSectionsRemovedTotal = await getSectionsRemovedTotal();

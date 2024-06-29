@@ -18,7 +18,8 @@ let defaults:settingsType = {
   "removeForYouFromSearch": true,
   "removePeopleAlsoWatchedFromSearch": true,
   "removeFromRelatedSearches": true,
-  "removePeopleAlsoSearchFor": true
+  "removePeopleAlsoSearchFor": true,
+  "removeFeaturedBanners": true
 }
 
 export async function getSettings():Promise<settingsType> {
