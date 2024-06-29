@@ -21,6 +21,7 @@
   let removeShortsFromSearchToggle;
   let removeShortsFromSiteToggle;
   let removeShortsPlaybackToggle;
+  let removeShortsRemixingThisVideoToggle;
 
   let shortsOptionsDisabled;
 
@@ -43,6 +44,7 @@
     removeShortsFromSearchToggle = settings.removeShortsFromSearch;
     removeShortsFromSiteToggle = settings.removeShortsFromSite;
     removeShortsPlaybackToggle = settings.removeShortsPlayback;
+    removeShortsRemixingThisVideoToggle = settings.removeShortsRemixingThisVideo;
 
     shortsOptionsDisabled = settings.shortsOptionsDisabled;
 
@@ -160,6 +162,10 @@
         removeFeaturedBannersToggle = !removeFeaturedBannersToggle;
         setSettings({"removeFeaturedBanners": removeFeaturedBannersToggle});
         break;
+      case "removeShortsRemixingThisVideo":
+        removeShortsRemixingThisVideoToggle = !removeShortsRemixingThisVideoToggle;
+        setSettings({"removeShortsRemixingThisVideo": removeShortsRemixingThisVideoToggle});
+        break;
       default:
         break;
     }
@@ -225,6 +231,14 @@
       disabled={shortsOptionsDisabled}
       optionName="Prevent Shorts Playback"
       optionsDesc="Prevents all Shorts videos from playing once clicked"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeShortsRemixingThisVideoToggle} 
+      handleChange={() => handleSettingsChanged("removeShortsRemixingThisVideo")}
+      disabled={shortsOptionsDisabled}
+      optionName="Remove <em>Shorts Remixing This Video</em>"
+      optionsDesc="Removes Shorts Remixing This Video section under videos"
     />
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Search</h2>

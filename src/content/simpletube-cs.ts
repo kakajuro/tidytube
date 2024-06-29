@@ -312,6 +312,30 @@ const removeFeaturedBanners = () => {
   generalRemoveElement("ytd-brand-video-shelf-renderer", "Featured Banner removed", "Error removing featured banner");
 }
 
+// Remove Shorts Remixing This Video
+const removeShortsRemixingThisVideo = () => {
+  const allShelfRenderers = document.querySelectorAll("ytd-reel-shelf-renderer");
+  const allShelfRenderersArray = [...allShelfRenderers];
+
+  allShelfRenderersArray.forEach(div => {
+
+    let spans = div.querySelectorAll("span");
+    [...spans].forEach((span) => {
+      if (span.innerText.includes("Shorts remixing this video")) {
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount();
+          handleSectionRemovedChange();          
+
+          console.log("Shorts remixing this video section removed");
+        } catch (error) {
+          console.log(`Error removing shorts remixing this video section`);
+        }
+      } 
+    });
+
+  });
+}
 
 // Scroll event handler
 const handleScrollEvent = (returnedFunction) => {
@@ -464,6 +488,14 @@ async function checkExtensionRunning () {
       document.addEventListener('mousemove', throttle(removeFeaturedBanners, 500));
     }
 
+    // Remove shorts remixing this video
+    if (settings.removeShortsRemixingThisVideo) {
+      removeShortsRemixingThisVideo();
+      document.addEventListener('scroll', () => handleScrollEvent(removeShortsRemixingThisVideo));
+      document.addEventListener('scrollend', () => handleScrollEvent(removeShortsRemixingThisVideo));
+      document.addEventListener('mousemove', throttle(removeShortsRemixingThisVideo, 500));
+    }
+
   } else {
     console.log("paused simpletube content script");
 
@@ -532,6 +564,11 @@ async function checkExtensionRunning () {
       document.removeEventListener('scroll', () => handleScrollEvent(removeFeaturedBanners));
       document.removeEventListener('scrollend', removeFeaturedBanners);
       document.removeEventListener('mousemove', throttle(removeFeaturedBanners, 500));
+
+      // [REMOVE EVENT LISTENER] Remove Shorts Remixing this video
+      document.removeEventListener('scroll', () => handleScrollEvent(removeShortsRemixingThisVideo));
+      document.removeEventListener('scrollend', removeShortsRemixingThisVideo);
+      document.removeEventListener('mousemove', throttle(removeShortsRemixingThisVideo, 500));
 
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);

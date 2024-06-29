@@ -3,6 +3,7 @@ export interface settingsType {
   "removeShortsFromSearch": boolean,
   "removeShortsFromSite": boolean,
   "removeShortsPlayback": boolean,
+  "removeShortsRemixingThisVideo": boolean,
 
   "shortsOptionsDisabled": boolean,
 

@@ -7,6 +7,7 @@ let defaults:settingsType = {
   "removeShortsFromSearch": true,
   "removeShortsFromSite": false,
   "removeShortsPlayback": false,
+  "removeShortsRemixingThisVideo": false,
 
   "shortsOptionsDisabled": false,
 
