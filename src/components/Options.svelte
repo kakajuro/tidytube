@@ -37,6 +37,7 @@
   let removePeopleAlsoSearchForToggle;
 
   let removeAdsFromReccomenationsToggle;
+  let removeAdCompanionSlotsToggle;
   let removeFeaturedBannersToggle;
   let removePopupsToggle;
 
@@ -65,8 +66,9 @@
     removePeopleAlsoSearchForToggle = settings.removePeopleAlsoSearchFor;
 
     removeAdsFromReccomenationsToggle = settings.removeAdsFromReccomendations;
+    removeAdCompanionSlotsToggle = settings.removeAdCompanionSlots;
     removeFeaturedBannersToggle = settings.removeFeaturedBanners;
-    let removePopupsToggle = settings.removePopups;
+    removePopupsToggle = settings.removePopups;
 
     darkMode = await getDarkMode();
   }
@@ -195,6 +197,11 @@
       case "removePopups":
         removePopupsToggle = !removePopupsToggle;
         setSettings({"removePopups": removePopupsToggle});
+        break;
+      case "removeAdCompanionSlots":
+        removeAdCompanionSlotsToggle = !removeAdCompanionSlotsToggle;
+        setSettings({"removeAdCompanionSlots": removeAdCompanionSlotsToggle});
+        break;
       default:
         break;
     }
@@ -231,6 +238,13 @@
     handleChange={() => handleSettingsChanged("removePopups")}
     optionName="Remove popups"
     optionsDesc="Stops promotional popups from appearing"
+  />
+  <OptionsCard 
+    {darkMode} 
+    toggle={removeAdCompanionSlotsToggle} 
+    handleChange={() => handleSettingsChanged("removeAdCompanionSlots")}
+    optionName="Remove Ad Companions"
+    optionsDesc="Stops ad companion slots from appearing (small clickable ad widgets next to videos)"
   />
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Shorts</h2>
   <div class="grid gap-y-1 gap-x-1 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">

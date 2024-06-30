@@ -23,6 +23,7 @@ let defaults:settingsType = {
   "removePeopleAlsoSearchFor": true,
   
   "removeAdsFromReccomendations": true,
+  "removeAdCompanionSlots": true,
   "removeFeaturedBanners": true,
   "removePopups": true
 }

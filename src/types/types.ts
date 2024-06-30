@@ -19,6 +19,7 @@ export interface settingsType {
   "removePeopleAlsoSearchFor": boolean,
 
   "removeAdsFromReccomendations": boolean,
+  "removeAdCompanionSlots": boolean,
   "removeFeaturedBanners": boolean,
   "removePopups": boolean
 }
