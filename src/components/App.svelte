@@ -16,6 +16,7 @@
   import { getManifestVer } from "../util/getManifestVersion";
   import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage } from "../util/sectionsRemoved";
   import { getTabStore } from "../util/tabStore";
+  import { formatNumber } from "../util/formatNumber";
   
   let version = getManifestVer();
   let darkMode;
@@ -133,7 +134,7 @@
       {#if sectionsRemovedPage === undefined}
         <div class="mb-16" />
       {:else}
-        <h1 class="text-custom-light-mode font-bold text-4xl text-center" class:text-white={darkMode}>{sectionsRemovedPage}</h1>
+        <h1 class="text-custom-light-mode font-bold text-4xl text-center" class:text-white={darkMode}>{formatNumber(sectionsRemovedPage)}</h1>
       {/if}
     </div>
     <div class="flex flex-col content-center justify-center mt-8">
@@ -141,7 +142,7 @@
       {#if sectionsRemovedTotal === undefined}
         <div class="mb-4" />
       {:else}
-        <h1 class="text-custom-light-mode font-bold text-4xl text-center" class:text-white={darkMode}>{sectionsRemovedTotal}</h1>
+        <h1 class="text-custom-light-mode font-bold text-4xl text-center" class:text-white={darkMode}>{formatNumber(sectionsRemovedTotal)}</h1>
       {/if}
     </div>
   </div>
