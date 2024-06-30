@@ -6,6 +6,8 @@ import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage
 import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
 import { throttle } from "../util/helpers"
 
+//MARK: START OF REMOVING FUNCTIONS
+
 // General remove element function
 const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:string, customSectionUpdates?:Function) => {
 
@@ -33,6 +35,32 @@ const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:str
 
 }
 
+// Remove shorts that appear next to playing videos
+const removeShortsWhileWatching = () => {
+  const watchNextTab = document.querySelector('ytd-watch-next-secondary-results-renderer');
+
+  const shortsElements = watchNextTab.querySelectorAll('ytd-reel-shelf-renderer')
+  const shortsElementsArray = [...shortsElements];
+  
+  shortsElementsArray.forEach(shortsElement => {
+    try {
+      if (shortsElement.firstChild) {
+        const shortsContainer = shortsElement.parentNode.parentNode; 
+        
+        shortsContainer.parentNode.removeChild(shortsContainer);
+        shortsElement.parentNode.removeChild(shortsElement);
+      }
+
+      updateSectionsRemoveCount();
+      handleSectionRemovedChange();      
+
+      console.log("Shorts section removed");
+    } catch (error) {
+      console.warn(`Error removing ad section: ${error}`);
+    }
+  })
+}
+
 // Remove Shorts on search page
 const removeShortsFromSearch = () => {
   if (window.location.href.includes("https://www.youtube.com/results")) {
@@ -42,11 +70,6 @@ const removeShortsFromSearch = () => {
 
 // Remove Shorts from the whole site
 const removeShortsFromSite = () => {
-  // Remove shorts that appear next to playing videos
-  if (document.location.href.includes("https://www.youtube.com/watch")) {
-    generalRemoveElement('ytd-reel-shelf-renderer', "Shorts section removed", "Error removing Shorts section");
-  }
-
   generalRemoveElement('[title="Shorts"]', "Shorts nav icon Removed", "Error removing Shorts nav icon");
   generalRemoveElement('ytd-rich-section-renderer', "Shorts section removed", "Error removing Shorts section");
 }
@@ -337,6 +360,8 @@ const removeShortsRemixingThisVideo = () => {
   });
 }
 
+//MARK: END OF REMOVING FUNCTIONS
+
 // Scroll event handler
 const handleScrollEvent = (returnedFunction) => {
 
@@ -496,6 +521,14 @@ async function checkExtensionRunning () {
       document.addEventListener('mousemove', throttle(removeShortsRemixingThisVideo, 500));
     }
 
+    // Remove shorts from appearing on the reccomended sidebar
+    if (settings.removeShortsWhileWatching) {
+      removeShortsWhileWatching();
+      document.addEventListener('scroll', () => handleScrollEvent(removeShortsWhileWatching));
+      document.addEventListener('scrollend', () => handleScrollEvent(removeShortsWhileWatching));
+      document.addEventListener('mousemove', throttle(removeShortsWhileWatching, 500));
+    }
+
   } else {
     console.log("paused simpletube content script");
 
@@ -569,6 +602,11 @@ async function checkExtensionRunning () {
       document.removeEventListener('scroll', () => handleScrollEvent(removeShortsRemixingThisVideo));
       document.removeEventListener('scrollend', removeShortsRemixingThisVideo);
       document.removeEventListener('mousemove', throttle(removeShortsRemixingThisVideo, 500));
+
+      // [REMOVE EVENT LISTENER] Remove Shorts While Watching Video
+      document.removeEventListener('scroll', () => handleScrollEvent(removeShortsWhileWatching));
+      document.removeEventListener('scrollend', removeShortsWhileWatching);
+      document.removeEventListener('mousemove', throttle(removeShortsWhileWatching, 500));
 
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);

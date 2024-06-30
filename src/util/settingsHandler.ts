@@ -8,8 +8,10 @@ let defaults:settingsType = {
   "removeShortsFromSite": false,
   "removeShortsPlayback": false,
   "removeShortsRemixingThisVideo": false,
+  "removeShortsWhileWatching": true,
 
   "shortsOptionsDisabled": false,
+  "shortsOnSiteDisabled": false,
 
   "removeAdsFromReccomendations": true,
   "removeNewChannelsFromSearch": true,

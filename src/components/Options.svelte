@@ -22,8 +22,10 @@
   let removeShortsFromSiteToggle;
   let removeShortsPlaybackToggle;
   let removeShortsRemixingThisVideoToggle;
+  let removeShortsWhileWatchingToggle;
 
   let shortsOptionsDisabled;
+  let shortsOnSiteDisabled;
 
   let removeAdsFromReccomenationsToggle;
   let removeNewChannelsFromSearchToggle;
@@ -45,8 +47,10 @@
     removeShortsFromSiteToggle = settings.removeShortsFromSite;
     removeShortsPlaybackToggle = settings.removeShortsPlayback;
     removeShortsRemixingThisVideoToggle = settings.removeShortsRemixingThisVideo;
+    removeShortsWhileWatchingToggle = settings.removeShortsWhileWatching;
 
     shortsOptionsDisabled = settings.shortsOptionsDisabled;
+    shortsOnSiteDisabled = settings.shortsOnSiteDisabled;
 
     removeAdsFromReccomenationsToggle = settings.removeAdsFromReccomendations;
     removeNewChannelsFromSearchToggle = settings.removeNewChannelsFromSearch;
@@ -103,12 +107,29 @@
     await optionsOpened();
   }
 
+  const handleRemoveShortsFromSite = async () => {
+    await delay(500);
+    let newSettings = await getSettings();
+    
+    await setSettings({"removeShortsFromSearch": true});
+    await setSettings({"removeShortsRemixingThisVideo": true});
+    await setSettings({"removeShortsWhileWatching": true});
+    
+    setSettings({"shortsOnSiteDisabled": newSettings.removeShortsFromSite});
+
+    await optionsOpened();
+  }
+
   function handleSettingsChanged(setting:string) {
 
     switch (setting) {
       case "preventShorts":
         preventShortsToggle = !preventShortsToggle;
         setSettings({"preventShorts": preventShortsToggle});
+        break;
+      case "removeShortsFromSite":
+        removeShortsFromSiteToggle = !removeShortsFromSiteToggle;
+        setSettings({"removeShortsFromSite": removeShortsFromSiteToggle});
         break;
       case "removeShortsFromSearch":
         removeShortsFromSearchToggle = !removeShortsFromSearchToggle;
@@ -150,10 +171,6 @@
         removePeopleAlsoSearchForToggle = !removePeopleAlsoSearchForToggle;
         setSettings({"removePeopleAlsoSearchFor": removePeopleAlsoSearchForToggle});
         break;
-      case "removeShortsFromSite":
-        removeShortsFromSiteToggle = !removeShortsFromSiteToggle;
-        setSettings({"removeShortsFromSite": removeShortsFromSiteToggle});
-        break;
       case "removeShortsPlayback":
         removeShortsPlaybackToggle = !removeShortsPlaybackToggle;
         setSettings({"removeShortsPlayback": removeShortsPlaybackToggle});
@@ -165,6 +182,10 @@
       case "removeShortsRemixingThisVideo":
         removeShortsRemixingThisVideoToggle = !removeShortsRemixingThisVideoToggle;
         setSettings({"removeShortsRemixingThisVideo": removeShortsRemixingThisVideoToggle});
+        break;
+      case "removeShortsWhileWatching":
+        removeShortsWhileWatchingToggle = !removeShortsWhileWatchingToggle;
+        setSettings({"removeShortsWhileWatchingToggle": removeShortsWhileWatchingToggle});
         break;
       default:
         break;
@@ -210,19 +231,22 @@
     />
     <OptionsCard 
       {darkMode} 
-      toggle={removeShortsFromSearchToggle} 
-      handleChange={() => handleSettingsChanged("removeShortsFromSearch")}
-      disabled={shortsOptionsDisabled}
-      optionName="Remove Shorts from search"
-      optionsDesc="Stops Shorts from appearing in the search page"
-    />
-    <OptionsCard 
-      {darkMode} 
       toggle={removeShortsFromSiteToggle} 
-      handleChange={() => handleSettingsChanged("removeShortsFromSite")}
+      handleChange={() => {
+        handleSettingsChanged("removeShortsFromSite");
+        handleRemoveShortsFromSite();
+      }}
       disabled={shortsOptionsDisabled}
       optionName="Remove Shorts from site"
       optionsDesc="Removes Shorts from being displayed anywhere on the site"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeShortsFromSearchToggle} 
+      handleChange={() => handleSettingsChanged("removeShortsFromSearch")}
+      disabled={shortsOptionsDisabled || shortsOnSiteDisabled}
+      optionName="Remove Shorts from search"
+      optionsDesc="Stops Shorts from appearing in the search page"
     />
     <OptionsCard 
       {darkMode} 
@@ -236,9 +260,17 @@
       {darkMode} 
       toggle={removeShortsRemixingThisVideoToggle} 
       handleChange={() => handleSettingsChanged("removeShortsRemixingThisVideo")}
-      disabled={shortsOptionsDisabled}
+      disabled={shortsOptionsDisabled || shortsOnSiteDisabled}
       optionName="Remove <em>Shorts Remixing This Video</em>"
       optionsDesc="Removes Shorts Remixing This Video section under videos"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeShortsWhileWatchingToggle} 
+      handleChange={() => handleSettingsChanged("removeShortsWhileWatching")}
+      disabled={shortsOptionsDisabled || shortsOnSiteDisabled}
+      optionName="Remove Shorts From Video Reccommendations"
+      optionsDesc="Removes Shorts next from video reccommendations while videos are playing"
     />
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Search</h2>
