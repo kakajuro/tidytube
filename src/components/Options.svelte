@@ -27,7 +27,6 @@
   let shortsOptionsDisabled;
   let shortsOnSiteDisabled;
 
-  let removeAdsFromReccomenationsToggle;
   let removeNewChannelsFromSearchToggle;
   let removeLatestPostsFromSearchToggle;
   let removeLastestVideosFromSearchToggle;
@@ -36,7 +35,11 @@
   let removePeopleAlsoWatchedFromSearchToggle;
   let removeFromRelatedSearchedToggle;
   let removePeopleAlsoSearchForToggle;
+
+  let removeAdsFromReccomenationsToggle;
   let removeFeaturedBannersToggle;
+  let removePopupsToggle;
+
 
   async function optionsOpened() {
     await delay(500);
@@ -52,7 +55,6 @@
     shortsOptionsDisabled = settings.shortsOptionsDisabled;
     shortsOnSiteDisabled = settings.shortsOnSiteDisabled;
 
-    removeAdsFromReccomenationsToggle = settings.removeAdsFromReccomendations;
     removeNewChannelsFromSearchToggle = settings.removeNewChannelsFromSearch;
     removeLatestPostsFromSearchToggle = settings.removeLatestPostsFromSearch;
     removeLastestVideosFromSearchToggle = settings.removeLastestVideosFromSearch;
@@ -61,7 +63,10 @@
     removePeopleAlsoWatchedFromSearchToggle = settings.removePeopleAlsoWatchedFromSearch;
     removeFromRelatedSearchedToggle = settings.removeFromRelatedSearches;
     removePeopleAlsoSearchForToggle = settings.removePeopleAlsoSearchFor;
+
+    removeAdsFromReccomenationsToggle = settings.removeAdsFromReccomendations;
     removeFeaturedBannersToggle = settings.removeFeaturedBanners;
+    let removePopupsToggle = settings.removePopups;
 
     darkMode = await getDarkMode();
   }
@@ -187,6 +192,9 @@
         removeShortsWhileWatchingToggle = !removeShortsWhileWatchingToggle;
         setSettings({"removeShortsWhileWatchingToggle": removeShortsWhileWatchingToggle});
         break;
+      case "removePopups":
+        removePopupsToggle = !removePopupsToggle;
+        setSettings({"removePopups": removePopupsToggle});
       default:
         break;
     }
@@ -216,6 +224,13 @@
     handleChange={() => handleSettingsChanged("removeFeaturedBanners")}
     optionName="Remove featured banners"
     optionsDesc="Stops featured banners from appearing on the homepage of search"
+  />
+  <OptionsCard 
+    {darkMode} 
+    toggle={removePopupsToggle} 
+    handleChange={() => handleSettingsChanged("removePopups")}
+    optionName="Remove popups"
+    optionsDesc="Stops promotional popups from appearing"
   />
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Shorts</h2>
   <div class="grid gap-y-1 gap-x-1 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">

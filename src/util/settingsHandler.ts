@@ -13,7 +13,6 @@ let defaults:settingsType = {
   "shortsOptionsDisabled": false,
   "shortsOnSiteDisabled": false,
 
-  "removeAdsFromReccomendations": true,
   "removeNewChannelsFromSearch": true,
   "removeLatestPostsFromSearch": false,
   "removeLastestVideosFromSearch": false,
@@ -22,7 +21,10 @@ let defaults:settingsType = {
   "removePeopleAlsoWatchedFromSearch": true,
   "removeFromRelatedSearches": true,
   "removePeopleAlsoSearchFor": true,
-  "removeFeaturedBanners": true
+  
+  "removeAdsFromReccomendations": true,
+  "removeFeaturedBanners": true,
+  "removePopups": true
 }
 
 export async function getSettings():Promise<settingsType> {

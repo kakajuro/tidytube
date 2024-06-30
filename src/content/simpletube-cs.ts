@@ -360,6 +360,10 @@ const removeShortsRemixingThisVideo = () => {
   });
 }
 
+const removePopups = () => {
+  generalRemoveElement("ytd-popup-container", "Removed Promotional Popup", "Error removing promotional popup");
+}
+
 //MARK: END OF REMOVING FUNCTIONS
 
 // Scroll event handler
@@ -529,6 +533,14 @@ async function checkExtensionRunning () {
       document.addEventListener('mousemove', throttle(removeShortsWhileWatching, 500));
     }
 
+    // Remove popups from appearing
+    if (settings.removePopups) {
+      removePopups();
+      document.addEventListener('scroll', () => handleScrollEvent(removePopups));
+      document.addEventListener('scrollend', () => handleScrollEvent(removePopups));
+      document.addEventListener('mousemove', throttle(removePopups, 500));
+    }
+
   } else {
     console.log("paused simpletube content script");
 
@@ -607,6 +619,11 @@ async function checkExtensionRunning () {
       document.removeEventListener('scroll', () => handleScrollEvent(removeShortsWhileWatching));
       document.removeEventListener('scrollend', removeShortsWhileWatching);
       document.removeEventListener('mousemove', throttle(removeShortsWhileWatching, 500));
+
+      // [REMOVE EVENT LISTENER] Remove Popups
+      document.removeEventListener('scroll', () => handleScrollEvent(removePopups));
+      document.removeEventListener('scrollend', removePopups);
+      document.removeEventListener('mousemove', throttle(removePopups, 500));
 
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);

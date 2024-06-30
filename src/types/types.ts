@@ -8,8 +8,7 @@ export interface settingsType {
 
   "shortsOptionsDisabled": boolean,
   "shortsOnSiteDisabled": boolean,
-
-  "removeAdsFromReccomendations": boolean,
+  
   "removeNewChannelsFromSearch": boolean,
   "removeLatestPostsFromSearch": boolean,
   "removeLastestVideosFromSearch": boolean,
@@ -18,7 +17,10 @@ export interface settingsType {
   "removePeopleAlsoWatchedFromSearch": boolean,
   "removeFromRelatedSearches": boolean,
   "removePeopleAlsoSearchFor": boolean,
-  "removeFeaturedBanners": boolean
+
+  "removeAdsFromReccomendations": boolean,
+  "removeFeaturedBanners": boolean,
+  "removePopups": boolean
 }
 
 export interface tabData {
