@@ -5,6 +5,7 @@ export interface settingsType {
   "removeShortsPlayback": boolean,
   "removeShortsRemixingThisVideo": boolean,
   "removeShortsWhileWatching": boolean,
+  "removeShortsExplore": boolean,
 
   "shortsOptionsDisabled": boolean,
   "shortsOnSiteDisabled": boolean,
@@ -22,6 +23,29 @@ export interface settingsType {
   "removeAdCompanionSlots": boolean,
   "removeFeaturedBanners": boolean,
   "removePopups": boolean
+}
+
+export interface pageChange {
+  "removeShortsFromSearch": number,
+  "removeShortsFromSite": number,
+  "removeShortsPlayback": number,
+  "removeShortsRemixingThisVideo": number,
+  "removeShortsWhileWatching": number,
+  "removeShortsExplore": number,
+
+  "removeNewChannelsFromSearch": number,
+  "removeLatestPostsFromSearch": number,
+  "removeLatestVideosFromSearch": number,
+  "removePreviouslyWatchedFromSearch": number,
+  "removeForYouFromSearch": number,
+  "removePeopleAlsoWatchedFromSearch": number,
+  "removeFromRelatedSearches": number,
+  "removePeopleAlsoSearchFor": number,
+
+  "removeAdsFromReccomendations": number,
+  "removeAdCompanionSlots": number,
+  "removeFeaturedBanners": number,
+  "removePopups": number
 }
 
 export interface tabData {

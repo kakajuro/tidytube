@@ -9,6 +9,7 @@ let defaults:settingsType = {
   "removeShortsPlayback": false,
   "removeShortsRemixingThisVideo": false,
   "removeShortsWhileWatching": true,
+  "removeShortsExplore": true,
 
   "shortsOptionsDisabled": false,
   "shortsOnSiteDisabled": false,

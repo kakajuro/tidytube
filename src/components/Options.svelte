@@ -23,6 +23,7 @@
   let removeShortsPlaybackToggle;
   let removeShortsRemixingThisVideoToggle;
   let removeShortsWhileWatchingToggle;
+  let removeShortsExploreToggle;
 
   let shortsOptionsDisabled;
   let shortsOnSiteDisabled;
@@ -52,6 +53,7 @@
     removeShortsPlaybackToggle = settings.removeShortsPlayback;
     removeShortsRemixingThisVideoToggle = settings.removeShortsRemixingThisVideo;
     removeShortsWhileWatchingToggle = settings.removeShortsWhileWatching;
+    removeShortsExploreToggle = settings.removeShortsExplore;
 
     shortsOptionsDisabled = settings.shortsOptionsDisabled;
     shortsOnSiteDisabled = settings.shortsOnSiteDisabled;
@@ -121,6 +123,7 @@
     await setSettings({"removeShortsFromSearch": true});
     await setSettings({"removeShortsRemixingThisVideo": true});
     await setSettings({"removeShortsWhileWatching": true});
+    await setSettings({"removeShortsExplore": true});
     
     setSettings({"shortsOnSiteDisabled": newSettings.removeShortsFromSite});
 
@@ -202,6 +205,10 @@
         removeAdCompanionSlotsToggle = !removeAdCompanionSlotsToggle;
         setSettings({"removeAdCompanionSlots": removeAdCompanionSlotsToggle});
         break;
+      case "removeShortsExplore":
+        removeShortsExploreToggle = !removeShortsExploreToggle;
+        setSettings({"removeShortsExplore": removeShortsExploreToggle});
+        break;
       default:
         break;
     }
@@ -276,6 +283,14 @@
       disabled={shortsOptionsDisabled || shortsOnSiteDisabled}
       optionName="Remove Shorts from search"
       optionsDesc="Stops Shorts from appearing in the search page"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeShortsExploreToggle} 
+      handleChange={() => handleSettingsChanged("removeShortsExplore")}
+      disabled={shortsOptionsDisabled || shortsOnSiteDisabled}
+      optionName="Remove Shorts from homepage"
+      optionsDesc="Stops Shorts from appearing on non-search pages (homepage, subscriptions, trending etc.)"
     />
     <OptionsCard 
       {darkMode} 
