@@ -22,7 +22,8 @@ export interface settingsType {
   "removeAdsFromReccomendations": boolean,
   "removeAdCompanionSlots": boolean,
   "removeFeaturedBanners": boolean,
-  "removePopups": boolean
+  "removePopups": boolean,
+  "removeNews": boolean,
 }
 
 export interface pageChange {
@@ -45,7 +46,8 @@ export interface pageChange {
   "removeAdsFromReccomendations": number,
   "removeAdCompanionSlots": number,
   "removeFeaturedBanners": number,
-  "removePopups": number
+  "removePopups": number,
+  "removeNews": number
 }
 
 export interface tabData {

@@ -121,6 +121,10 @@ export async function incremementPageChangeStore(field:string) {
       let newRemoveShortsExplore = pageChangeStore.removeShortsExplore + 1;
       updatePageChangeStore({"removeShortsExplore": newRemoveShortsExplore});
       break;
+    case "removeNews":
+      let newRemoveNews = pageChangeStore.removeNews + 1;
+      updatePageChangeStore({"removeNews": newRemoveNews});
+      break;
     default:
       console.warn("Field not found when updating page change data");
       break;

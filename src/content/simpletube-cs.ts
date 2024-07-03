@@ -43,29 +43,33 @@ const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:str
 
 // Remove shorts that appear next to playing videos
 const removeShortsWhileWatching = () => {
-  const watchNextTab = document.querySelector('ytd-watch-next-secondary-results-renderer');
+  if (window.location.href.includes("https://www.youtube.com/watch")) {
 
-  const shortsElements = watchNextTab.querySelectorAll('ytd-reel-shelf-renderer')
-  const shortsElementsArray = [...shortsElements];
+    const watchNextTab = document.querySelector('ytd-watch-next-secondary-results-renderer');
+
+    const shortsElements = watchNextTab.querySelectorAll('ytd-reel-shelf-renderer')
+    const shortsElementsArray = [...shortsElements];
+    
+    shortsElementsArray?.forEach(shortsElement => {
+      try {
+        if (shortsElement.firstChild) {
+          const shortsContainer = shortsElement.parentNode.parentNode; 
+          
+          shortsContainer.parentNode.removeChild(shortsContainer);
+          shortsElement.parentNode.removeChild(shortsElement);
+        }
   
-  shortsElementsArray.forEach(shortsElement => {
-    try {
-      if (shortsElement.firstChild) {
-        const shortsContainer = shortsElement.parentNode.parentNode; 
-        
-        shortsContainer.parentNode.removeChild(shortsContainer);
-        shortsElement.parentNode.removeChild(shortsElement);
+        updateSectionsRemoveCount("removeShortsWhileWatching");
+        handleSectionRemovedChange();      
+  
+        console.log("Shorts section removed");
+      } catch (error) {
+        console.warn(`Error removing ad section: ${error}`);
       }
-
-      updateSectionsRemoveCount("removeShortsWhileWatching");
-      handleSectionRemovedChange();      
-
-      console.log("Shorts section removed");
-    } catch (error) {
-      console.warn(`Error removing ad section: ${error}`);
-    }
-  })
+    });
+  }
 }
+
 
 // Remove Shorts on search page
 const removeShortsFromSearch = () => {
@@ -381,11 +385,37 @@ const removeAdCompanions = () => {
   generalRemoveElement("ytd-companion-slot-renderer", "Removed ad companion widget", "Error removing ad companion widget", "removeAdCompanionSlots");
 }
 
+// Remove Shorts from explore pages
 const removeShortsExplore = () => {
   // This console log needs to be here otherwise it doesn't work?
   console.log();
-  generalRemoveElement("ytd-reel-shelf-renderer", "Shorts removed", "Error removing shorts", "removeShortsFromSearch");
-  generalRemoveElement("ytd-rich-section-renderer", "Shorts removed", "Error removing Shorts section", "removeShortsFromSite");
+  generalRemoveElement("ytd-reel-shelf-renderer", "Shorts removed (explore)", "Error removing shorts", "removeShortsFromSearch");
+  generalRemoveElement("ytd-rich-section-renderer", "Shorts removed (explore)", "Error removing Shorts section", "removeShortsFromSite");
+  generalRemoveElement("ytd-rich-shelf-renderer", "Shorts removed (explore)", "Error removing Shorts section", "removeShortsFromSite");
+}
+
+// Remove news pages
+const removeNews = () => {
+  let allShelfRenderers = document.querySelectorAll("ytd-rich-shelf-renderer");
+  let allShelfRenderersArray = [...allShelfRenderers];
+
+  allShelfRenderersArray.forEach(div => {
+    let spans = document.querySelectorAll("span");
+    [...spans].forEach(span => {
+      if (span.innerText.includes("news")) {
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount("removeNews");
+          handleSectionRemovedChange();          
+
+          console.log("News section removed");
+        } catch (error) {
+          console.log(`Error removing news section: ${error}`);
+        }
+      } 
+    })
+  });
+
 }
 
 //MARK: END OF REMOVING FUNCTIONS
@@ -581,6 +611,14 @@ async function checkExtensionRunning () {
       document.addEventListener('mousemove', throttle(removeShortsExplore, 500));
     }
 
+    // Remove news
+    if (settings.removeNews) {
+      removeNews();
+      document.addEventListener('scroll', () => handleScrollEvent(removeNews));
+      document.addEventListener('scrollend', () => handleScrollEvent(removeNews));
+      document.addEventListener('mousemove', throttle(removeNews, 500));
+    }
+
   } else {
     console.log("paused simpletube content script");
 
@@ -674,6 +712,11 @@ async function checkExtensionRunning () {
       document.removeEventListener('scroll', () => handleScrollEvent(removeShortsExplore));
       document.removeEventListener('scrollend', removeShortsExplore);
       document.removeEventListener('mousemove', throttle(removeShortsExplore, 500));
+
+      // [REMOVE EVENT LISTENER] Remove news
+      document.removeEventListener('scroll', () => handleScrollEvent(removeNews));
+      document.removeEventListener('scrollend', removeNews);
+      document.removeEventListener('mousemove', throttle(removeNews, 500));
 
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);

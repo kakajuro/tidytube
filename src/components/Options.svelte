@@ -41,6 +41,7 @@
   let removeAdCompanionSlotsToggle;
   let removeFeaturedBannersToggle;
   let removePopupsToggle;
+  let removeNewsToggle;
 
 
   async function optionsOpened() {
@@ -71,6 +72,7 @@
     removeAdCompanionSlotsToggle = settings.removeAdCompanionSlots;
     removeFeaturedBannersToggle = settings.removeFeaturedBanners;
     removePopupsToggle = settings.removePopups;
+    removeNewsToggle = settings.removeNews;
 
     darkMode = await getDarkMode();
   }
@@ -209,6 +211,10 @@
         removeShortsExploreToggle = !removeShortsExploreToggle;
         setSettings({"removeShortsExplore": removeShortsExploreToggle});
         break;
+      case "removeNews":
+        removeNewsToggle = !removeNewsToggle;
+        setSettings({"removeNews": removeNewsToggle});
+        break;
       default:
         break;
     }
@@ -252,6 +258,13 @@
     handleChange={() => handleSettingsChanged("removeAdCompanionSlots")}
     optionName="Remove Ad Companions"
     optionsDesc="Stops ad companion slots from appearing (small clickable ad widgets next to videos)"
+  />
+  <OptionsCard 
+    {darkMode} 
+    toggle={removeNewsToggle} 
+    handleChange={() => handleSettingsChanged("removeNews")}
+    optionName="Remove News Sections"
+    optionsDesc="Remove the news sections from appearing on the homepage"
   />
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Shorts</h2>
   <div class="grid gap-y-1 gap-x-1 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
