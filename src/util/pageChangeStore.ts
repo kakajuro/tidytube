@@ -22,7 +22,8 @@ let defaults:pageChange =  {
   "removeAdsFromReccomendations": 0,
   "removeAdCompanionSlots": 0,
   "removeFeaturedBanners": 0,
-  "removePopups": 0
+  "removePopups": 0,
+  "removeNews": 0
 }
 
 export async function getPageChangeStore():Promise<pageChange> {

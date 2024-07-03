@@ -474,6 +474,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
       document.addEventListener('scrollend', removeShortsFromSearch);
       document.addEventListener('mousemove', throttle(removeShortsFromSearch, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeShortsFromSearch));
+      document.removeEventListener('scrollend', removeShortsFromSearch);
+      document.removeEventListener('mousemove', throttle(removeShortsFromSearch, 500));
     }
     
     // Remove ads from search
@@ -482,6 +486,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeAdsFromReccomendations));
       document.addEventListener('scrollend', removeAdsFromReccomendations);
       document.addEventListener('mousemove', throttle(removeAdsFromReccomendations, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeAdsFromReccomendations));
+      document.removeEventListener('scrollend', removeAdsFromReccomendations);
+      document.removeEventListener('mousemove', throttle(removeAdsFromReccomendations, 500));
     }
 
     // Remove "Channels new to you" from search
@@ -490,6 +498,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeNewChannelsFromSearch));
       document.addEventListener('scrollend', removeNewChannelsFromSearch);
       document.addEventListener('mousemove', throttle(removeNewChannelsFromSearch, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeNewChannelsFromSearch));
+      document.removeEventListener('scrollend', removeNewChannelsFromSearch);
+      document.removeEventListener('mousemove', throttle(removeNewChannelsFromSearch, 500));
     }
 
     // Remove "Latest Posts from ..." from search
@@ -498,6 +510,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeLatestPostsFromSearch));
       document.addEventListener('scrollend', removeLatestPostsFromSearch);
       document.addEventListener('mousemove', throttle(removeLatestPostsFromSearch, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeLatestPostsFromSearch));
+      document.removeEventListener('scrollend', removeLatestPostsFromSearch);
+      document.removeEventListener('mousemove', throttle(removeLatestPostsFromSearch, 500));
     }
 
     // Remove "Latest Videos from ..." from search
@@ -506,6 +522,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeLatestVideosFromSearch));
       document.addEventListener('scrollend', removeLatestVideosFromSearch);
       document.addEventListener('mousemove', throttle(removeLatestVideosFromSearch, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeLatestVideosFromSearch));
+      document.removeEventListener('scrollend', removeLatestVideosFromSearch);
+      document.removeEventListener('mousemove', throttle(removeLatestVideosFromSearch, 500));
     }
 
     // Remove "Previously watched" from search
@@ -514,6 +534,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removePreviouslyWatchedFromSearch));
       document.addEventListener('scrollend', removePreviouslyWatchedFromSearch);
       document.addEventListener('mousemove', throttle(removePreviouslyWatchedFromSearch, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removePreviouslyWatchedFromSearch));
+      document.removeEventListener('scrollend', removePreviouslyWatchedFromSearch);
+      document.removeEventListener('mousemove', throttle(removePreviouslyWatchedFromSearch, 500));
     }
 
     // Remove "For You" from search
@@ -522,6 +546,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeForYouFromSearch));
       document.addEventListener('scrollend', removeForYouFromSearch);
       document.addEventListener('mousemove', throttle(removeForYouFromSearch, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeForYouFromSearch));
+      document.removeEventListener('scrollend', removeForYouFromSearch);
+      document.removeEventListener('mousemove', throttle(removeForYouFromSearch, 500));
     }
 
     // Remove "People also watched" from search
@@ -530,6 +558,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removePeopleAlsoWatchedFromSearch));
       document.addEventListener('scrollend', removePeopleAlsoWatchedFromSearch);
       document.addEventListener('mousemove', throttle(removePeopleAlsoWatchedFromSearch, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removePeopleAlsoWatchedFromSearch));
+      document.removeEventListener('scrollend', removePeopleAlsoWatchedFromSearch);
+      document.removeEventListener('mousemove', throttle(removePeopleAlsoWatchedFromSearch, 500));
     }
 
     // Remove "From Related Searches" from search
@@ -538,6 +570,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeFromRelatedSearches));
       document.addEventListener('scrollend', removeFromRelatedSearches);
       document.addEventListener('mousemove', throttle(removeFromRelatedSearches, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeFromRelatedSearches));
+      document.removeEventListener('scrollend', removeFromRelatedSearches);
+      document.removeEventListener('mousemove', throttle(removeFromRelatedSearches, 500));
     }
 
     // Remove "People Also Search For" from search
@@ -546,6 +582,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removePeopleAlsoSearchFor));
       document.addEventListener('scrollend', removePeopleAlsoSearchFor);
       document.addEventListener('mousemove', throttle(removePeopleAlsoSearchFor, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removePeopleAlsoSearchFor));
+      document.removeEventListener('scrollend', removePeopleAlsoSearchFor);
+      document.removeEventListener('mousemove', throttle(removePeopleAlsoSearchFor, 500));
     }
 
     // Remove Shorts From Site
@@ -554,6 +594,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromSite));
       document.addEventListener('scrollend', removeShortsFromSite);
       document.addEventListener('mousemove', throttle(removeShortsFromSite, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeShortsFromSite));
+      document.removeEventListener('scrollend', removeShortsFromSite);
+      document.removeEventListener('mousemove', throttle(removeShortsFromSite, 500));
     }
 
     // Prevent Shorts Playback
@@ -562,13 +606,22 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(preventShortsPlayback));
       document.addEventListener('scrollend', preventShortsPlayback);
       document.addEventListener('mousemove', throttle(preventShortsPlayback, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(preventShortsPlayback));
+      document.removeEventListener('scrollend', preventShortsPlayback);
+      document.removeEventListener('mousemove', throttle(preventShortsPlayback, 500));
     }
+
     // Remove featured banners
     if (settings.removeFeaturedBanners) {
       removeFeaturedBanners();
       document.addEventListener('scroll', () => handleScrollEvent(removeFeaturedBanners));
       document.addEventListener('scrollend', () => handleScrollEvent(removeFeaturedBanners));
       document.addEventListener('mousemove', throttle(removeFeaturedBanners, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeFeaturedBanners));
+      document.removeEventListener('scrollend', () => handleScrollEvent(removeFeaturedBanners));
+      document.removeEventListener('mousemove', throttle(removeFeaturedBanners, 500));
     }
 
     // Remove shorts remixing this video
@@ -577,6 +630,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeShortsRemixingThisVideo));
       document.addEventListener('scrollend', () => handleScrollEvent(removeShortsRemixingThisVideo));
       document.addEventListener('mousemove', throttle(removeShortsRemixingThisVideo, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeShortsRemixingThisVideo));
+      document.removeEventListener('scrollend', () => handleScrollEvent(removeShortsRemixingThisVideo));
+      document.removeEventListener('mousemove', throttle(removeShortsRemixingThisVideo, 500));
     }
 
     // Remove shorts from appearing on the reccomended sidebar
@@ -585,6 +642,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeShortsWhileWatching));
       document.addEventListener('scrollend', () => handleScrollEvent(removeShortsWhileWatching));
       document.addEventListener('mousemove', throttle(removeShortsWhileWatching, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeShortsWhileWatching));
+      document.removeEventListener('scrollend', () => handleScrollEvent(removeShortsWhileWatching));
+      document.removeEventListener('mousemove', throttle(removeShortsWhileWatching, 500));
     }
 
     // Remove popups from appearing
@@ -593,6 +654,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removePopups));
       document.addEventListener('scrollend', () => handleScrollEvent(removePopups));
       document.addEventListener('mousemove', throttle(removePopups, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removePopups));
+      document.removeEventListener('scrollend', () => handleScrollEvent(removePopups));
+      document.removeEventListener('mousemove', throttle(removePopups, 500));
     }
 
     // Remove ad companions
@@ -601,6 +666,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeAdCompanions));
       document.addEventListener('scrollend', () => handleScrollEvent(removeAdCompanions));
       document.addEventListener('mousemove', throttle(removeAdCompanions, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeAdCompanions));
+      document.removeEventListener('scrollend', () => handleScrollEvent(removeAdCompanions));
+      document.removeEventListener('mousemove', throttle(removeAdCompanions, 500));
     }
 
     // Remove Shorts explore
@@ -609,6 +678,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeShortsExplore));
       document.addEventListener('scrollend', () => handleScrollEvent(removeShortsExplore));
       document.addEventListener('mousemove', throttle(removeShortsExplore, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeShortsExplore));
+      document.removeEventListener('scrollend', () => handleScrollEvent(removeShortsExplore));
+      document.removeEventListener('mousemove', throttle(removeShortsExplore, 500));
     }
 
     // Remove news
@@ -617,6 +690,10 @@ async function checkExtensionRunning () {
       document.addEventListener('scroll', () => handleScrollEvent(removeNews));
       document.addEventListener('scrollend', () => handleScrollEvent(removeNews));
       document.addEventListener('mousemove', throttle(removeNews, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeNews));
+      document.removeEventListener('scrollend', () => handleScrollEvent(removeNews));
+      document.removeEventListener('mousemove', throttle(removeNews, 500));
     }
 
   } else {
