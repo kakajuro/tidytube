@@ -1,16 +1,18 @@
-/// <reference types="chrome"/>
-
 import { browser } from "webextension-polyfill-ts";
 import { getTabStore, removeTabFromStore, updateTabStore } from "../util/tabStore";
 import { setSectionsRemovedPage, getSectionsRemovedPage } from "../util/sectionsRemoved";
+import { clearPageChangeStore, getPageChangeStore } from "../util/pageChangeStore";
 
-chrome.runtime.onInstalled.addListener(function () {
+// Setup alarms
+browser.alarms.create("sendPageUpdates", {"periodInMinutes": 5});
+
+browser.runtime.onInstalled.addListener(function () {
   // Make extension work on all pages
-  chrome.declarativeContent.onPageChanged.removeRules(undefined, function () {
-    chrome.declarativeContent.onPageChanged.addRules([
+  browser.declarativeContent.onPageChanged.removeRules(undefined, function () {
+    browser.declarativeContent.onPageChanged.addRules([
       {
-        conditions: [new chrome.declarativeContent.PageStateMatcher({})],
-        actions: [new chrome.declarativeContent.ShowPageAction()],
+        conditions: [new browser.declarativeContent.PageStateMatcher({})],
+        actions: [new browser.declarativeContent.ShowPageAction()],
       },
     ]);
   }); 
@@ -88,6 +90,7 @@ browser.tabs.onRemoved.addListener(async function(tabId, removeInfo) {
 
 });
 
+// Reponse functions
 const tabStoreUpdate = async () => {
   let sectionsRemovedPage = await getSectionsRemovedPage();
 
@@ -99,10 +102,28 @@ const tabStoreUpdate = async () => {
   })
 }; 
 
+const sendPageUpdates = async () => {
+  
+  let pageChangeData = await getPageChangeStore();
+  console.log("Sending page change data...")
+
+  // Here send page change data to server
+  // If it fails then wait and retry later
+
+  await clearPageChangeStore();
+
+}
+
+// Alarm listeners
+browser.alarms.onAlarm.addListener(alarmInfo => {
+  if (alarmInfo.name === "sendPageUpdates") {
+    sendPageUpdates();
+  }
+})
+
 // Message listners
 browser.runtime.onMessage.addListener((msg, sender) => {
   if (msg === "BGupdateTabStore") {
-    console.log("BGupdateTabStore");
     tabStoreUpdate();
   }
 })
