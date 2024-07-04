@@ -1,8 +1,8 @@
 /// <reference types="chrome"/>
 
 import { browser } from "webextension-polyfill-ts";
-import { getTabStore, removeTabFromStore, updateTabStore } from "../../util/tabStore";
-import { setSectionsRemovedPage, getSectionsRemovedPage } from "../../util/sectionsRemoved";
+import { getTabStore, removeTabFromStore, updateTabStore } from "../util/tabStore";
+import { setSectionsRemovedPage, getSectionsRemovedPage } from "../util/sectionsRemoved";
 
 chrome.runtime.onInstalled.addListener(function () {
   // Make extension work on all pages
@@ -76,7 +76,7 @@ browser.tabs.onActivated.addListener(async function (activeInfo) {
 
 });
 
-// Tab close event (remove data for closed tab from tab store) [WORKING]
+// Tab close event (remove data for closed tab from tab store)
 browser.tabs.onRemoved.addListener(async function(tabId, removeInfo) {
   
   let tabStore = await getTabStore();

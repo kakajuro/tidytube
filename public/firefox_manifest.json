@@ -6,7 +6,8 @@
     "declarativeContent", 
     "scripting",
     "storage", 
-    "activeTab"
+    "activeTab",
+    "alarms"
   ],
   "content_security_policy": "script-src 'self' https://youtube.com https://youtube.com/*; object-src 'self'",
   "manifest_version": 2,
