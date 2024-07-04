@@ -1,6 +1,6 @@
 import { browser } from "webextension-polyfill-ts";
 
-export async function getExtensionRunning() {
+export async function getExtensionRunning():Promise<Boolean> {
   try { 
     let { extensionRunning } = await browser.storage.local.get("extensionRunning");
 

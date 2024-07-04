@@ -54,3 +54,7 @@ export interface tabData {
   tab: number,
   sectionsRemovedPage: number
 }
+
+export interface tabStore {
+  [tab: number]: number
+}

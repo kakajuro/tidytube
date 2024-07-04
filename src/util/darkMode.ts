@@ -5,7 +5,7 @@ export const getDarkModePreference = (): Boolean => {
   return prefence;
 }
 
-export async function getDarkMode() {
+export async function getDarkMode():Promise<Boolean> {
   try {
     let { darkMode } = await browser.storage.local.get("darkMode");
 

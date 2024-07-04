@@ -1,8 +1,8 @@
 import { browser } from "webextension-polyfill-ts";
 
-import type { tabData } from "../types/types";
+import type { tabData, tabStore } from "../types/types";
 
-export async function getTabStore() {
+export async function getTabStore():Promise<tabStore> {
   try {
     
     let { tabStore } = await browser.storage.local.get("tabStore");

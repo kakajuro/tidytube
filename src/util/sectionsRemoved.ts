@@ -1,6 +1,6 @@
 import { browser } from "webextension-polyfill-ts";
 
-export async function getSectionsRemovedPage() {
+export async function getSectionsRemovedPage():Promise<number> {
   try {
     let { sectionsRemovedPage } = await browser.storage.local.get("sectionsRemovedPage");
 
@@ -16,7 +16,7 @@ export async function getSectionsRemovedPage() {
   } catch (error) {
     // Return nothing in case of an error
     console.error(`An error occurred when trying to get sections removed (page): ${error}`);
-    return "---"
+    return -1
   }
 }
 
@@ -25,7 +25,7 @@ export function setSectionsRemovedPage(value:number) {
   .catch((error) => console.error(`An error occurred when trying to store sections removed (page): ${error}`))
 }
 
-export async function getSectionsRemovedTotal() {
+export async function getSectionsRemovedTotal():Promise<number> {
   try {
     let { sectionsRemovedTotal } = await browser.storage.local.get("sectionsRemovedTotal");
 
@@ -41,7 +41,7 @@ export async function getSectionsRemovedTotal() {
   } catch (error) {
     // Return nothing in case of an error
     console.error(`An error occurred when trying to get sections removed (total): ${error}`);
-    return "---"
+    return -1
   }
 }
 
