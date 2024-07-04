@@ -50,6 +50,10 @@
     browser.tabs.create({ url: "./options.html" })
   }
 
+  const handleReportBugButtonClicked = () => {
+    browser.tabs.create({ url: "https://github.com/kakajuro/tidytube/issues" });
+  }
+
   onMount(async ()  => {
     darkMode = await getDarkMode();
     extensionRunningToggle = await getExtensionRunning();
@@ -148,7 +152,13 @@
   </div>
   <div class="mb-[50px]"/>
   <div class="flex flex-col mb-auto mt-auto">
-    <button class="flex flex-row content-center justify-center font-semibold items-center text-center h-10 border-2 rounded-lg button-effect" class:text-white={darkMode} class:border-white={darkMode} class:border-[#4a4a4a]={!darkMode}>
+    <button 
+      class="flex flex-row content-center justify-center font-semibold items-center text-center h-10 border-2 rounded-lg button-effect" 
+      class:text-white={darkMode} 
+      class:border-white={darkMode} 
+      class:border-[#4a4a4a]={!darkMode}
+      on:click={() => handleReportBugButtonClicked()} 
+    >
       <Warning color={darkMode ? "#FFFFFF" : "#09090B"} size="{22}" class="space-x-4"/>
       <p class="ml-2">Report a bug</p>
     </button>
