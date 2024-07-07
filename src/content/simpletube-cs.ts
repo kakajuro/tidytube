@@ -46,23 +46,22 @@ const removeShortsWhileWatching = () => {
   if (window.location.href.includes("https://www.youtube.com/watch")) {
 
     const watchNextTab = document.querySelector('ytd-watch-next-secondary-results-renderer');
+    const reelShelves = watchNextTab?.querySelectorAll('ytd-reel-shelf-renderer');
+    const richSections = watchNextTab?.querySelectorAll('ytd-rich-section-renderer');
+    const richShelves = watchNextTab?.querySelectorAll('ytd-rich-shelf-renderer');
 
-    const shortsElements = watchNextTab.querySelectorAll('ytd-reel-shelf-renderer')
-    const shortsElementsArray = [...shortsElements];
+    const elementsToRemove = reelShelves || richSections || richShelves;
+
+    const shortsElementsArray = elementsToRemove ? [...reelShelves, ...richSections, ...richShelves].filter(e => e) : null;
     
     shortsElementsArray?.forEach(shortsElement => {
       try {
-        if (shortsElement.firstChild) {
-          const shortsContainer = shortsElement.parentNode.parentNode; 
-          
-          shortsContainer.parentNode.removeChild(shortsContainer);
-          shortsElement.parentNode.removeChild(shortsElement);
-        }
+        document.removeChild(shortsElement);
   
         updateSectionsRemoveCount("removeShortsWhileWatching");
         handleSectionRemovedChange();      
   
-        console.log("Shorts section removed");
+        console.log("Shorts section removed (while watching)");
       } catch (error) {
         console.warn(`Error removing ad section: ${error}`);
       }
