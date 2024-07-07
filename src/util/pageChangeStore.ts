@@ -23,7 +23,8 @@ let defaults:pageChange =  {
   "removeAdCompanionSlots": 0,
   "removeFeaturedBanners": 0,
   "removePopups": 0,
-  "removeNews": 0
+  "removeNews": 0,
+  "removeForYouFromChannel": 0
 }
 
 export async function getPageChangeStore():Promise<pageChange> {
@@ -125,6 +126,10 @@ export async function incremementPageChangeStore(field:string) {
     case "removeNews":
       let newRemoveNews = pageChangeStore.removeNews + 1;
       updatePageChangeStore({"removeNews": newRemoveNews});
+      break;
+    case "removeForYouFromChannel":
+      let newRemoveForYouFromChannel = pageChangeStore.removeForYouFromChannel + 1;
+      updatePageChangeStore({"removeForYouFromChannel": newRemoveForYouFromChannel});
       break;
     default:
       console.warn("Field not found when updating page change data");

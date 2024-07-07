@@ -24,6 +24,7 @@ export interface settingsType {
   "removeFeaturedBanners": boolean,
   "removePopups": boolean,
   "removeNews": boolean,
+  "removeForYouFromChannel": boolean
 }
 
 export interface pageChange {
@@ -47,7 +48,8 @@ export interface pageChange {
   "removeAdCompanionSlots": number,
   "removeFeaturedBanners": number,
   "removePopups": number,
-  "removeNews": number
+  "removeNews": number,
+  "removeForYouFromChannel": number
 }
 
 export interface tabData {

@@ -394,7 +394,7 @@ const removeShortsExplore = () => {
   generalRemoveElement("ytd-rich-shelf-renderer", "Shorts removed (explore)", "Error removing Shorts section", "removeShortsFromSite");
 }
 
-// Remove news pages
+// Remove news feeds
 const removeNews = () => {
   let allShelfRenderers = document.querySelectorAll("ytd-rich-shelf-renderer");
   let allShelfRenderersArray = [...allShelfRenderers];
@@ -416,6 +416,29 @@ const removeNews = () => {
     })
   });
 
+}
+
+// Remove "For You" sections on channel pages
+const removeForYouFromChannel = () => {
+  let allShelfRenderers = document.querySelectorAll("ytd-shelf-renderer");
+  let allShelfRenderersArray = [...allShelfRenderers];
+
+  allShelfRenderersArray.forEach(div => {
+    let spans = document.querySelectorAll("span");
+    [...spans].forEach(span => {
+      if (span.innerText.includes("For You")) {
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount("removeForYouFromChannel");
+          handleSectionRemovedChange();          
+
+          console.log("For You channel section removed");
+        } catch (error) {
+          console.log(`Error removing For You channel section: ${error}`);
+        }
+      } 
+    })
+  });
 }
 
 //MARK: END OF REMOVING FUNCTIONS
@@ -696,6 +719,18 @@ async function checkExtensionRunning () {
       document.removeEventListener('mousemove', throttle(removeNews, 500));
     }
 
+    // Remove "For You" from channel
+    if (settings.removeForYouFromChannel) {
+      removeForYouFromChannel();
+      document.addEventListener('scroll', () => handleScrollEvent(removeForYouFromChannel));
+      document.addEventListener('scrollend', () => handleScrollEvent(removeForYouFromChannel));
+      document.addEventListener('mousemove', throttle(removeForYouFromChannel, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeForYouFromChannel));
+      document.removeEventListener('scrollend', () => handleScrollEvent(removeForYouFromChannel));
+      document.removeEventListener('mousemove', throttle(removeForYouFromChannel, 500));
+    }
+
   } else {
     console.log("paused simpletube content script");
 
@@ -794,6 +829,11 @@ async function checkExtensionRunning () {
       document.removeEventListener('scroll', () => handleScrollEvent(removeNews));
       document.removeEventListener('scrollend', removeNews);
       document.removeEventListener('mousemove', throttle(removeNews, 500));
+
+      // [REMOVE EVENT LISTENER] Remove "For You" from channel
+      document.removeEventListener('scroll', () => handleScrollEvent(removeForYouFromChannel));
+      document.removeEventListener('scrollend', removeForYouFromChannel);
+      document.removeEventListener('mousemove', throttle(removeForYouFromChannel, 500));
 
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);

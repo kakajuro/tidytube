@@ -42,6 +42,7 @@
   let removeFeaturedBannersToggle;
   let removePopupsToggle;
   let removeNewsToggle;
+  let removeForYouFromChannelPageToggle;
 
 
   async function optionsOpened() {
@@ -73,6 +74,7 @@
     removeFeaturedBannersToggle = settings.removeFeaturedBanners;
     removePopupsToggle = settings.removePopups;
     removeNewsToggle = settings.removeNews;
+    removeForYouFromChannelPageToggle = settings.removeForYouFromChannel;
 
     darkMode = await getDarkMode();
   }
@@ -215,6 +217,10 @@
         removeNewsToggle = !removeNewsToggle;
         setSettings({"removeNews": removeNewsToggle});
         break;
+      case "removeForYouFromChannel":
+        removeForYouFromChannelPageToggle = !removeForYouFromChannelPageToggle;
+        setSettings({"removeForYouFromChannel": removeForYouFromChannelPageToggle});
+        break;
       default:
         break;
     }
@@ -258,6 +264,13 @@
     handleChange={() => handleSettingsChanged("removeAdCompanionSlots")}
     optionName="Remove Ad Companions"
     optionsDesc="Stops ad companion slots from appearing (small clickable ad widgets next to videos)"
+  />
+  <OptionsCard 
+    {darkMode}
+    toggle={removeForYouFromChannelPageToggle}
+    handleChange={() => handleSettingsChanged("removeForYouFromChannel")}
+    optionName="Remove <em>For You</em> From Channel page"
+    optionsDesc="Removes <em>For You</em> recommended videos appearing on a channel's page"
   />
   <OptionsCard 
     {darkMode} 
@@ -365,7 +378,7 @@
       toggle={removeForYouFromSearchToggle} 
       handleChange={() => handleSettingsChanged("removeForYouFromSearch")}
       optionName="Remove <em>For You</em>"
-      optionsDesc="Removes general Youtube reccomendations <br /> from appearing in the search page"
+      optionsDesc="Removes Youtube reccomendations unrelated to the search query <br /> from appearing in the search page"
     />
     <OptionsCard 
       {darkMode} 

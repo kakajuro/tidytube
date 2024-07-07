@@ -27,7 +27,8 @@ let defaults:settingsType = {
   "removeAdsFromReccomendations": true,
   "removeAdCompanionSlots": true,
   "removeFeaturedBanners": true,
-  "removePopups": true
+  "removePopups": true,
+  "removeForYouFromChannel": false
 }
 
 export async function getSettings():Promise<settingsType> {
