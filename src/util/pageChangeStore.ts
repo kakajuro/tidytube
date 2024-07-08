@@ -9,6 +9,7 @@ let defaults:pageChange =  {
   "removeShortsRemixingThisVideo": 0,
   "removeShortsWhileWatching": 0,
   "removeShortsExplore": 0,
+  "removeShortsFromChannel": 0,
 
   "removeNewChannelsFromSearch": 0,
   "removeLatestPostsFromSearch": 0,
@@ -130,6 +131,10 @@ export async function incremementPageChangeStore(field:string) {
     case "removeForYouFromChannel":
       let newRemoveForYouFromChannel = pageChangeStore.removeForYouFromChannel + 1;
       updatePageChangeStore({"removeForYouFromChannel": newRemoveForYouFromChannel});
+      break;
+    case "removeShortsFromChannel":
+      let newRemoveShortsFromChannel = pageChangeStore.removeShortsFromChannel + 1;
+      updatePageChangeStore({"removeShortsFromChannel": newRemoveShortsFromChannel});
       break;
     default:
       console.warn("Field not found when updating page change data");

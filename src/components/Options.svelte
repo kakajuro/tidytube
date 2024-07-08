@@ -24,6 +24,7 @@
   let removeShortsRemixingThisVideoToggle;
   let removeShortsWhileWatchingToggle;
   let removeShortsExploreToggle;
+  let removeShortsFromChannelToggle;
 
   let shortsOptionsDisabled;
   let shortsOnSiteDisabled;
@@ -56,6 +57,7 @@
     removeShortsRemixingThisVideoToggle = settings.removeShortsRemixingThisVideo;
     removeShortsWhileWatchingToggle = settings.removeShortsWhileWatching;
     removeShortsExploreToggle = settings.removeShortsExplore;
+    removeShortsFromChannelToggle = settings.removeShortsFromChannel;
 
     shortsOptionsDisabled = settings.shortsOptionsDisabled;
     shortsOnSiteDisabled = settings.shortsOnSiteDisabled;
@@ -221,6 +223,10 @@
         removeForYouFromChannelPageToggle = !removeForYouFromChannelPageToggle;
         setSettings({"removeForYouFromChannel": removeForYouFromChannelPageToggle});
         break;
+      case "removeShortsFromChannel":
+        removeNewChannelsFromSearchToggle = !removeShortsFromChannelToggle;
+        setSettings({"removeShortsFromChannel": removeShortsFromChannelToggle});
+        break;
       default:
         break;
     }
@@ -289,7 +295,7 @@
         handlePreventShortsChange();
       }}
       optionName="Block Shorts"
-      optionsDesc="Completely block Shorts from the site"
+      optionsDesc="Completely block Shorts from the site (prevents Shorts playback)"
     />
     <OptionsCard 
       {darkMode} 
@@ -341,6 +347,14 @@
       disabled={shortsOptionsDisabled || shortsOnSiteDisabled}
       optionName="Remove Shorts From Video Reccommendations"
       optionsDesc="Removes Shorts next from video reccommendations while videos are playing"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeShortsFromChannelToggle} 
+      handleChange={() => handleSettingsChanged("removeShortsFromChannel")}
+      disabled={shortsOptionsDisabled || shortsOnSiteDisabled}
+      optionName="Remove Shorts From Channel Pages"
+      optionsDesc="Prevents Shorts from being displayed on channel pages"
     />
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Search</h2>

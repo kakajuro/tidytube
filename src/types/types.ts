@@ -6,6 +6,7 @@ export interface settingsType {
   "removeShortsRemixingThisVideo": boolean,
   "removeShortsWhileWatching": boolean,
   "removeShortsExplore": boolean,
+  "removeShortsFromChannel": boolean,
 
   "shortsOptionsDisabled": boolean,
   "shortsOnSiteDisabled": boolean,
@@ -33,7 +34,8 @@ export interface pageChange {
   "removeShortsPlayback": number,
   "removeShortsRemixingThisVideo": number,
   "removeShortsWhileWatching": number,
-  "removeShortsExplore": number,
+  "removeShortsExplore": number, 
+  "removeShortsFromChannel": number,
 
   "removeNewChannelsFromSearch": number,
   "removeLatestPostsFromSearch": number,

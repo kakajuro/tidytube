@@ -389,9 +389,9 @@ const removeShortsExplore = () => {
   // This console log needs to be here otherwise it doesn't work?
   console.log();
   
-  const currentURL = window.location.href;
+  const currentURL = window.location.href; 
   
-  let canRemoveShorts = currentURL.includes("https://www.youtube.com/feed/trending") || currentURL.includes("https://www.youtube.com/feed/subscriptions") || currentURL.match("/^https://www.youtube.com$/")
+  let canRemoveShorts = currentURL.includes("https://www.youtube.com/feed/trending") || currentURL.includes("https://www.youtube.com/feed/subscriptions") || (window.location.pathname === "/");
 
   if (canRemoveShorts) {
     generalRemoveElement("ytd-reel-shelf-renderer", "Shorts removed (explore)", "Error removing shorts", "removeShortsFromSearch");
@@ -446,6 +446,24 @@ const removeForYouFromChannel = () => {
       } 
     })
   });
+}
+
+// Remove Shorts from channel pages
+const removeShortsFromChannel = () => {
+
+  const currentURL = window.location.href;
+  const onChannelPage = currentURL.includes("https://www.youtube.com/c/") || currentURL.includes("https://www.youtube.com/@");
+
+  if (onChannelPage) {
+    let shortsTabIcon = document.querySelector("[tab-title='Shorts']");
+    let shortsTabParent = shortsTabIcon?.parentNode;
+    if (shortsTabIcon) shortsTabParent?.removeChild(shortsTabIcon);
+
+    generalRemoveElement("ytd-reel-shelf-renderer", "Shorts removed from channel page", "Error removing shorts", "removeShortsFromSearch");
+    generalRemoveElement("ytd-rich-section-renderer", "Shorts removed from channel page", "Error removing Shorts section", "removeShortsFromSite");
+    generalRemoveElement("ytd-rich-shelf-renderer", "Shorts removed from channel page", "Error removing Shorts section", "removeShortsFromSite");
+  }
+
 }
 
 //MARK: END OF REMOVING FUNCTIONS
@@ -738,6 +756,18 @@ async function checkExtensionRunning () {
       document.removeEventListener('mousemove', throttle(removeForYouFromChannel, 500));
     }
 
+    // Remove Shorts from channel pages
+    if (settings.removeShortsFromChannel) {
+      removeShortsFromChannel();
+      document.addEventListener('scroll', () => handleScrollEvent(removeShortsFromChannel));
+      document.addEventListener('scrollend', () => handleScrollEvent(removeShortsFromChannel));
+      document.addEventListener('mousemove', throttle(removeShortsFromChannel, 500));
+    } else {
+      document.removeEventListener('scroll', () => handleScrollEvent(removeShortsFromChannel));
+      document.removeEventListener('scrollend', () => handleScrollEvent(removeShortsFromChannel));
+      document.removeEventListener('mousemove', throttle(removeShortsFromChannel, 500));
+    }
+
   } else {
     console.log("paused simpletube content script");
 
@@ -841,6 +871,11 @@ async function checkExtensionRunning () {
       document.removeEventListener('scroll', () => handleScrollEvent(removeForYouFromChannel));
       document.removeEventListener('scrollend', removeForYouFromChannel);
       document.removeEventListener('mousemove', throttle(removeForYouFromChannel, 500));
+
+      // [REMOVE EVENT LISTENER] Remove Shorts from channel pages
+      document.removeEventListener('scroll', () => handleScrollEvent(removeShortsFromChannel));
+      document.removeEventListener('scrollend', removeShortsFromChannel);
+      document.removeEventListener('mousemove', throttle(removeShortsFromChannel, 500));
 
     } catch (error) {
       console.error(`Error removing event listeners (there may not have been any): ${error}`);
