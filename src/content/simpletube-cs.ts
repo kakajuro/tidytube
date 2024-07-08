@@ -388,9 +388,17 @@ const removeAdCompanions = () => {
 const removeShortsExplore = () => {
   // This console log needs to be here otherwise it doesn't work?
   console.log();
-  generalRemoveElement("ytd-reel-shelf-renderer", "Shorts removed (explore)", "Error removing shorts", "removeShortsFromSearch");
-  generalRemoveElement("ytd-rich-section-renderer", "Shorts removed (explore)", "Error removing Shorts section", "removeShortsFromSite");
-  generalRemoveElement("ytd-rich-shelf-renderer", "Shorts removed (explore)", "Error removing Shorts section", "removeShortsFromSite");
+  
+  const currentURL = window.location.href;
+  
+  let canRemoveShorts = currentURL.includes("https://www.youtube.com/feed/trending") || currentURL.includes("https://www.youtube.com/feed/subscriptions") || currentURL.match("/^https://www.youtube.com$/")
+
+  if (canRemoveShorts) {
+    generalRemoveElement("ytd-reel-shelf-renderer", "Shorts removed (explore)", "Error removing shorts", "removeShortsFromSearch");
+    generalRemoveElement("ytd-rich-section-renderer", "Shorts removed (explore)", "Error removing Shorts section", "removeShortsFromSite");
+    generalRemoveElement("ytd-rich-shelf-renderer", "Shorts removed (explore)", "Error removing Shorts section", "removeShortsFromSite");
+  }
+
 }
 
 // Remove news feeds
