@@ -29,7 +29,7 @@ const reinjectContentScript = () => {
 
       browser.scripting.executeScript({
         target: {tabId: currentTabID},
-        files: ["simpletube-cs.js"]
+        files: ["tidytube-cs.js"]
       })
     })
   }

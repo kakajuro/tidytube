@@ -1,3 +1,3 @@
-# Simpletube
+# tidytube
 
 Simplifying Youtube

@@ -1,5 +1,5 @@
 {
-  "name": "simpletube",
+  "name": "tidytube",
   "version": "0.0.1",
   "description": "An extension built to simplify Youtube by removing excess clutter",
   "permissions": [
@@ -26,7 +26,7 @@
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["simpletube-cs.js"],
+      "js": ["tidytube-cs.js"],
       "run_at": "document_idle"
     }
   ],

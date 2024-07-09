@@ -103,7 +103,7 @@
 
 <main class="container min-w-[21rem] p-4 flex flex-col select-none" class:bg-custom-dark={darkMode}>
   <nav class="flex flex-row content-center justify-between items-center w-full">
-    <h1 class="text-light-mode-title font-bold text-3xl underline" class:text-white={darkMode}>simpletube</h1>
+    <h1 class="text-light-mode-title font-bold text-3xl underline" class:text-white={darkMode}>tidytube</h1>
     <div class="flex flex-row space-x-3 content-center pt-3">
       {#if darkMode}
       <button class="w-[20px] h-[20px]" on:click={handleDarkModeSwitch}>
