@@ -79,6 +79,8 @@
     removeForYouFromChannelPageToggle = settings.removeForYouFromChannel;
 
     darkMode = await getDarkMode();
+
+    if (removeShortsFromSiteToggle) handleRemoveShortsFromSite("nodisable");
   }
 
   const makeToast = (customMsg?:string) => {
@@ -122,7 +124,7 @@
     await optionsOpened();
   }
 
-  const handleRemoveShortsFromSite = async () => {
+  const handleRemoveShortsFromSite = async (nodisable?:string) => {
     await delay(500);
     let newSettings = await getSettings();
     
@@ -131,7 +133,7 @@
     await setSettings({"removeShortsWhileWatching": true});
     await setSettings({"removeShortsExplore": true});
     
-    setSettings({"shortsOnSiteDisabled": newSettings.removeShortsFromSite});
+    nodisable ? null : setSettings({"shortsOnSiteDisabled": newSettings.removeShortsFromSite});
 
     await optionsOpened();
   }

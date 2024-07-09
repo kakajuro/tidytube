@@ -1,4 +1,5 @@
 {
+  "manifest_version": 2,
   "name": "tidytube",
   "version": "0.0.1",
   "description": "An extension built to simplify Youtube by removing excess clutter",
@@ -8,22 +9,21 @@
     "128": "images/icons/icon128.png"
   },
   "permissions": [
-    "declarativeContent", 
     "scripting",
     "storage", 
     "activeTab",
     "alarms"
   ],
   "content_security_policy": "script-src 'self' https://youtube.com https://youtube.com/*; object-src 'self'",
-  "manifest_version": 2,
   "options_page": "options.html",
   "background": {
     "scripts": ["background.js"]
   },
   "content_scripts": [
     {
-      "matches": ["https://youtube.com/*"],
-      "js": ["tidytube-cs.js"]
+      "matches": ["https://*.youtube.com/*"],
+      "js": ["tidytube-cs.js"],
+      "run_at": "document_idle"
     }
   ],
   "browser_action": {
