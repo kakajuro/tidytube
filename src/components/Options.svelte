@@ -243,50 +243,52 @@
 <main class="w-full p-4 flex flex-col items-center select-none font-jost text-center" class:bg-custom-dark={darkMode}>
   <h1 class="font-semibold text-5xl mt-12 pb-4" class:text-white={darkMode}>Options</h1>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>General</h2>
-  <OptionsCard 
-    {darkMode} 
-    toggle={removeAdsFromReccomenationsToggle} 
-    handleChange={() => handleSettingsChanged("removeAdsFromReccomendations")}
-    optionName="Remove ads from reccomendations"
-    optionsDesc="Stops ads from appearing in the search page and homepage (does not block ads during video playback)"
-  />
-  <OptionsCard 
-    {darkMode} 
-    toggle={removeFeaturedBannersToggle} 
-    handleChange={() => handleSettingsChanged("removeFeaturedBanners")}
-    optionName="Remove featured banners"
-    optionsDesc="Stops featured banners from appearing on the homepage of search"
-  />
-  <OptionsCard 
-    {darkMode} 
-    toggle={removePopupsToggle} 
-    handleChange={() => handleSettingsChanged("removePopups")}
-    optionName="Remove popups"
-    optionsDesc="Stops promotional popups from appearing"
-  />
-  <OptionsCard 
-    {darkMode} 
-    toggle={removeAdCompanionSlotsToggle} 
-    handleChange={() => handleSettingsChanged("removeAdCompanionSlots")}
-    optionName="Remove Ad Companions"
-    optionsDesc="Stops ad companion slots from appearing (small clickable ad widgets next to videos)"
-  />
-  <OptionsCard 
-    {darkMode}
-    toggle={removeForYouFromChannelPageToggle}
-    handleChange={() => handleSettingsChanged("removeForYouFromChannel")}
-    optionName="Remove <em>For You</em> From Channel page"
-    optionsDesc="Removes <em>For You</em> recommended videos appearing on a channel's page"
-  />
-  <OptionsCard 
-    {darkMode} 
-    toggle={removeNewsToggle} 
-    handleChange={() => handleSettingsChanged("removeNews")}
-    optionName="Remove News Sections"
-    optionsDesc="Remove the news sections from appearing on the homepage"
-  />
+  <div class="grid gap-x-1 gap-y-1 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeAdsFromReccomenationsToggle} 
+      handleChange={() => handleSettingsChanged("removeAdsFromReccomendations")}
+      optionName="Remove ads from reccomendations"
+      optionsDesc="Stops ads from appearing in the search page and homepage (does not block ads during video playback)"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeFeaturedBannersToggle} 
+      handleChange={() => handleSettingsChanged("removeFeaturedBanners")}
+      optionName="Remove featured banners"
+      optionsDesc="Stops featured banners from appearing on the homepage of search"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removePopupsToggle} 
+      handleChange={() => handleSettingsChanged("removePopups")}
+      optionName="Remove popups"
+      optionsDesc="Stops promotional popups from appearing"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeAdCompanionSlotsToggle} 
+      handleChange={() => handleSettingsChanged("removeAdCompanionSlots")}
+      optionName="Remove Ad Companions"
+      optionsDesc="Stops ad companion slots from appearing (small clickable ad widgets next to videos)"
+    />
+    <OptionsCard 
+      {darkMode}
+      toggle={removeForYouFromChannelPageToggle}
+      handleChange={() => handleSettingsChanged("removeForYouFromChannel")}
+      optionName="Remove <em>For You</em> From Channel page"
+      optionsDesc="Removes <em>For You</em> recommended videos appearing on a channel's page"
+    />
+    <OptionsCard 
+      {darkMode} 
+      toggle={removeNewsToggle} 
+      handleChange={() => handleSettingsChanged("removeNews")}
+      optionName="Remove News Sections"
+      optionsDesc="Remove the news sections from appearing on the homepage"
+    />
+  </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Shorts</h2>
-  <div class="grid gap-y-1 gap-x-1 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+  <div class="grid gap-x-1 gap-y-1 grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
     <OptionsCard 
       {darkMode} 
       toggle={preventShortsToggle} 
@@ -406,7 +408,7 @@
       toggle={removeFromRelatedSearchedToggle} 
       handleChange={() => handleSettingsChanged("removeFromRelatedSearches")}
       optionName="Remove <em>From Related Searches</em>"
-      optionsDesc="Removes videos suggested from related searches <br /> from appearing in the search page"
+      optionsDesc="Removes videos suggested from related searches from appearing <br /> in the search page"
     />
     <OptionsCard 
       {darkMode} 

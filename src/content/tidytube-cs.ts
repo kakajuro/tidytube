@@ -514,7 +514,7 @@ async function checkExtensionRunning () {
   let settings = await getSettings();
 
   if (extensionRunning) {
-    console.log("simpletube content script now running...");
+    console.log("tidytube content script now running...");
     
     // Remove shorts from search
     if (settings.removeShortsFromSearch) {
@@ -769,7 +769,7 @@ async function checkExtensionRunning () {
     }
 
   } else {
-    console.log("paused simpletube content script");
+    console.log("paused tidytube content script");
 
     try {
       // [REMOVE EVENT LISTENER] Remove shorts from search
@@ -895,4 +895,4 @@ setSectionsRemovedPage(0);
 handleSectionRemovedChange("Page");
 
 setTimeout(checkExtensionRunning, 1000);
-console.log("simpletube loaded");
+console.log("tidytube loaded");
