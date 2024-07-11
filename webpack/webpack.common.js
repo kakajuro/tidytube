@@ -4,7 +4,7 @@ const CopyPlugin = require('copy-webpack-plugin');
 const postcss = require("postcss-loader");
 
 const browser = process.env.BROWSER;
-const BUILD_DIR_NAME = 'dist';
+const BUILD_DIR_NAME = `${browser.toLowerCase()}_dist`;
 const SRC_DIR_NAME = 'src';
 
 module.exports = {

@@ -1,5 +1,8 @@
 {
+  "name":"tidytube",
   "version": "0.0.1",
+  "description": "",
+  "author": "kakajuro",
   "scripts": {
     "code:validate": "svelte-check",
     "code:typecheck": "./node_modules/.bin/tsc --noEmit",
@@ -33,7 +36,7 @@
     "postcss-import": "^16.0.0",
     "postcss-loader": "^8.1.0",
     "precss": "^4.0.0",
-    "rimraf": "^3.0.2",
+    "rimraf": "^6.0.1",
     "sinon": "^10.0.0",
     "svelte": "^3.31.2",
     "svelte-check": "^1.0.46",
