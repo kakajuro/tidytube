@@ -375,7 +375,22 @@ const removeShortsRemixingThisVideo = () => {
 
 // Remove popups
 const removePopups = () => {
-  generalRemoveElement("ytd-popup-container", "Removed Promotional Popup", "Error removing promotional popup", "removePopups");
+  let popupItems = document.querySelector("ytd-popup-container").childNodes;
+  let popupItemsArray = [...popupItems];
+
+  popupItemsArray.forEach(popupItem => {
+
+    let toRemove = !(popupItem.nodeName.toLowerCase() == "tp-yt-iron-dropdown")
+
+    if (toRemove) {
+      popupItem.parentNode.removeChild(popupItem);
+      updateSectionsRemoveCount("removePopups");
+      handleSectionRemovedChange();
+
+      console.log("Popup removed");
+    }
+  });
+
 }
 
 // Remove ad companion slots
@@ -476,7 +491,6 @@ const removeSpinnerFromSearch = () => {
       const spinner = topContinuationRenderer.querySelector("tp-yt-paper-spinner");
       spinner?.parentNode.removeChild(spinner);
   
-      console.log("Loading spinner removed");
       removeSpinners = false;
   
     }
