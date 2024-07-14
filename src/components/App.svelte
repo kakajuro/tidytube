@@ -157,7 +157,7 @@
   {#if extensionStateChanged}
     <h1 class="text-red-700 pt-[30px] pb-[30px]">Reload Youtube for changes to take effect.</h1>
   {/if}
-  <div class="flex flex-col mb-auto mt-auto" class:pt-5={!extensionStateChanged}>
+  <div class="flex flex-col mb-auto mt-auto" class:pt-10={!extensionStateChanged}>
     <button 
       class="flex flex-row content-center justify-center font-semibold items-center text-center h-10 border-2 rounded-lg button-effect" 
       class:text-white={darkMode} 
