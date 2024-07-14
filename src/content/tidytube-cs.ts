@@ -5,6 +5,7 @@ import { getSettings } from "../util/settingsHandler";
 import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../util/sectionsRemoved";
 import { incremementPageChangeStore } from "../util/pageChangeStore";
 import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
+import { settingsType } from "../types/types";
 
 //MARK: START OF REMOVING FUNCTIONS
 
@@ -529,82 +530,86 @@ const updateSectionsRemoveCount = async (type:string) => {
 // Check extension is running
 async function checkExtensionRunning () {
   let extensionRunning = await getExtensionRunning();
-  let settings = await getSettings();
 
   if (extensionRunning) {
     console.log("tidytube content script now running...");
-    
-    // Remove shorts from search
-    if (settings.removeShortsFromSearch) removeShortsFromSearch();
-
-    // Remove ads from search
-    if (settings.removeAdsFromReccomendations) removeAdsFromReccomendations();
-
-    // Remove "Channels new to you" from search
-    if (settings.removeNewChannelsFromSearch) removeNewChannelsFromSearch();
-
-    // Remove "Latest Posts from ..." from search
-    if (settings.removeLatestPostsFromSearch) removeLatestPostsFromSearch();
-
-    // Remove "Latest Videos from ..." from search
-    if (settings.removeLastestVideosFromSearch) removeLatestVideosFromSearch();
-
-    // Remove "Previously watched" from search
-    if (settings.removePreviouslyWatchedFromSearch) removePreviouslyWatchedFromSearch();
-
-    // Remove "For You" from search
-    if (settings.removeForYouFromSearch) removeForYouFromSearch();
-
-    // Remove "People also watched" from search
-    if (settings.removePeopleAlsoWatchedFromSearch) removePeopleAlsoWatchedFromSearch();
-
-    // Remove "From Related Searches" from search
-    if (settings.removeFromRelatedSearches) removeFromRelatedSearches();
-
-    // Remove "People Also Search For" from search
-    if (settings.removePeopleAlsoSearchFor) removePeopleAlsoSearchFor();
-
-    // Remove Shorts From Site
-    if (settings.removeShortsFromSite) removeShortsFromSite();
-
-    // Prevent Shorts Playback
-    if (settings.removeShortsPlayback) preventShortsPlayback();
-
-    // Remove featured banners
-    if (settings.removeFeaturedBanners) removeFeaturedBanners();
-
-    // Remove shorts remixing this video
-    if (settings.removeShortsRemixingThisVideo) removeShortsRemixingThisVideo();
-
-    // Remove shorts from appearing on the reccomended sidebar
-    if (settings.removeShortsWhileWatching) removeShortsWhileWatching();
-
-    // Remove popups from appearing
-    if (settings.removePopups) removePopups();
-
-    // Remove ad companions
-    if (settings.removeAdCompanionSlots) removeAdCompanions();
-
-    // Remove Shorts explore
-    if (settings.removeShortsExplore) removeShortsExplore();
-
-    // Remove news
-    if (settings.removeNews) removeNews();
-
-    // Remove "For You" from channel
-    if (settings.removeForYouFromChannel) removeForYouFromChannel();
-
-    // Remove Shorts from channel pages
-    if (settings.removeShortsFromChannel) removeShortsFromChannel();
-
-    // Handle removal of broken loading spinners
-    if (removeSpinners) removeSpinnerFromSearch();
+    runExtension();
 
   } else {
     observer.disconnect();
     console.log("paused tidytube content script");
 
   }
+}
+
+async function runExtension() {
+  let settings:settingsType = await getSettings();
+
+  // Remove shorts from search
+  if (settings.removeShortsFromSearch) removeShortsFromSearch();
+
+  // Remove ads from search
+  if (settings.removeAdsFromReccomendations) removeAdsFromReccomendations();
+
+  // Remove "Channels new to you" from search
+  if (settings.removeNewChannelsFromSearch) removeNewChannelsFromSearch();
+
+  // Remove "Latest Posts from ..." from search
+  if (settings.removeLatestPostsFromSearch) removeLatestPostsFromSearch();
+
+  // Remove "Latest Videos from ..." from search
+  if (settings.removeLastestVideosFromSearch) removeLatestVideosFromSearch();
+
+  // Remove "Previously watched" from search
+  if (settings.removePreviouslyWatchedFromSearch) removePreviouslyWatchedFromSearch();
+
+  // Remove "For You" from search
+  if (settings.removeForYouFromSearch) removeForYouFromSearch();
+
+  // Remove "People also watched" from search
+  if (settings.removePeopleAlsoWatchedFromSearch) removePeopleAlsoWatchedFromSearch();
+
+  // Remove "From Related Searches" from search
+  if (settings.removeFromRelatedSearches) removeFromRelatedSearches();
+
+  // Remove "People Also Search For" from search
+  if (settings.removePeopleAlsoSearchFor) removePeopleAlsoSearchFor();
+
+  // Remove Shorts From Site
+  if (settings.removeShortsFromSite) removeShortsFromSite();
+
+  // Prevent Shorts Playback
+  if (settings.removeShortsPlayback) preventShortsPlayback();
+
+  // Remove featured banners
+  if (settings.removeFeaturedBanners) removeFeaturedBanners();
+
+  // Remove shorts remixing this video
+  if (settings.removeShortsRemixingThisVideo) removeShortsRemixingThisVideo();
+
+  // Remove shorts from appearing on the reccomended sidebar
+  if (settings.removeShortsWhileWatching) removeShortsWhileWatching();
+
+  // Remove popups from appearing
+  if (settings.removePopups) removePopups();
+
+  // Remove ad companions
+  if (settings.removeAdCompanionSlots) removeAdCompanions();
+
+  // Remove Shorts explore
+  if (settings.removeShortsExplore) removeShortsExplore();
+
+  // Remove news
+  if (settings.removeNews) removeNews();
+
+  // Remove "For You" from channel
+  if (settings.removeForYouFromChannel) removeForYouFromChannel();
+
+  // Remove Shorts from channel pages
+  if (settings.removeShortsFromChannel) removeShortsFromChannel();
+
+  // Handle removal of broken loading spinners
+  if (removeSpinners) removeSpinnerFromSearch();
 }
 
 // Mutation Observer 
@@ -619,7 +624,7 @@ const observer = new MutationObserver((mutationRecords, observer) => {
   if (!mutationQueue.length) requestAnimationFrame(() => {
     for (let mutation of mutationQueue) {
       console.log("Mutation observed");
-      checkExtensionRunning();
+      runExtension();
     }
     mutationQueue.length = 0;
   });
