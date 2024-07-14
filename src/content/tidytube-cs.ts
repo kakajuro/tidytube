@@ -462,6 +462,28 @@ const removeShortsFromChannel = () => {
 
 }
 
+// Remove loading spinner from search when page loaded
+const removeSpinnerFromSearch = () => {
+
+  if (window.location.href.includes("https://www.youtube.com/results")) {
+  
+    let topContinuationRenderer:Element;
+    const sectionListRendererContent = document.getElementById("contents").getElementsByClassName("ytd-section-list-renderer");
+    
+    if (sectionListRendererContent[0].tagName.toLowerCase() == "ytd-continuation-item-renderer") {
+      topContinuationRenderer = sectionListRendererContent[0];
+  
+      const spinner = topContinuationRenderer.querySelector("tp-yt-paper-spinner");
+      spinner.parentNode.removeChild(spinner);
+  
+      console.log("Loading spinner removed");
+      removeSpinners = false;
+  
+    }
+  }
+
+}
+
 //MARK: END OF REMOVING FUNCTIONS
 
 // Scroll event handler
@@ -575,18 +597,15 @@ async function checkExtensionRunning () {
     // Remove Shorts from channel pages
     if (settings.removeShortsFromChannel) removeShortsFromChannel();
 
+    // Handle removal of broken loading spinners
+    if (removeSpinners) removeSpinnerFromSearch();
+
   } else {
     observer.disconnect();
     console.log("paused tidytube content script");
 
   }
 }
-
-// Content script event listener
-browser.runtime.onMessage.addListener(msg => {
-  (msg === "extensionStateChanged") ? checkExtensionRunning() : null;
-  (msg === "tidyWhileLoading") ? checkExtensionRunning() : null;
-});
 
 // Mutation Observer 
 let observerConfig = {
@@ -610,6 +629,18 @@ const observer = new MutationObserver((mutationRecords, observer) => {
 let container = document.documentElement || document.body
 observer.observe(container, observerConfig);
 
+// Handle loading spinner removal state
+// Sometimes the loading spinner at the top of the search page will stay on screen
+// without loading new content so this will remove it if it stays there
+let removeSpinners = true;
+
+// Content script event listener
+browser.runtime.onMessage.addListener(msg => {
+  (msg === "extensionStateChanged") ? checkExtensionRunning() : null;
+  (msg === "removeSpinnerFromSearch") ? removeSpinnerFromSearch() : null;
+});
+
+// Startup
 checkExtensionRunning();
 setSectionsRemovedPage(0);
 handleSectionRemovedChange("Page");

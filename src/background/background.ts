@@ -48,14 +48,7 @@ let invalidateTimeout = setTimeout(async ()  => {
 browser.tabs.onUpdated.addListener(async function(tabId, changeInfo, tab) {
   if (changeInfo.status == "loading") {
     setSectionsRemovedPage(0);
-    console.log("SectionsREmovedPage Reset here");  
-    try {
-      browser.tabs.sendMessage(tabId, "tidyWhileLoading");
-      setTimeout(null, 1000);
-      browser.tabs.sendMessage(tabId, "tidyWhileLoading");
-    } catch (err) {
-      null;
-    }
+    console.log("SectionsRemovedPage Reset here");  
   }
 });
 
@@ -70,8 +63,13 @@ browser.tabs.onActivated.addListener(async function (activeInfo) {
     setSectionsRemovedPage(tabStore[activeInfo.tabId]);
     console.log("Set sections removed page value to " + tabStore[activeInfo.tabId]);
 
-    browser.runtime.sendMessage(null, "sectionsRemovedPageChanged");
-    browser.runtime.sendMessage(null, "resetSectionsRemovedPage");
+    // Throws error if popup is not open 
+    try {
+      browser.runtime.sendMessage(null, "sectionsRemovedPageChanged");
+      browser.runtime.sendMessage(null, "resetSectionsRemovedPage");
+    } catch (err) {
+      console.warn("An error occurred when sending update messages to popup. Likely because the popup was not open.")
+    }
   } else {
     setSectionsRemovedPage(0);
   }
