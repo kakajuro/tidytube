@@ -4,7 +4,6 @@ import { getExtensionRunning } from "../util/extensionRunning";
 import { getSettings } from "../util/settingsHandler";
 import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../util/sectionsRemoved";
 import { incremementPageChangeStore } from "../util/pageChangeStore";
-import { checkScrollDirectionIsUp } from "../util/checkScollDirection";
 import { settingsType } from "../types/types";
 
 //MARK: START OF REMOVING FUNCTIONS
@@ -475,7 +474,7 @@ const removeSpinnerFromSearch = () => {
       topContinuationRenderer = sectionListRendererContent[0];
   
       const spinner = topContinuationRenderer.querySelector("tp-yt-paper-spinner");
-      spinner.parentNode.removeChild(spinner);
+      spinner?.parentNode.removeChild(spinner);
   
       console.log("Loading spinner removed");
       removeSpinners = false;
@@ -486,19 +485,6 @@ const removeSpinnerFromSearch = () => {
 }
 
 //MARK: END OF REMOVING FUNCTIONS
-
-// Scroll event handler
-const handleScrollEvent = (returnedFunction) => {
-
-  let scrollableElement = document.body;
-
-  scrollableElement.addEventListener("wheel", (event) => {
-    if (!checkScrollDirectionIsUp(event)) {
-      returnedFunction();
-    }
-  });
-
-} 
 
 // Handle sections remove change
 const handleSectionRemovedChange = (type?:String) => {
@@ -620,10 +606,11 @@ let observerConfig = {
 
 const mutationQueue = [];
 
+// Queue mechanic helps debounce mutations (?)
 const observer = new MutationObserver((mutationRecords, observer) => {
   if (!mutationQueue.length) requestAnimationFrame(() => {
     for (let mutation of mutationQueue) {
-      console.log("Mutation observed");
+      //console.log("Mutation observed");
       runExtension();
     }
     mutationQueue.length = 0;
