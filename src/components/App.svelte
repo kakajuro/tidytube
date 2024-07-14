@@ -21,6 +21,7 @@
   let version = getManifestVer();
   let darkMode;
   let extensionRunningToggle;
+  let extensionStateChanged = false;
   let sectionsRemovedPage;
   let sectionsRemovedTotal;
   let tabStore;
@@ -33,6 +34,7 @@
   const handleExtensionToggle = () => {
     extensionRunningToggle = !extensionRunningToggle;
     setExtensionRunning(extensionRunningToggle);
+    extensionStateChanged = true;
 
     // Alert content script that extension state has changed
     browser.tabs.query({currentWindow: true, active: true})
@@ -60,6 +62,8 @@
     sectionsRemovedPage = await getSectionsRemovedPage();
     sectionsRemovedTotal = await getSectionsRemovedTotal();
     tabStore = await getTabStore();
+
+    extensionStateChanged = false;
   });
 
   onMount(async () => {
@@ -150,8 +154,10 @@
       {/if}
     </div>
   </div>
-  <div class="mb-[50px]"/>
-  <div class="flex flex-col mb-auto mt-auto">
+  {#if extensionStateChanged}
+    <h1 class="text-red-700 pt-[30px] pb-[30px]">Reload Youtube for changes to take effect.</h1>
+  {/if}
+  <div class="flex flex-col mb-auto mt-auto" class:pt-5={!extensionStateChanged}>
     <button 
       class="flex flex-row content-center justify-center font-semibold items-center text-center h-10 border-2 rounded-lg button-effect" 
       class:text-white={darkMode} 
