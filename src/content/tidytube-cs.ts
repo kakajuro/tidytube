@@ -4,7 +4,7 @@ import { getExtensionRunning } from "../util/extensionRunning";
 import { getSettings } from "../util/settingsHandler";
 import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../util/sectionsRemoved";
 import { incremementPageChangeStore } from "../util/pageChangeStore";
-import { settingsType } from "../types/types";
+import type { settingsType } from "../types/types";
 
 //MARK: START OF REMOVING FUNCTIONS
 

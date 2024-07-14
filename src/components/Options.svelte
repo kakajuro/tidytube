@@ -118,7 +118,9 @@
     await setSettings({"removeShortsFromSearch": true});
     await setSettings({"removeShortsFromSite": true});
     await setSettings({"removeShortsPlayback": true});
+    await setSettings({"removeShortsFromChannel": true});
     
+    await handleRemoveShortsFromSite();
     setSettings({"shortsOptionsDisabled": newSettings.preventShorts});
 
     await optionsOpened();
@@ -132,6 +134,7 @@
     await setSettings({"removeShortsRemixingThisVideo": true});
     await setSettings({"removeShortsWhileWatching": true});
     await setSettings({"removeShortsExplore": true});
+    await setSettings({"removeShortsFromChannel": true});
     
     nodisable ? null : setSettings({"shortsOnSiteDisabled": newSettings.removeShortsFromSite});
 
