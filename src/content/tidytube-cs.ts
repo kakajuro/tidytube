@@ -478,6 +478,8 @@ const removeShortsFromChannel = () => {
 }
 
 // Remove broken loading spinners from search when page loaded
+// Sometimes the loading spinner at the top of the search page will stay on screen
+// without loading new content so this will remove it if it stays there
 const removeSpinnerFromSearch = () => {
 
   if (window.location.href.includes("https://www.youtube.com/results")) {
@@ -611,7 +613,7 @@ async function runExtension() {
   if (settings.removeShortsFromChannel) removeShortsFromChannel();
 
   // Handle removal of broken loading spinners
-  if (removeSpinners) removeSpinnerFromSearch();
+  removeSpinnerFromSearch();
 }
 
 // Mutation Observer 
@@ -626,7 +628,6 @@ const mutationQueue = [];
 const observer = new MutationObserver((mutationRecords, observer) => {
   if (!mutationQueue.length) requestAnimationFrame(() => {
     for (let mutation of mutationQueue) {
-      //console.log("Mutation observed");
       runExtension();
     }
     mutationQueue.length = 0;
@@ -637,15 +638,9 @@ const observer = new MutationObserver((mutationRecords, observer) => {
 let container = document.documentElement || document.body
 observer.observe(container, observerConfig);
 
-// Handle loading spinner removal state
-// Sometimes the loading spinner at the top of the search page will stay on screen
-// without loading new content so this will remove it if it stays there
-let removeSpinners = true;
-
 // Content script event listener
 browser.runtime.onMessage.addListener(msg => {
   (msg === "extensionStateChanged") ? checkExtensionRunning() : null;
-  (msg === "removeSpinnerFromSearch") ? removeSpinnerFromSearch() : null;
 });
 
 // Startup
