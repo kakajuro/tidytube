@@ -375,10 +375,10 @@ const removeShortsRemixingThisVideo = () => {
 
 // Remove popups
 const removePopups = () => {
-  let popupItems = document.querySelector("ytd-popup-container").childNodes;
+  let popupItems = document.querySelector("ytd-popup-container")?.childNodes;
   let popupItemsArray = [...popupItems];
 
-  popupItemsArray.forEach(popupItem => {
+  popupItemsArray?.forEach(popupItem => {
 
     let toRemove = !(popupItem.nodeName.toLowerCase() == "tp-yt-iron-dropdown")
 
@@ -477,23 +477,25 @@ const removeShortsFromChannel = () => {
 
 }
 
-// Remove loading spinner from search when page loaded
+// Remove broken loading spinners from search when page loaded
 const removeSpinnerFromSearch = () => {
 
   if (window.location.href.includes("https://www.youtube.com/results")) {
   
-    let topContinuationRenderer:Element;
-    const sectionListRendererContent = document.getElementById("contents").getElementsByClassName("ytd-section-list-renderer");
+    const sectionListRendererContent = document.getElementById("contents")?.getElementsByClassName("ytd-section-list-renderer");
     
-    if (sectionListRendererContent[0].tagName.toLowerCase() == "ytd-continuation-item-renderer") {
-      topContinuationRenderer = sectionListRendererContent[0];
-  
-      const spinner = topContinuationRenderer.querySelector("tp-yt-paper-spinner");
-      spinner?.parentNode.removeChild(spinner);
-  
-      removeSpinners = false;
-  
+    // Removes all but the last spinner
+    for (let currentItem = 0; currentItem < sectionListRendererContent?.length-1; currentItem++) {
+
+      if (sectionListRendererContent && sectionListRendererContent[currentItem].tagName.toLowerCase() == "ytd-continuation-item-renderer") {
+
+        const spinner:Element = sectionListRendererContent[currentItem].querySelector("tp-yt-paper-spinner");
+        spinner?.parentNode.removeChild(spinner);
+
+      }
+
     }
+    
   }
 
 }
