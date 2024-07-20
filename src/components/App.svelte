@@ -119,7 +119,7 @@
       </button>
       {/if}
       <button class="w-[20px] h-[20px]" on:click={handleOptionsClicked}>
-        <Gear class="hover:cursor-pointer" color={darkMode ? "#FFFFFF" : "#09090B"} size="{20}"/>
+      <Gear class="hover:cursor-pointer" color={darkMode ? "#FFFFFF" : "#09090B"} size="{20}"/>
       </button>   
       <ToggleWrapper>
           <Toggle 

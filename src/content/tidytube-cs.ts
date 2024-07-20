@@ -55,7 +55,7 @@ const removeShortsWhileWatching = () => {
     
     shortsElementsArray?.forEach(shortsElement => {
       try {
-        document.removeChild(shortsElement);
+        shortsElement.parentNode.removeChild(shortsElement);
   
         updateSectionsRemoveCount("removeShortsWhileWatching");
         handleSectionRemovedChange();      
@@ -98,15 +98,10 @@ const removeAdsFromReccomendations = () => {
   const adSections = document.querySelectorAll('ytd-ad-slot-renderer');
   const adSectionsArray = [...adSections];
 
-  adSectionsArray.forEach(div => {
+  adSectionsArray.forEach(adSection => {
     
     try {
-      if (div.firstChild) {
-        const adContainer = div.parentNode.parentNode; 
-        
-        adContainer.parentNode.removeChild(adContainer);
-        div.parentNode.removeChild(div);
-      }
+      adSection.parentNode.removeChild(adSection);
 
       updateSectionsRemoveCount("removeAdsFromReccomendations");
       handleSectionRemovedChange();      
@@ -375,8 +370,9 @@ const removeShortsRemixingThisVideo = () => {
 
 // Remove popups
 const removePopups = () => {
+  let popupItemsArray;
   let popupItems = document.querySelector("ytd-popup-container")?.childNodes;
-  let popupItemsArray = [...popupItems];
+  popupItems ? popupItemsArray = [...popupItems] : null;
 
   popupItemsArray?.forEach(popupItem => {
 
