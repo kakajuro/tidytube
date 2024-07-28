@@ -3,6 +3,9 @@ const path = require('path');
 const CopyPlugin = require('copy-webpack-plugin');
 const postcss = require("postcss-loader");
 
+const dotenv = require("dotenv");
+const { DefinePlugin } = require("webpack");
+
 const browser = process.env.BROWSER;
 const BUILD_DIR_NAME = `${browser.toLowerCase()}_dist`;
 const SRC_DIR_NAME = 'src';
@@ -61,5 +64,8 @@ module.exports = {
         { from: `${browser}_manifest.json`, to: `../${BUILD_DIR_NAME}/manifest.json`, context: 'public' },
       ],
     }),
+    new DefinePlugin({
+      "process.env": JSON.stringify(dotenv.config().parsed)
+    })
   ],
 };

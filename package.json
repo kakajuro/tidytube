@@ -1,5 +1,5 @@
 {
-  "name":"tidytube",
+  "name": "tidytube",
   "version": "0.0.1",
   "description": "",
   "author": "kakajuro",
@@ -30,6 +30,7 @@
     "copy-webpack-plugin": "^8.1.1",
     "cross-env": "^7.0.3",
     "css-loader": "^5.2.4",
+    "dotenv": "^16.4.5",
     "mini-css-extract-plugin": "^1.6.0",
     "phosphor-svelte": "^2.0.1",
     "postcss": "^8.4.35",
