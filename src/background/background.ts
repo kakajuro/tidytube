@@ -21,7 +21,6 @@ browser.runtime.onInstalled.addListener(async function (details) {
   if (details.reason == "install") {
     let API_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.API_URL;
     console.log("Setting up extension...");
-    console.log(API_URL);
     
     let response = await fetch(`${API_URL}/api/install`, {
       headers: {
