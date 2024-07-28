@@ -3,10 +3,52 @@ import { getTabStore, removeTabFromStore, updateTabStore } from "../util/tabStor
 import { setSectionsRemovedPage, getSectionsRemovedPage } from "../util/sectionsRemoved";
 import { clearPageChangeStore, getPageChangeStore } from "../util/pageChangeStore";
 
-// Setup alarms
-browser.alarms.create("sendPageUpdates", {"periodInMinutes": 5});
+interface InstallRes {
+  clientID: string,
+  uninstallKey: string
+}
 
-browser.runtime.onInstalled.addListener(function () {
+interface StatsRes {
+  message: string
+}
+
+// Setup alarms
+browser.alarms.create("sendPageUpdates", {"periodInMinutes": 15});
+
+// On installed listener
+browser.runtime.onInstalled.addListener(async function (details) {
+
+  if (details.reason == "install") {
+    let API_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.API_URL;
+    console.log("Setting up extension...");
+    console.log(API_URL);
+    
+    let response = await fetch(`${API_URL}/api/install`, {
+      headers: {
+        "Content-Type": "application/json",
+        "install-key": process.env.HASHED_INSTALL_KEY
+      }
+    });
+
+    if (response?.ok) {
+      let jsonRes:Promise<InstallRes> = await response.json();
+      let clientID = (await jsonRes).clientID;
+      let uninstallKey = (await jsonRes).uninstallKey;
+
+      // Store client ID + uninstall key locally
+      browser.storage.local.set({"clientID": clientID});
+      browser.storage.local.set({"uninstallKey": uninstallKey});
+
+      // Setup uninstall URL
+      let uninstallURL = process.env.NODE_ENV == "development" ? process.env.LOCAL_SITE_URL : process.env.SITE_URL;
+      browser.runtime.setUninstallURL(`${uninstallURL}/uninstall?clientID=${clientID}&uninstallKey=${uninstallKey}`);
+      
+    } else {
+      console.warn(`There was an error when trying to authenticate install with the server...`)
+    }
+
+  }
+
   // Make extension work on all pages
   browser.declarativeContent.onPageChanged.removeRules(undefined, function () {
     browser.declarativeContent.onPageChanged.addRules([
@@ -48,7 +90,7 @@ let invalidateTimeout = setTimeout(async ()  => {
 browser.tabs.onUpdated.addListener(async function(tabId, changeInfo, tab) {
   if (changeInfo.status == "loading") {
     setSectionsRemovedPage(0);
-    console.log("SectionsRemovedPage Reset here");  
+    console.log("SectionsRemovedPage Reset");  
   }
 });
 
@@ -103,12 +145,33 @@ const tabStoreUpdate = async () => {
 const sendPageUpdates = async () => {
   
   let pageChangeData = await getPageChangeStore();
-  console.log("Sending page change data...")
+  console.log("Sending page change data...");
 
-  // Here send page change data to server
-  // If it fails then wait and retry later
+  let API_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.API_URL;
 
-  await clearPageChangeStore();
+  let { clientID } = await browser.storage.local.get("clientID");
+
+  let response = await fetch(`${API_URL}/api/updateStats`, {
+    method: "POST",
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+      "install-key": process.env.HASHED_INSTALL_KEY,
+      "client-id": clientID
+    },
+    body: JSON.stringify(pageChangeData)
+  })
+
+  if (response?.ok) {
+    let jsonRes:Promise<StatsRes> = await response.json();
+    console.log((await jsonRes).message);
+
+    console.log("Clearing page change data...");
+    await clearPageChangeStore();
+  } else {
+    console.warn("An error occurred sending page change data to server...");
+    console.log("A successful update will be attempted later...");
+  } 
 
 }
 
