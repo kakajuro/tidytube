@@ -1,17 +1,12 @@
 import { browser } from "webextension-polyfill-ts";
 
-export const getDarkModePreference = (): Boolean => {
-  const prefence = (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) ? true : false
-  return prefence;
-}
-
 export async function getDarkMode():Promise<Boolean> {
   try {
     let { darkMode } = await browser.storage.local.get("darkMode");
 
     if (darkMode === undefined) {
       // Get user default preference if no value in storage
-      const darkModeDefault = getDarkModePreference();
+      const darkModeDefault = true;
 
       setDarkMode(darkModeDefault);
       return darkModeDefault;
@@ -24,7 +19,7 @@ export async function getDarkMode():Promise<Boolean> {
   } catch (error) {
     // Return default user preference in case of an error
     console.error(`An error occurred when trying to get dark mode preference: ${error}`);
-    return getDarkModePreference();
+    return true;
   }
 }
 
