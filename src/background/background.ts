@@ -3,6 +3,8 @@ import { getTabStore, removeTabFromStore, updateTabStore } from "../util/tabStor
 import { setSectionsRemovedPage, getSectionsRemovedPage } from "../util/sectionsRemoved";
 import { clearPageChangeStore, getPageChangeStore } from "../util/pageChangeStore";
 
+import config from "../../config.json";
+
 interface InstallRes {
   clientID: string,
   uninstallKey: string
@@ -19,32 +21,38 @@ browser.alarms.create("sendPageUpdates", {"periodInMinutes": 15});
 browser.runtime.onInstalled.addListener(async function (details) {
 
   if (details.reason == "install") {
-    let API_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.API_URL;
     console.log("Setting up extension...");
     
-    let response = await fetch(`${API_URL}/api/install`, {
-      headers: {
-        "Content-Type": "application/json",
-        "install-key": process.env.HASHED_INSTALL_KEY
-      }
-    });
+    if (config.apiEnabled) {
 
-    if (response?.ok) {
-      let jsonRes:Promise<InstallRes> = await response.json();
-      let clientID = (await jsonRes).clientID;
-      let uninstallKey = (await jsonRes).uninstallKey;
-
-      // Store client ID + uninstall key locally
-      browser.storage.local.set({"clientID": clientID});
-      browser.storage.local.set({"uninstallKey": uninstallKey});
-
-      // Setup uninstall URL
-      let uninstallURL = process.env.NODE_ENV == "development" ? process.env.LOCAL_SITE_URL : process.env.SITE_URL;
-      browser.runtime.setUninstallURL(`${uninstallURL}/uninstall?clientID=${clientID}&uninstallKey=${uninstallKey}`);
+      let API_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.API_URL;
       
-    } else {
-      console.warn(`There was an error when trying to authenticate install with the server...`)
+      let response = await fetch(`${API_URL}/api/install`, {
+        headers: {
+          "Content-Type": "application/json",
+          "install-key": process.env.HASHED_INSTALL_KEY
+        }
+      });
+  
+      if (response?.ok) {
+        let jsonRes:Promise<InstallRes> = await response.json();
+        let clientID = (await jsonRes).clientID;
+        let uninstallKey = (await jsonRes).uninstallKey;
+  
+        // Store client ID + uninstall key locally
+        browser.storage.local.set({"clientID": clientID});
+        browser.storage.local.set({"uninstallKey": uninstallKey});
+  
+        // Setup uninstall URL
+        let uninstallURL = process.env.NODE_ENV == "development" ? process.env.LOCAL_SITE_URL : process.env.SITE_URL;
+        browser.runtime.setUninstallURL(`${uninstallURL}/uninstall?clientID=${clientID}&uninstallKey=${uninstallKey}`);
+        
+      } else {
+        console.warn(`There was an error when trying to authenticate install with the server...`)
+      }
+    
     }
+
 
   }
 
@@ -146,31 +154,37 @@ const sendPageUpdates = async () => {
   let pageChangeData = await getPageChangeStore();
   console.log("Sending page change data...");
 
-  let API_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.API_URL;
+  if (config.apiEnabled) {
 
-  let { clientID } = await browser.storage.local.get("clientID");
+    let API_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.API_URL;
 
-  let response = await fetch(`${API_URL}/api/updateStats`, {
-    method: "POST",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-      "install-key": process.env.HASHED_INSTALL_KEY,
-      "client-id": clientID
-    },
-    body: JSON.stringify(pageChangeData)
-  })
+    let { clientID } = await browser.storage.local.get("clientID");
 
-  if (response?.ok) {
-    let jsonRes:Promise<StatsRes> = await response.json();
-    console.log((await jsonRes).message);
+    let response = await fetch(`${API_URL}/api/updateStats`, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "install-key": process.env.HASHED_INSTALL_KEY,
+        "client-id": clientID
+      },
+      body: JSON.stringify(pageChangeData)
+    })
 
-    console.log("Clearing page change data...");
-    await clearPageChangeStore();
-  } else {
-    console.warn("An error occurred sending page change data to server...");
-    console.log("A successful update will be attempted later...");
-  } 
+    if (response?.ok) {
+      let jsonRes:Promise<StatsRes> = await response.json();
+      console.log((await jsonRes).message);
+
+      console.log("Clearing page change data...");
+      await clearPageChangeStore();
+    } else {
+      console.warn("An error occurred sending page change data to server...");
+      console.log("A successful update will be attempted later...");
+    } 
+
+  }
+
+  
 
 }
 

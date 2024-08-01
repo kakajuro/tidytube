@@ -11,6 +11,7 @@
   "compilerOptions": {
     "rootDir": "src",
     "isolatedModules": false,
+    "resolveJsonModule": true,
     "typeRoots": [
       "node_modules/@types",
     ],
