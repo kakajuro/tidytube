@@ -318,11 +318,14 @@ const removePeopleAlsoSearchFor = () => {
 
   cardListRenderersArray.forEach(div => {
 
+    let removedDivAlready;
+
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
       if (span.innerText.includes("People also search for")) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
+          removedDivAlready = true;
           updateSectionsRemoveCount("removePeopleAlsoSearchFor");
           handleSectionRemovedChange();          
 
@@ -332,6 +335,24 @@ const removePeopleAlsoSearchFor = () => {
         }
       } 
     });
+
+    if (!removedDivAlready) {
+      let formattedStrings = div.querySelectorAll("yt-formatted-string");
+      [...formattedStrings].forEach((string) => {
+        console.log(string.textContent)
+        if (string.textContent.includes("People also search for")) {
+          try {
+            if (div.firstChild) { div.parentNode.removeChild(div) }
+            updateSectionsRemoveCount("removePeopleAlsoSearchFor");
+            handleSectionRemovedChange();          
+
+            console.log("People also search for section removed");
+          } catch (error) {
+            console.log(`Error removing latest sections`);
+          }
+        } 
+      });
+    }
 
   });
 }

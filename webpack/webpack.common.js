@@ -18,7 +18,7 @@ module.exports = {
     "tidytube-cs": path.join(__dirname, `../${SRC_DIR_NAME}/content/tidytube-cs.ts`)
   },
   output: {
-    path: path.join(__dirname, `../${BUILD_DIR_NAME}`),
+    path: path.join(__dirname, `../dist/${BUILD_DIR_NAME}`),
     filename: '[name].js',
   },
   module: {
