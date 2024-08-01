@@ -3,7 +3,7 @@ import { getTabStore, removeTabFromStore, updateTabStore } from "../util/tabStor
 import { setSectionsRemovedPage, getSectionsRemovedPage } from "../util/sectionsRemoved";
 import { clearPageChangeStore, getPageChangeStore } from "../util/pageChangeStore";
 
-import config from "../../config.json";
+import config from "../config.json";
 
 interface InstallRes {
   clientID: string,
@@ -23,7 +23,7 @@ browser.runtime.onInstalled.addListener(async function (details) {
   if (details.reason == "install") {
     console.log("Setting up extension...");
     
-    if (config.apiEnabled) {
+    if (config.apiEnabled || process.env.NODE_ENV == "production") {
 
       let API_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.API_URL;
       
@@ -154,7 +154,7 @@ const sendPageUpdates = async () => {
   let pageChangeData = await getPageChangeStore();
   console.log("Sending page change data...");
 
-  if (config.apiEnabled) {
+  if (config.apiEnabled || process.env.NODE_ENV == "production") {
 
     let API_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.API_URL;
 
