@@ -401,9 +401,9 @@ const removeShortsExplore = () => {
   let canRemoveShorts = currentURL.includes("https://www.youtube.com/feed/trending") || currentURL.includes("https://www.youtube.com/feed/subscriptions") || (window.location.pathname === "/");
 
   if (canRemoveShorts) {
-    generalRemoveElement("ytd-reel-shelf-renderer", "Shorts removed (explore)", "Error removing shorts", "removeShortsFromSearch");
-    generalRemoveElement("ytd-rich-section-renderer", "Shorts removed (explore)", "Error removing Shorts section", "removeShortsFromSite");
-    generalRemoveElement("ytd-rich-shelf-renderer", "Shorts removed (explore)", "Error removing Shorts section", "removeShortsFromSite");
+    generalRemoveElement("ytd-reel-shelf-renderer", "Shorts removed (explore)", "Error removing shorts", "removeShortsExplore");
+    generalRemoveElement("ytd-rich-section-renderer", "Shorts removed (explore)", "Error removing Shorts section", "removeShortsExplore");
+    generalRemoveElement("ytd-rich-shelf-renderer", "Shorts removed (explore)", "Error removing Shorts section", "removeShortsExplore");
   }
 
 }
@@ -466,9 +466,9 @@ const removeShortsFromChannel = () => {
     let shortsTabParent = shortsTabIcon?.parentNode;
     if (shortsTabIcon) shortsTabParent?.removeChild(shortsTabIcon);
 
-    generalRemoveElement("ytd-reel-shelf-renderer", "Shorts removed from channel page", "Error removing shorts", "removeShortsFromSearch");
-    generalRemoveElement("ytd-rich-section-renderer", "Shorts removed from channel page", "Error removing Shorts section", "removeShortsFromSite");
-    generalRemoveElement("ytd-rich-shelf-renderer", "Shorts removed from channel page", "Error removing Shorts section", "removeShortsFromSite");
+    generalRemoveElement("ytd-reel-shelf-renderer", "Shorts removed from channel page", "Error removing shorts", "removeShortsFromChannel");
+    generalRemoveElement("ytd-rich-section-renderer", "Shorts removed from channel page", "Error removing Shorts section", "removeShortsFromChannel");
+    generalRemoveElement("ytd-rich-shelf-renderer", "Shorts removed from channel page", "Error removing Shorts section", "removeShortsFromChannel");
   }
 
 }

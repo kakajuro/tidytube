@@ -30,7 +30,6 @@ export interface settingsType {
 
 export interface pageChange {
   "removeShortsFromSearch": number,
-  "removeShortsFromSite": number,
   "removeShortsPlayback": number,
   "removeShortsRemixingThisVideo": number,
   "removeShortsWhileWatching": number,

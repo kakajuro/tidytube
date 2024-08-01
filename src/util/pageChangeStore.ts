@@ -4,7 +4,6 @@ import type { pageChange } from "../types/types";
 
 let defaults:pageChange =  {
   "removeShortsFromSearch": 0,
-  "removeShortsFromSite": 0,
   "removeShortsPlayback": 0,
   "removeShortsRemixingThisVideo": 0,
   "removeShortsWhileWatching": 0,
@@ -55,10 +54,6 @@ export async function incremementPageChangeStore(field:string) {
     case "removeShortsFromSearch":
       let newRemoveShortsFromSearch = pageChangeStore.removeShortsFromSearch + 1;
       updatePageChangeStore({"removeShortsFromSearch": newRemoveShortsFromSearch});
-      break;
-    case "removeShortsFromSite":
-      let newRemoveShortsFromSite = pageChangeStore.removeShortsFromSite + 1;
-      updatePageChangeStore({"removeShortsFromSite": newRemoveShortsFromSite});
       break;
     case "removeShortsPlayback":
       let newRemoveShortsPlayback = pageChangeStore.removeShortsPlayback + 1;
