@@ -1,8 +1,10 @@
 {
   "manifest_version": 2,
   "name": "tidytube",
-  "version": "0.0.1",
-  "description": "An extension built to simplify Youtube by removing excess clutter",
+  "version": "1",
+  "description": "An extension built to simplify Youtube's UI by removing excess clutter",
+  "homepage_url": "https://tidytube.app",
+  "default_locale": "en",
   "icons": {
     "32": "images/icons/icon32.png",
     "48": "images/icons/icon48.png",
