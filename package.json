@@ -57,5 +57,6 @@
     "webpack-cli": "^4.4.0",
     "whatwg-fetch": "^3.0.0",
     "zip-a-folder": "^3.1.7"
-  }
+  },
+  "dependencies": {}
 }
