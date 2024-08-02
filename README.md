@@ -41,8 +41,11 @@ Install dependencies (using yarn)
 
 Edit the config.json to disable api calls (If you do not also have the server also running locally, it may error otherwise)
 
+```bash
+  Available at ./src/config.json
+```
+
 ```json
-  # ./src/config.json
   {
     "apiEnabled": false
   }
