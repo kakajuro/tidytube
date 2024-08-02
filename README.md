@@ -9,6 +9,7 @@ tidytube is an open-source web extension which allows you to remove parts of You
 
 Available on the Chrome, Firefox and Edge browsers.
 
+Also visit the [website](https://tidytube.app)
 
 ## Install
 
@@ -16,70 +17,40 @@ Available on the Chrome, Firefox and Edge browsers.
 * [**Firefox**](COMING SOON)
 * [**Edge**](COMING SOON)
 
+## Options available 
+
+### General
+- Remove ads from appearing next to recommended videos
+- Remove ad companion slots
+- Remove popups and featured banners
+- Remove News Feed sections from the homepage
+- Remove the *For You* section from channels
+
+### Shorts
+- Remove Shorts from channel pages
+- Remove Shorts from the homepage
+- Remove Shorts from appearing in the sidebar while watching other videos
+- Remove *Shorts Remixing This Video* sections
+- Remove Shorts from appearing in the search reccomendations
+- Prevent Shorts from playing entirely
+
+### Search
+- Remove *New Channels* sections
+- Remove *Latest Posts From ...* sections
+- Remove *Lastest Videos From ...* sections
+- Remove *Previously watched* sections
+- Remove *For You* sections
+- Remove *People Also Watched* sections
+- Remove *From Related Searches* sections
+- Remove *People Also Search For* sections
+
+## Building Locally
+See the [CONTRIBUTING.md](CONTRIBUTING) file for more information
+
 ## Server
 
 The code for the server, website and pretty much anything that is not the extension itself is available in this seperate repository : https://github.com/kakajuro/tidytube-backend
-## Build Locally
 
-Clone the project
-
-```bash
-  https://github.com/kakajuro/tidytube my-project
-```
-
-Go to the project directory
-
-```bash
-  cd my-project
-```
-
-Install dependencies (using yarn)
-
-```bash
-  yarn
-```
-
-Edit the config.json to disable api calls (If you do not also have the server also running locally, it may error otherwise)
-
-```bash
-  Available at ./src/config.json
-```
-
-```json
-  {
-    "apiEnabled": false
-  }
-```
-
-Start the extension with
-
-```bash
-  yarn app:YOUR_PLATFORM-dev
-```
-
-Extension output locations
-
-```bash
-  ./dist/YOUR_PLATFORM_dist
-```
-
-Build the extension with
-
-```bash
-  yarn app:YOUR_PLATFORM-dev
-```
-
-or build and zip for all platforms at once using
-
-```bash
-  yarn build:all
-```
-
-These will be available at 
-
-```bash
-  ./dist/YOUR_PLATFORM_dist
-```
 ### License
 
 This project is licensed under the GPLv3 License - see [LICENSE.md](LICENSE) file for more information
