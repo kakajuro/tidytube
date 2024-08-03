@@ -1,12 +1,11 @@
 const fs = require("fs");
 const path = require("path");
 const util = require("util");
-const { rimrafSync } = require("rimraf")
-const { fileURLToPath } = require("url");
-const { execSync, exec } = require("child_process");
-const { zip } = require("zip-a-folder");
+const { rimrafSync } = require("rimraf");
+const { execSync } = require("child_process");
+const zipdir = require("zip-dir");
 
-const execPromise = util.promisify(execSync);
+const execPromise = util.promisify(execSync)
 
 let outputDir = path.join(__dirname, "dist");
 
@@ -46,19 +45,15 @@ for (let platform of platforms) {
   let inPath = path.join(__dirname, `/dist/${platform}_dist`);
   let outPath = path.join(__dirname, `/dist/${platform}_dist.zip`);
 
-  zip(inPath, outPath)
-  .then(() => console.log(`Sucessfully zipped ${platform.toUpperCase()}`))
-  .catch(error => console.warn(`An error occurred attempting to zip ${platform.toUpperCase()}: ${error}`))
-
-}
-
-// Remove unzipped extension directories
-for (let platform of platforms) {
-
-  let unzippedPath = path.join(__dirname, `/dist/${platform}_dist`);
-
-  rimrafSync(unzippedPath);
-  console.log(`${platform.toUpperCase()} unzipped directory removed`);
+  zipdir(inPath, 
+    { each: path => console.log(path.replace(/^.*[\\/]/, ''), `added to ${platform.toUpperCase()} zip`), saveTo: outPath },  
+    (err, buffer) => {
+      if (err) {
+        console.warn("An error occurred while zipping: " + err);
+      } else {
+        console.log(`Zipped: ${platform.toUpperCase()}`);
+      }
+  })
 
 }
 
