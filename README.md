@@ -5,7 +5,7 @@
 
 # tidytube
 
-tidytube is an open-source web extension which allows you to remove parts of Youtube's UI. Users are able to remove elements from the search page, homepage as well as blocking shorts from playing.
+tidytube is an open-source web extension which allows you to remove parts of Youtube's UI. Users are able to remove elements from the search page, homepage as well as blocking shorts from playing. **Some parts of the extension will not work in all languages at the moment.**
 
 Available on the Chrome, Firefox and Edge browsers.
 
