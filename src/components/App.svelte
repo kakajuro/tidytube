@@ -155,7 +155,9 @@
     </div>
   </div>
   {#if extensionStateChanged}
-    <h1 class="text-red-700 pt-[30px] pb-[30px]">Reload Youtube for changes to take effect.</h1>
+    <div class="flex justify-center items-center py-4">
+      <h1 class="text-red-700">Reload Youtube for changes to take effect.</h1>
+    </div>
   {/if}
   <div class="flex flex-col mb-auto mt-auto" class:pt-10={!extensionStateChanged}>
     <button 
