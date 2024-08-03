@@ -53,7 +53,6 @@ browser.runtime.onInstalled.addListener(async function (details) {
     
     }
 
-
   }
 
   // Make extension work on all pages
@@ -66,32 +65,6 @@ browser.runtime.onInstalled.addListener(async function (details) {
     ]);
   }); 
 });
-
-// Re-inject content script if extension context invalidated
-const reinjectContentScript = () => {
-  console.log("REINJECTING CONTENT SCRIPT");
-
-  if (browser.runtime?.id) {
-    browser.tabs.query({currentWindow:true, active:true})
-    .then(tabs => {
-      let currentTabID = tabs[0].id;
-
-      browser.scripting.executeScript({
-        target: {tabId: currentTabID},
-        files: ["tidytube-cs.js"]
-      })
-    })
-  }
-}
-
-const revalidationTimeout = 20000;
-let invalidateTimeout = setTimeout(async ()  => {
-  if (!browser.runtime?.id) {
-    clearInterval(invalidateTimeout);
-    reinjectContentScript();
-  }
-}, revalidationTimeout);
-
 
 // Tab reload event
 browser.tabs.onUpdated.addListener(async function(tabId, changeInfo, tab) {
@@ -183,8 +156,6 @@ const sendPageUpdates = async () => {
     } 
 
   }
-
-  
 
 }
 

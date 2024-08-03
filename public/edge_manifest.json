@@ -11,9 +11,7 @@
     "128": "images/icons/icon128.png"
   },
   "permissions": [
-    "scripting",
-    "storage", 
-    "activeTab",
+    "storage",
     "alarms"
   ],
   "content_security_policy": "script-src 'self' https://youtube.com https://youtube.com/*; object-src 'self'",

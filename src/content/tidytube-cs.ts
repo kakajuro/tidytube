@@ -339,7 +339,6 @@ const removePeopleAlsoSearchFor = () => {
     if (!removedDivAlready) {
       let formattedStrings = div.querySelectorAll("yt-formatted-string");
       [...formattedStrings].forEach((string) => {
-        console.log(string.textContent)
         if (string.textContent.includes("People also search for")) {
           try {
             if (div.firstChild) { div.parentNode.removeChild(div) }
