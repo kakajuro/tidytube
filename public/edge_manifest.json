@@ -14,7 +14,6 @@
     "storage",
     "alarms"
   ],
-  "content_security_policy": "script-src 'self' https://youtube.com https://youtube.com/*; object-src 'self'",
   "options_page": "options.html",
   "background": {
     "scripts": ["background.js"]
