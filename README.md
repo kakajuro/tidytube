@@ -45,7 +45,7 @@ Also visit the [website](https://tidytube.app)
 - Remove *People Also Search For* sections
 
 ## Building Locally
-See the [CONTRIBUTING.md](CONTRIBUTING) file for more information
+See the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information
 
 ## Server
 
