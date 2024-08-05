@@ -1,5 +1,5 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "tidytube - Declutter Youtube",
   "short_name": "tidytube",
   "version": "1.0",
@@ -14,9 +14,11 @@
     "storage",
     "alarms"
   ],
-  "options_page": "options.html",
   "background": {
-    "scripts": ["background.js"]
+    "service_worker": "background.js"
+  },
+  "options_ui": {
+    "page": "options.html"
   },
   "content_scripts": [
     {
@@ -25,7 +27,7 @@
       "run_at": "document_start"
     }
   ],
-  "browser_action": {
+  "action": {
     "default_popup": "popup.html"
   }
 }
