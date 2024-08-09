@@ -1,0 +1,82 @@
+name: Create Release Draft
+
+on:
+  push:
+    tags: 
+      - "v*"
+
+  workflow_dispatch: 
+
+
+jobs:
+  release:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20.15.0'
+
+      - name: Build + zip extensions
+        run: yarn build:all
+
+      - name: Rename Chrome build
+        run: mv ./dist/chrome_dist.zip ./dist/tidytube_chrome_${{ github.ref_name }}.zip
+      
+      - name: Rename Firefox build
+        run:  mv ./dist/firefox_dist.zip ./dist/tidytube_firefox_${{ github.ref_name }}.zip
+
+      - name: Rename Edge build
+        run:  mv ./dist/edge_dist.zip ./dist/tidytube_edge_${{ github.ref_name }}.zip
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref_name }}
+          release_name: ${{ github.ref_name }}
+          body: |
+            Updates:
+          draft: true
+          prerelease: false
+          
+      - name: Upload Chrome build to release
+        id: upload-release-asset-chrome
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/tidytube_chrome_${{ github.ref_name }}.zip
+          asset_name: tidytube_chrome_${{ github.ref_name }}.zip
+          asset_content_type: application/zip
+
+      - name: Upload Firefox build to release
+        id: upload-release-asset-firefox
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/tidytube_firefox_${{ github.ref_name }}.zip
+          asset_name: tidytube_firefox_${{ github.ref_name }}.zip
+          asset_content_type: application/zip
+
+      - name: Upload Edge build to release
+        id: upload-release-asset-edge
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ./dist/tidytube_edge_${{ github.ref_name }}.zip
+          asset_name: tidytube_firefox_${{ github.ref_name }}.zip
+          asset_content_type: application/zip
+          
