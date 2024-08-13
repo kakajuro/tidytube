@@ -13,9 +13,9 @@ Also visit the [website](https://tidytube.app)
 
 ## Install
 
-* [**Chrome Webstore**](COMING SOON)
-* [**Firefox**](COMING SOON)
-* [**Edge**](COMING SOON)
+* [**Chrome Webstore**](https://chromewebstore.google.com/detail/tidytube-declutter-youtub/apibkmhaeddgpadajegdpcdlifodaonb)
+* [**Firefox**](https://addons.mozilla.org/en-GB/firefox/addon/tidytube-declutter-youtube)
+* [**Edge**](https://microsoftedge.microsoft.com/addons/detail/ofonionbpflcmjgnofibdegeaiibdflp)
 
 ## Options available 
 
