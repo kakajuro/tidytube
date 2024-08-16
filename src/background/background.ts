@@ -15,37 +15,74 @@ interface StatsRes {
 }
 
 const setupExtension = async () => {
-  let API_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.API_URL;
-  let SITE_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_SITE_URL : process.env.SITE_URL;
 
-  await fetch(`https://${API_URL}/api/install`, {
-    headers: {
-      "Content-Type": "application/json",
-      "install-key": process.env.HASHED_INSTALL_KEY
-    }
-  }).then(async (response) => {
-    if (response?.ok) {
-      console.log("Authenticated sucessfully...");
+  if (process.env.NODE_ENV == "production") {
 
-      let jsonRes:Promise<InstallRes> = await response.json();
-      let clientID = (await jsonRes).clientID;
-      let uninstallKey = (await jsonRes).uninstallKey;
+    let API_URL = process.env.API_URL;
+    let SITE_URL = process.env.SITE_URL;
 
-      // Store client ID + uninstall key locally
-      browser.storage.local.set({"clientID": clientID});
-      browser.storage.local.set({"uninstallKey": uninstallKey});
+    await fetch(`https://${API_URL}/api/install`, {
+      headers: {
+        "Content-Type": "application/json",
+        "install-key": process.env.HASHED_INSTALL_KEY
+      }
+    }).then(async (response) => {
+      if (response?.ok) {
+        console.log("Authenticated sucessfully...");
+  
+        let jsonRes:Promise<InstallRes> = await response.json();
+        let clientID = (await jsonRes).clientID;
+        let uninstallKey = (await jsonRes).uninstallKey;
+  
+        // Store client ID + uninstall key locally
+        browser.storage.local.set({"clientID": clientID});
+        browser.storage.local.set({"uninstallKey": uninstallKey});
+  
+        // Setup uninstall URL
+        browser.runtime.setUninstallURL(`https://${SITE_URL}/uninstall?clientID=${clientID}&uninstallKey=${uninstallKey}`);
+  
+        console.log("Extension fully set up");
+      } else {
+        console.warn(`There was an error when trying to authenticate install with the server...`)
+      }
+    })
+    .catch(error => {
+      console.log(`An error occured authenticating extension: ${error}`)
+    });
+  } else if (config.apiEnabled) {
 
-      // Setup uninstall URL
-      browser.runtime.setUninstallURL(`https://${SITE_URL}/uninstall?clientID=${clientID}&uninstallKey=${uninstallKey}`);
+    let API_URL = process.env.LOCAL_API_URL;
+    let SITE_URL = process.env.LOCAL_SITE_URL;
 
-      console.log("Extension fully set up");
-    } else {
-      console.warn(`There was an error when trying to authenticate install with the server...`)
-    }
-  })
-  .catch(error => {
-    console.log(`An error occured authenticating extension: ${error}`)
-  });
+    await fetch(`https://${API_URL}/api/install`, {
+      headers: {
+        "Content-Type": "application/json",
+        "install-key": process.env.HASHED_INSTALL_KEY
+      }
+    }).then(async (response) => {
+      if (response?.ok) {
+        console.log("Authenticated sucessfully...");
+  
+        let jsonRes:Promise<InstallRes> = await response.json();
+        let clientID = (await jsonRes).clientID;
+        let uninstallKey = (await jsonRes).uninstallKey;
+  
+        // Store client ID + uninstall key locally
+        browser.storage.local.set({"clientID": clientID});
+        browser.storage.local.set({"uninstallKey": uninstallKey});
+  
+        // Setup uninstall URL
+        browser.runtime.setUninstallURL(`https://${SITE_URL}/uninstall?clientID=${clientID}&uninstallKey=${uninstallKey}`);
+  
+        console.log("Extension fully set up");
+      } else {
+        console.warn(`There was an error when trying to authenticate install with the server...`)
+      }
+    })
+    .catch(error => {
+      console.log(`An error occured authenticating extension: ${error}`)
+    });
+  }
 
 }
 
@@ -64,10 +101,27 @@ browser.runtime.onInstalled.addListener(async function (details) {
 
     // Check if existing users are still authenticated after an update
     if (process.env.NODE_ENV == "production") {
+      let API_URL = process.env.API_URL;
+
       let { clientID } = await browser.storage.local.get("clientID");
 
       if (!clientID) {
         setupExtension();
+      } else {
+        // Check if client ID exists
+        await fetch(`https://${API_URL}/api/me`, {
+          headers: {
+            "Content-Type": "application/json",
+            "client-id": clientID
+          }
+        }).then(response => {
+          if (!response?.ok) {
+            // Get new client ID
+            setupExtension();
+          }
+        })
+
+
       }
     }
 
@@ -145,9 +199,37 @@ const sendPageUpdates = async () => {
   let pageChangeData = await getPageChangeStore();
   console.log("Sending page change data...");
 
-  if (config.apiEnabled || process.env.NODE_ENV == "production") {
+  if (process.env.NODE_ENV == "production") {
+    let API_URL = process.env.API_URL;
 
-    let API_URL = process.env.NODE_ENV == "development" ? process.env.LOCAL_API_URL : process.env.API_URL;
+    let { clientID } = await browser.storage.local.get("clientID");
+
+    await fetch(`https://${API_URL}/api/updateStats`, {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "install-key": process.env.HASHED_INSTALL_KEY,
+        "client-id": clientID
+      },
+      body: JSON.stringify(pageChangeData)
+    }).then(async (response) => {
+      if (response?.ok) {
+        let jsonRes:Promise<StatsRes> = await response.json();
+        console.log((await jsonRes).message);
+
+        console.log("Clearing page change data...");
+        await clearPageChangeStore();
+      } else {
+        console.warn("An error occurred sending page change data to server...");
+        console.log("A successful update will be attempted later...");
+      } 
+    })
+    .catch(error => {
+      console.log(`An error occured updating extension stats on the server: ${error}`)
+    });
+  } else if (config.apiEnabled) {
+    let API_URL = process.env.LOCAL_API_URL;
 
     let { clientID } = await browser.storage.local.get("clientID");
 
@@ -176,8 +258,8 @@ const sendPageUpdates = async () => {
       console.log(`An error occured updating extension stats on the server: ${error}`)
     });
   }
-
 }
+
 
 // Alarm listeners
 browser.alarms.onAlarm.addListener(alarmInfo => {
