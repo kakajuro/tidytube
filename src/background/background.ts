@@ -42,6 +42,9 @@ const setupExtension = async () => {
         browser.runtime.setUninstallURL(`https://${SITE_URL}/uninstall?clientID=${clientID}&uninstallKey=${uninstallKey}`);
   
         console.log("Extension fully set up");
+
+        // Install page
+        browser.tabs.create({ url: `https://${SITE_URL}/install?clientID=${clientID}` });
       } else {
         console.warn(`There was an error when trying to authenticate install with the server...`)
       }
@@ -75,6 +78,9 @@ const setupExtension = async () => {
         browser.runtime.setUninstallURL(`https://${SITE_URL}/uninstall?clientID=${clientID}&uninstallKey=${uninstallKey}`);
   
         console.log("Extension fully set up");
+
+        // Install page
+        browser.tabs.create({ url: `https://${SITE_URL}/install?clientID=${clientID}` });
       } else {
         console.warn(`There was an error when trying to authenticate install with the server...`)
       }
