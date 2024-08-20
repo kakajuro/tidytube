@@ -45,6 +45,7 @@
   let removeNewsToggle;
   let removeForYouFromChannelPageToggle;
 
+  let disableTelemetryToggle;
 
   async function optionsOpened() {
     await delay(500);
@@ -77,6 +78,8 @@
     removePopupsToggle = settings.removePopups;
     removeNewsToggle = settings.removeNews;
     removeForYouFromChannelPageToggle = settings.removeForYouFromChannel;
+
+    disableTelemetryToggle = settings.disableTelemetry;
 
     darkMode = await getDarkMode();
 
@@ -232,11 +235,25 @@
         removeNewChannelsFromSearchToggle = !removeShortsFromChannelToggle;
         setSettings({"removeShortsFromChannel": removeShortsFromChannelToggle});
         break;
+      case "disableTelemetry":
+        disableTelemetryToggle = !disableTelemetryToggle;
+        setSettings({"disableTelemetry": disableTelemetryToggle});
+
+        if (disableTelemetryToggle) {
+          makeToast("Settings updated. Data will no longer be sent to server.").showToast();
+        } else {
+          makeToast("Settings updated. Data will be sent to server.").showToast();
+        }
+
+        break;
       default:
         break;
     }
 
-    makeToast().showToast();
+    if (!(setting == "disableTelemetry")) {
+      makeToast().showToast();
+    }
+
   }
 
   onMount(async () => {
@@ -421,6 +438,16 @@
       handleChange={() => handleSettingsChanged("removePeopleAlsoSearchFor")}
       optionName="Remove <em>People Also Search For</em>"
       optionsDesc="Removes videos people also search for <br /> from appearing in the search page"
+    />
+  </div>
+  <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Other</h2>
+  <div class="grid gap-y-1 gap-x-1 grid-cols-1 md:grid-cols-1 xl:grid-cols-1">
+    <OptionsCard 
+      {darkMode} 
+      toggle={disableTelemetryToggle} 
+      handleChange={() => handleSettingsChanged("disableTelemetry")}
+      optionName="Disable Telemetry"
+      optionsDesc="Disable the data that the extensions sends to the server about what sections are removed."
     />
   </div>
   <div class="mt-6">

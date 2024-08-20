@@ -1,4 +1,6 @@
 import { browser } from "webextension-polyfill-ts";
+
+import { getSettings } from "../util/settingsHandler";
 import { getTabStore, removeTabFromStore, updateTabStore } from "../util/tabStore";
 import { setSectionsRemovedPage, getSectionsRemovedPage } from "../util/sectionsRemoved";
 import { clearPageChangeStore, getPageChangeStore } from "../util/pageChangeStore";
@@ -93,7 +95,7 @@ const setupExtension = async () => {
 }
 
 // Setup alarms
-browser.alarms.create("sendPageUpdates", {"periodInMinutes": 15});
+browser.alarms.create("sendPageUpdates", {"periodInMinutes": 0.1});
 
 // On installed listener
 browser.runtime.onInstalled.addListener(async function (details) {
@@ -201,6 +203,10 @@ const tabStoreUpdate = async () => {
 }; 
 
 const sendPageUpdates = async () => {
+
+  let settings = await getSettings();
+
+  if (settings.disableTelemetry) return;
   
   let pageChangeData = await getPageChangeStore();
   console.log("Sending page change data...");

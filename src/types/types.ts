@@ -25,7 +25,9 @@ export interface settingsType {
   "removeFeaturedBanners": boolean,
   "removePopups": boolean,
   "removeNews": boolean,
-  "removeForYouFromChannel": boolean
+  "removeForYouFromChannel": boolean,
+
+  "disableTelemetry": boolean
 }
 
 export interface pageChange {
