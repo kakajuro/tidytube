@@ -17,7 +17,7 @@ Also visit the [website](https://tidytube.app)
 * [**Firefox**](https://addons.mozilla.org/en-GB/firefox/addon/tidytube-declutter-youtube)
 * [**Edge**](https://microsoftedge.microsoft.com/addons/detail/ofonionbpflcmjgnofibdegeaiibdflp)
 
-## Options available 
+## Options available
 
 ### General
 - Remove ads from appearing next to recommended videos
@@ -31,7 +31,7 @@ Also visit the [website](https://tidytube.app)
 - Remove Shorts from the homepage
 - Remove Shorts from appearing in the sidebar while watching other videos
 - Remove *Shorts Remixing This Video* sections
-- Remove Shorts from appearing in the search reccomendations
+- Remove Shorts from appearing in the search recommendations
 - Prevent Shorts from playing entirely
 
 ### Search

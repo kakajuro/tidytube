@@ -19,7 +19,7 @@ let defaults:pageChange =  {
   "removeFromRelatedSearches": 0,
   "removePeopleAlsoSearchFor": 0,
 
-  "removeAdsFromReccomendations": 0,
+  "removeAdsFromRecommendations": 0,
   "removeAdCompanionSlots": 0,
   "removeFeaturedBanners": 0,
   "removePopups": 0,
@@ -30,9 +30,9 @@ let defaults:pageChange =  {
 export async function getPageChangeStore():Promise<pageChange> {
 
   try {
-    
+
     let { pageChangeStore } = await browser.storage.local.get("pageChangeStore");
-   
+
     if (pageChangeStore === undefined) {
       // Set default settings if no value in storage
       browser.storage.local.set({"pageChangeStore": defaults})
@@ -99,9 +99,9 @@ export async function incremementPageChangeStore(field:string) {
       let newRemovePeopleAlsoSearchFor = pageChangeStore.removePeopleAlsoSearchFor + 1;
       updatePageChangeStore({"removePeopleAlsoSearchFor": newRemovePeopleAlsoSearchFor});
       break;
-    case "removeAdsFromReccomendations":
-      let newRemoveAdsFromReccomendations = pageChangeStore.removeAdsFromReccomendations + 1;
-      updatePageChangeStore({"removeAdsFromReccomendations": newRemoveAdsFromReccomendations});
+    case "removeAdsFromRecommendations":
+      let newRemoveAdsFromRecommendations = pageChangeStore.removeAdsFromRecommendations + 1;
+      updatePageChangeStore({"removeAdsFromRecommendations": newRemoveAdsFromRecommendations});
       break;
     case "removeAdCompanionSlots":
       let newRemoveAdCompanionSlots = pageChangeStore.removeAdCompanionSlots + 1;
@@ -135,7 +135,7 @@ export async function incremementPageChangeStore(field:string) {
       console.warn("Field not found when updating page change data");
       break;
   }
-  
+
 }
 
 export async function updatePageChangeStore(data:object) {

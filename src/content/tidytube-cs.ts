@@ -16,13 +16,13 @@ const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:str
   let status;
 
   elementsArray.forEach(div => {
-    
+
     try {
       if (div.firstChild) { div.parentNode.removeChild(div) }
 
       if (!customSectionUpdates) {
         updateSectionsRemoveCount(type);
-        handleSectionRemovedChange();        
+        handleSectionRemovedChange();
       } else {
         customSectionUpdates();
       }
@@ -33,7 +33,7 @@ const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:str
       console.warn(`${errorMsg}: ${error}`);
       status = 0;
     }
-    
+
   });
 
   return status;
@@ -52,14 +52,14 @@ const removeShortsWhileWatching = () => {
     const elementsToRemove = reelShelves || richSections || richShelves;
 
     const shortsElementsArray = elementsToRemove ? [...reelShelves, ...richSections, ...richShelves].filter(e => e) : null;
-    
+
     shortsElementsArray?.forEach(shortsElement => {
       try {
         shortsElement.parentNode.removeChild(shortsElement);
-  
+
         updateSectionsRemoveCount("removeShortsWhileWatching");
-        handleSectionRemovedChange();      
-  
+        handleSectionRemovedChange();
+
         console.log("Shorts section removed (while watching)");
       } catch (error) {
         console.warn(`Error removing ad section: ${error}`);
@@ -94,23 +94,23 @@ const preventShortsPlayback = () => {
 }
 
 // Remove ad slots on search page
-const removeAdsFromReccomendations = () => {
+const removeAdsFromRecommendations = () => {
   const adSections = document.querySelectorAll('ytd-ad-slot-renderer');
   const adSectionsArray = [...adSections];
 
   adSectionsArray.forEach(adSection => {
-    
+
     try {
       adSection.parentNode.removeChild(adSection);
 
-      updateSectionsRemoveCount("removeAdsFromReccomendations");
-      handleSectionRemovedChange();      
+      updateSectionsRemoveCount("removeAdsFromRecommendations");
+      handleSectionRemovedChange();
 
       console.log("Ad removed");
     } catch (error) {
       console.warn(`Error removing ad section: ${error}`);
     }
-    
+
   });
 }
 
@@ -127,13 +127,13 @@ const removeNewChannelsFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeNewChannelsFromSearch");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("New Channels section removed");
         } catch (error) {
           console.log(`Error removing New Channels sections`);
         }
-      } 
+      }
     });
 
   });
@@ -152,13 +152,13 @@ const removeLatestPostsFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeLatestPostsFromSearch");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("Latest posts section removed");
         } catch (error) {
           console.log(`Error removing latest posts sections`);
         }
-      } 
+      }
     });
 
   });
@@ -177,13 +177,13 @@ const removeLatestVideosFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeLastestVideosFromSearch");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("Latest videos section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
         }
-      } 
+      }
     });
 
   });
@@ -202,13 +202,13 @@ const removePreviouslyWatchedFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removePreviouslyWatchedFromSearch");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("Previously watched videos section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
         }
-      } 
+      }
     });
 
   });
@@ -227,13 +227,13 @@ const removeForYouFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeForYouFromSearch");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("For you section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
         }
-      } 
+      }
     });
 
   });
@@ -252,13 +252,13 @@ const removePeopleAlsoWatchedFromSearch = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removePeopleAlsoWatchedFromSearch");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("People also watched section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
         }
-      } 
+      }
     });
 
   });
@@ -277,13 +277,13 @@ const removeFromRelatedSearches = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeFromRelatedSearches");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("From related searches removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
         }
-      } 
+      }
     });
 
   });
@@ -302,13 +302,13 @@ const removePeopleAlsoSearchFor = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removePeopleAlsoSearchFor");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("People also search for section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
         }
-      } 
+      }
     });
 
   });
@@ -327,13 +327,13 @@ const removePeopleAlsoSearchFor = () => {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           removedDivAlready = true;
           updateSectionsRemoveCount("removePeopleAlsoSearchFor");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("People also search for section removed");
         } catch (error) {
           console.log(`Error removing latest sections`);
         }
-      } 
+      }
     });
 
     if (!removedDivAlready) {
@@ -343,13 +343,13 @@ const removePeopleAlsoSearchFor = () => {
           try {
             if (div.firstChild) { div.parentNode.removeChild(div) }
             updateSectionsRemoveCount("removePeopleAlsoSearchFor");
-            handleSectionRemovedChange();          
+            handleSectionRemovedChange();
 
             console.log("People also search for section removed");
           } catch (error) {
             console.log(`Error removing latest sections`);
           }
-        } 
+        }
       });
     }
 
@@ -376,13 +376,13 @@ const removeShortsRemixingThisVideo = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeShortsRemixingThisVideo");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("Shorts remixing this video section removed");
         } catch (error) {
           console.log(`Error removing shorts remixing this video section`);
         }
-      } 
+      }
     });
 
   });
@@ -416,8 +416,8 @@ const removeAdCompanions = () => {
 
 // Remove Shorts from explore pages
 const removeShortsExplore = () => {
-  const currentURL = window.location.href; 
-  
+  const currentURL = window.location.href;
+
   let canRemoveShorts = currentURL.includes("https://www.youtube.com/feed/trending") || currentURL.includes("https://www.youtube.com/feed/subscriptions") || (window.location.pathname === "/");
 
   if (canRemoveShorts) {
@@ -440,13 +440,13 @@ const removeNews = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeNews");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("News section removed");
         } catch (error) {
           console.log(`Error removing news section: ${error}`);
         }
-      } 
+      }
     })
   });
 
@@ -464,13 +464,13 @@ const removeForYouFromChannel = () => {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeForYouFromChannel");
-          handleSectionRemovedChange();          
+          handleSectionRemovedChange();
 
           console.log("For You channel section removed");
         } catch (error) {
           console.log(`Error removing For You channel section: ${error}`);
         }
-      } 
+      }
     })
   });
 }
@@ -499,9 +499,9 @@ const removeShortsFromChannel = () => {
 const removeSpinnerFromSearch = () => {
 
   if (window.location.href.includes("https://www.youtube.com/results")) {
-  
+
     const sectionListRendererContent = document.getElementById("contents")?.getElementsByClassName("ytd-section-list-renderer");
-    
+
     // Removes all but the last spinner
     for (let currentItem = 0; currentItem < sectionListRendererContent?.length-1; currentItem++) {
 
@@ -513,7 +513,7 @@ const removeSpinnerFromSearch = () => {
       }
 
     }
-    
+
   }
 
 }
@@ -524,10 +524,10 @@ const removeSpinnerFromSearch = () => {
 const handleSectionRemovedChange = (type?:String) => {
   if (type === "Page") {
     browser.runtime.sendMessage(null, `sectionsRemoved${type}Changed`)
-    .catch((error) => console.warn("Could not establish connection. Receiving end does not exist - from HSRC (ignore)")) 
+    .catch((error) => console.warn("Could not establish connection. Receiving end does not exist - from HSRC (ignore)"))
   } else {
-    browser.runtime.sendMessage(null, `sectionsRemovedBothChanged`) 
-    .catch((error) => console.warn("Could not establish connection. Receiving end does not exist - from HSRC (ignore)")) 
+    browser.runtime.sendMessage(null, `sectionsRemovedBothChanged`)
+    .catch((error) => console.warn("Could not establish connection. Receiving end does not exist - from HSRC (ignore)"))
   }
 }
 
@@ -569,7 +569,7 @@ async function runExtension() {
   if (settings.removeShortsFromSearch) removeShortsFromSearch();
 
   // Remove ads from search
-  if (settings.removeAdsFromReccomendations) removeAdsFromReccomendations();
+  if (settings.removeAdsFromRecommendations) removeAdsFromRecommendations();
 
   // Remove "Channels new to you" from search
   if (settings.removeNewChannelsFromSearch) removeNewChannelsFromSearch();
@@ -632,7 +632,7 @@ async function runExtension() {
   removeSpinnerFromSearch();
 }
 
-// Mutation Observer 
+// Mutation Observer
 let observerConfig = {
   subtree : true,
   childList: true,
