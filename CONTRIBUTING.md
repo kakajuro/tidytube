@@ -57,5 +57,5 @@ or build and zip for all platforms at once using
 These will be available at 
 
 ```bash
-  ./dist/YOUR_PLATFORM_dist
+  ./dist/YOUR_PLATFORM_dist.zip
 ```
