@@ -10,7 +10,7 @@ export interface settingsType {
 
   "shortsOptionsDisabled": boolean,
   "shortsOnSiteDisabled": boolean,
-  
+
   "removeNewChannelsFromSearch": boolean,
   "removeLatestPostsFromSearch": boolean,
   "removeLastestVideosFromSearch": boolean,
@@ -20,7 +20,7 @@ export interface settingsType {
   "removeFromRelatedSearches": boolean,
   "removePeopleAlsoSearchFor": boolean,
 
-  "removeAdsFromReccomendations": boolean,
+  "removeAdsFromRecommendations": boolean,
   "removeAdCompanionSlots": boolean,
   "removeFeaturedBanners": boolean,
   "removePopups": boolean,
@@ -35,7 +35,7 @@ export interface pageChange {
   "removeShortsPlayback": number,
   "removeShortsRemixingThisVideo": number,
   "removeShortsWhileWatching": number,
-  "removeShortsExplore": number, 
+  "removeShortsExplore": number,
   "removeShortsFromChannel": number,
 
   "removeNewChannelsFromSearch": number,
@@ -47,7 +47,7 @@ export interface pageChange {
   "removeFromRelatedSearches": number,
   "removePeopleAlsoSearchFor": number,
 
-  "removeAdsFromReccomendations": number,
+  "removeAdsFromRecommendations": number,
   "removeAdCompanionSlots": number,
   "removeFeaturedBanners": number,
   "removePopups": number,

@@ -24,8 +24,8 @@ let defaults:settingsType = {
   "removeFromRelatedSearches": true,
   "removePeopleAlsoSearchFor": true,
   "removeNews": true,
-  
-  "removeAdsFromReccomendations": true,
+
+  "removeAdsFromRecommendations": true,
   "removeAdCompanionSlots": true,
   "removeFeaturedBanners": true,
   "removePopups": true,
