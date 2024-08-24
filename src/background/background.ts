@@ -95,7 +95,7 @@ const setupExtension = async () => {
 }
 
 // Setup alarms
-browser.alarms.create("sendPageUpdates", {"periodInMinutes": 0.1});
+browser.alarms.create("sendPageUpdates", {"periodInMinutes": 20});
 
 // On installed listener
 browser.runtime.onInstalled.addListener(async function (details) {
@@ -205,6 +205,7 @@ const tabStoreUpdate = async () => {
 const sendPageUpdates = async () => {
 
   let settings = await getSettings();
+  console.log(settings);
 
   if (settings.disableTelemetry) return;
   
