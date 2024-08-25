@@ -25,7 +25,7 @@ export const AdapterFR:LanguageAdapter = {
   news: ["news", "nouvelles"]
 }
 
-export const AdapterNL = {
+export const AdapterNL:LanguageAdapter = {
   ChannelsNewToYou: ["Nieuwe kanalen voor jou"],
   LatestPostsFrom: ["Nieuwste posts van"],
   LatestFrom: ["Het nieuwste van"],
@@ -36,4 +36,30 @@ export const AdapterNL = {
   PreviouslyWatched: ["Eerder bekeken"],
   ShortsRemixingThisVideo: ["Shorts die deze video opnieuw mixen"],
   news: ["nieuws"]
+}
+
+export const AdapterPT_BR:LanguageAdapter = {
+  ChannelsNewToYou: ["Novos canais para você"],
+  LatestPostsFrom: ["Últimas postagens de"],
+  LatestFrom: ["Vídeo mais recente do canal"],
+  ForYou: ["Para você"],
+  FromRelatedSearches: ["De pesquisas relacionadas"],
+  PeopleAlsoSearchFor: ["As pessoas também pesquisam"],
+  PeopleAlsoWatched: ["Outros usuários também assistiram"],
+  PreviouslyWatched: ["Assistidos anteriormente"],
+  ShortsRemixingThisVideo: ["Shorts que remixam esse vídeo"],
+  news: ["notícias", "notícia"]
+}
+
+export const AdapterPT:LanguageAdapter = {
+  ChannelsNewToYou: ["Canais novos para si"],
+  LatestPostsFrom: ["Publicações mais recentes de"],
+  LatestFrom: ["Mais recentes do canal"],
+  ForYou: ["Para si"],
+  FromRelatedSearches: ["De pesquisas relacionadas"],
+  PeopleAlsoSearchFor: ["As pessoas também pesquisam"],
+  PeopleAlsoWatched: ["As pessoas também viram"],
+  PreviouslyWatched: ["Já vistos"],
+  ShortsRemixingThisVideo: ["Vídeos curtos que fazem remixes deste vídeo"],
+  news: ["notícias", "notícia"]
 }
