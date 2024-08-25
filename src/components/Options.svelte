@@ -434,7 +434,7 @@
     />
     <OptionsCard
       {darkMode}
-      toggle={removeFromRelatedSearchedToggle}
+      toggle={removePeopleAlsoSearchForToggle}
       handleChange={() => handleSettingsChanged("removePeopleAlsoSearchFor")}
       optionName="Remove <em>People Also Search For</em>"
       optionsDesc="Removes videos people also search for <br /> from appearing in the search page"
