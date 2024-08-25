@@ -447,7 +447,7 @@
       toggle={disableTelemetryToggle}
       handleChange={() => handleSettingsChanged("disableTelemetry")}
       optionName="Disable Telemetry"
-      optionsDesc="Disable the data that the extensions sends to the server about what sections are removed."
+      optionsDesc="Prevent the extension sending data to the server about what sections are removed."
     />
   </div>
   <div class="mt-6">
