@@ -6,7 +6,7 @@ import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage
 import { incremementPageChangeStore } from "../util/pageChangeStore";
 import type { settingsType } from "../types/types";
 
-import { AdapterFR, AdapterNL, AdapterPT, AdapterPT_BR } from "../util/languageAdapter";
+import { AdapterFR, AdapterNL, AdapterPT, AdapterPT_BR, AdapterRU } from "../util/languageAdapter";
 
 //MARK: START OF REMOVING FUNCTIONS
 
@@ -126,12 +126,13 @@ const removeNewChannelsFromSearch = () => {
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
       let validInOtherLanguage = 
-      AdapterFR.ChannelsNewToYou.some(translation => { return (span.innerText.includes(translation)) }) 
-      || AdapterNL.ChannelsNewToYou.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT.ChannelsNewToYou.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.ChannelsNewToYou.some(translation => { return (span.innerText.includes(translation)) });
+      AdapterFR.ChannelsNewToYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) }) 
+      || AdapterNL.ChannelsNewToYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT.ChannelsNewToYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.ChannelsNewToYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.ChannelsNewToYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
-      if (span.innerText.includes("Channels new to you") || validInOtherLanguage) {
+      if (span.innerText.toLowerCase().includes("channels new to you") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeNewChannelsFromSearch");
@@ -160,8 +161,9 @@ const removeLatestPostsFromSearch = () => {
       let validInOtherLanguage = 
       AdapterFR.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterNL.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterPT.LatestPostsFrom.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.LatestPostsFrom.some(translation => { return (span.innerText.includes(translation)) });
+      || AdapterPT.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("latest posts from") || validInOtherLanguage) {
         try {
@@ -192,8 +194,9 @@ const removeLatestVideosFromSearch = () => {
       let validInOtherLanguage 
       = AdapterFR.LatestFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterNL.LatestFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterPT.LatestFrom.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.LatestFrom.some(translation => { return (span.innerText.includes(translation)) });
+      || AdapterPT.LatestFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.LatestFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.LatestFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("latest from") || validInOtherLanguage) {
         try {
@@ -223,8 +226,9 @@ const removePreviouslyWatchedFromSearch = () => {
       let validInOtherLanguage 
       = AdapterFR.PreviouslyWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterNL.PreviouslyWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterPT.PreviouslyWatched.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.PreviouslyWatched.some(translation => { return (span.innerText.includes(translation)) });
+      || AdapterPT.PreviouslyWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.PreviouslyWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.PreviouslyWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("previously watched") || validInOtherLanguage) {
         try {
@@ -254,8 +258,9 @@ const removeForYouFromSearch = () => {
       let validInOtherLanguage 
       = AdapterFR.ForYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterNL.ForYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterPT.ForYou.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.ForYou.some(translation => { return (span.innerText.includes(translation)) });
+      || AdapterPT.ForYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.ForYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.ForYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("for you") || validInOtherLanguage) {
         try {
@@ -285,8 +290,9 @@ const removePeopleAlsoWatchedFromSearch = () => {
       let validInOtherLanguage 
       = AdapterFR.PeopleAlsoWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterFR.PeopleAlsoWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterPT.PeopleAlsoWatched.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.PeopleAlsoWatched.some(translation => { return (span.innerText.includes(translation)) });
+      || AdapterPT.PeopleAlsoWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.PeopleAlsoWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.PeopleAlsoWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("people also watched") || validInOtherLanguage) {
         try {
@@ -316,8 +322,9 @@ const removeFromRelatedSearches = () => {
       let validInOtherLanguage 
       = AdapterFR.FromRelatedSearches.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterNL.FromRelatedSearches.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterPT.FromRelatedSearches.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.FromRelatedSearches.some(translation => { return (span.innerText.includes(translation)) });
+      || AdapterPT.FromRelatedSearches.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.FromRelatedSearches.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.FromRelatedSearches.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("from related searches") || validInOtherLanguage) {
         try {
@@ -347,8 +354,9 @@ const removePeopleAlsoSearchFor = () => {
       let validInOtherLanguage 
       = AdapterFR.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterNL.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterPT.PeopleAlsoSearchFor.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.PeopleAlsoSearchFor.some(translation => { return (span.innerText.includes(translation)) });
+      || AdapterPT.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("people also search for") || validInOtherLanguage) {
         
@@ -378,8 +386,9 @@ const removePeopleAlsoSearchFor = () => {
       let validInOtherLanguage 
       = AdapterFR.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterNL.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterPT.PeopleAlsoSearchFor.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.PeopleAlsoSearchFor.some(translation => { return (span.innerText.includes(translation)) });
+      || AdapterPT.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("people also search for") || validInOtherLanguage) {
         try {
@@ -401,8 +410,9 @@ const removePeopleAlsoSearchFor = () => {
         let validInOtherLanguage 
         = AdapterFR.PeopleAlsoSearchFor.some(translation => { return (string.textContent.toLowerCase().includes(translation.toLowerCase())) })
         || AdapterNL.PeopleAlsoSearchFor.some(translation => { return (string.textContent.toLowerCase().includes(translation.toLowerCase())) })
-        || AdapterPT.PeopleAlsoSearchFor.some(translation => { return (string.textContent.includes(translation)) })
-        || AdapterPT_BR.PeopleAlsoSearchFor.some(translation => { return (string.textContent.includes(translation)) });
+        || AdapterPT.PeopleAlsoSearchFor.some(translation => { return (string.textContent.toLowerCase().includes(translation.toLowerCase())) })
+        || AdapterPT_BR.PeopleAlsoSearchFor.some(translation => { return (string.textContent.toLowerCase().includes(translation.toLowerCase())) })
+        || AdapterRU.PeopleAlsoSearchFor.some(translation => { return (string.textContent.toLowerCase().includes(translation.toLowerCase())) });
 
         if (string.textContent.toLowerCase().includes("people also search for") || validInOtherLanguage) {
           try {
@@ -440,8 +450,9 @@ const removeShortsRemixingThisVideo = () => {
       let validInOtherLanguage 
       = AdapterFR.ShortsRemixingThisVideo.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterNL.ShortsRemixingThisVideo.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterPT.ShortsRemixingThisVideo.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.ShortsRemixingThisVideo.some(translation => { return (span.innerText.includes(translation)) });
+      || AdapterPT.ShortsRemixingThisVideo.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.ShortsRemixingThisVideo.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.ShortsRemixingThisVideo.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("shorts remixing this video") || validInOtherLanguage) {
         try {
@@ -510,8 +521,9 @@ const removeNews = () => {
       let validInOtherLanguage 
       = AdapterFR.news.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterNL.news.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterPT.news.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.news.some(translation => { return (span.innerText.includes(translation)) });
+      || AdapterPT.news.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.news.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.news.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("news") || validInOtherLanguage) {
         try {
@@ -541,8 +553,9 @@ const removeForYouFromChannel = () => {
       let validInOtherLanguage 
       = AdapterFR.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       AdapterNL.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterPT.LatestPostsFrom.some(translation => { return (span.innerText.includes(translation)) })
-      || AdapterPT_BR.LatestPostsFrom.some(translation => { return (span.innerText.includes(translation)) });
+      || AdapterPT.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("for you") || validInOtherLanguage) {
         try {

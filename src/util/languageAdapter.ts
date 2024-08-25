@@ -7,7 +7,7 @@ interface LanguageAdapter {
   FromRelatedSearches: string[],
   PeopleAlsoSearchFor: string[],
   PeopleAlsoWatched: string[],
-  PreviouslyWatched: string[]
+  PreviouslyWatched: string[],
   ShortsRemixingThisVideo: string[],
   news: string[]
 }
@@ -62,4 +62,17 @@ export const AdapterPT:LanguageAdapter = {
   PreviouslyWatched: ["Já vistos"],
   ShortsRemixingThisVideo: ["Vídeos curtos que fazem remixes deste vídeo"],
   news: ["notícias", "notícia"]
+}
+
+export const AdapterRU:LanguageAdapter = {
+  ChannelsNewToYou: ["Новые каналы для вас"],
+  LatestPostsFrom: ["новые записи"],
+  LatestFrom: ["Новые видео на канале"],
+  ForYou: ["Для вас"],
+  FromRelatedSearches: ["Из связанных запросов"],
+  PeopleAlsoSearchFor: ["Похожие запросы"],
+  PeopleAlsoWatched: ["Другие видео, которые посмотрели зрители"],
+  PreviouslyWatched: ["Просмотренные видео"],
+  ShortsRemixingThisVideo: ["Shorts с этим видео"],
+  news: ["новости"]
 }
