@@ -24,3 +24,16 @@ export const AdapterFR:LanguageAdapter = {
   ShortsRemixingThisVideo: ["Shorts utilisant l'audio de cette vidéo"],
   news: ["news", "nouvelles"]
 }
+
+export const AdapterNL = {
+  ChannelsNewToYou: ["Nieuwe kanalen voor jou"],
+  LatestPostsFrom: ["Nieuwste posts van"],
+  LatestFrom: ["Het nieuwste van"],
+  ForYou: ["Voor jou"],
+  FromRelatedSearches: ["Van gerelateerde zoekopdrachten"],
+  PeopleAlsoSearchFor: ["Mensen zoeken ook naar"],
+  PeopleAlsoWatched: ["Anderen keken ook naar"],
+  PreviouslyWatched: ["Eerder bekeken"],
+  ShortsRemixingThisVideo: ["Shorts die deze video opnieuw mixen"],
+  news: ["nieuws"]
+}
