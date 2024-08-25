@@ -201,7 +201,7 @@ const removeLatestVideosFromSearch = () => {
       if (span.innerText.toLowerCase().includes("latest from") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
-          updateSectionsRemoveCount("removeLastestVideosFromSearch");
+          updateSectionsRemoveCount("removeLatestVideosFromSearch");
           handleSectionRemovedChange();
 
           console.log("Latest videos section removed");
