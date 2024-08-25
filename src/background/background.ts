@@ -205,7 +205,6 @@ const tabStoreUpdate = async () => {
 const sendPageUpdates = async () => {
 
   let settings = await getSettings();
-  console.log(settings);
 
   if (settings.disableTelemetry) return;
   

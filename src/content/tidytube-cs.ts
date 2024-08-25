@@ -153,9 +153,9 @@ const removeLatestPostsFromSearch = () => {
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
 
-      let validInOtherLanguage = AdapterFR.LatestPostsFrom.some(translation => { return (span.innerText.includes(translation)) });
+      let validInOtherLanguage = AdapterFR.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
-      if (span.innerText.includes("Latest posts from") || validInOtherLanguage) {
+      if (span.innerText.toLowerCase().includes("latest posts from") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeLatestPostsFromSearch");
@@ -181,9 +181,9 @@ const removeLatestVideosFromSearch = () => {
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
       
-      let validInOtherLanguage = AdapterFR.LatestFrom.some(translation => { return (span.innerText.includes(translation)) });
+      let validInOtherLanguage = AdapterFR.LatestFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
-      if (span.innerText.includes("Latest from") || validInOtherLanguage) {
+      if (span.innerText.toLowerCase().includes("latest from") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeLastestVideosFromSearch");
@@ -208,9 +208,9 @@ const removePreviouslyWatchedFromSearch = () => {
 
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
-      let validInOtherLanguage = AdapterFR.PreviouslyWatched.some(translation => { return (span.innerText.includes(translation)) })
+      let validInOtherLanguage = AdapterFR.PreviouslyWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
 
-      if (span.innerText.includes("Previously watched") || validInOtherLanguage) {
+      if (span.innerText.toLowerCase().includes("previously watched") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removePreviouslyWatchedFromSearch");
@@ -235,9 +235,9 @@ const removeForYouFromSearch = () => {
 
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
-      let validInOtherLanguage = AdapterFR.ForYou.some(translation => { return (span.innerText.includes(translation)) })
+      let validInOtherLanguage = AdapterFR.ForYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
 
-      if (span.innerText.includes("For you") || validInOtherLanguage) {
+      if (span.innerText.toLowerCase().includes("for you") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeForYouFromSearch");
@@ -262,9 +262,9 @@ const removePeopleAlsoWatchedFromSearch = () => {
 
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
-      let validInOtherLanguage = AdapterFR.PeopleAlsoWatched.some(translation => { return (span.innerText.includes(translation)) })
+      let validInOtherLanguage = AdapterFR.PeopleAlsoWatched.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
 
-      if (span.innerText.includes("People also watched") || validInOtherLanguage) {
+      if (span.innerText.toLowerCase().includes("people also watched") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removePeopleAlsoWatchedFromSearch");
@@ -289,9 +289,9 @@ const removeFromRelatedSearches = () => {
 
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
-      let validInOtherLanguage = AdapterFR.FromRelatedSearches.some(translation => { return (span.innerText.includes(translation)) })
+      let validInOtherLanguage = AdapterFR.FromRelatedSearches.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
 
-      if (span.innerText.includes("From related searches") || validInOtherLanguage) {
+      if (span.innerText.toLowerCase().includes("from related searches") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeFromRelatedSearches");
@@ -316,9 +316,9 @@ const removePeopleAlsoSearchFor = () => {
 
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
-      let validInOtherLanguage = AdapterFR.PeopleAlsoSearchFor.some(translation => { return (span.innerText.includes(translation)) })
+      let validInOtherLanguage = AdapterFR.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
 
-      if (span.innerText.includes("People also search for") || validInOtherLanguage) {
+      if (span.innerText.toLowerCase().includes("people also search for") || validInOtherLanguage) {
         
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
@@ -343,9 +343,9 @@ const removePeopleAlsoSearchFor = () => {
 
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
-      let validInOtherLanguage = AdapterFR.PeopleAlsoSearchFor.some(translation => { return (span.innerText.includes(translation)) });
+      let validInOtherLanguage = AdapterFR.PeopleAlsoSearchFor.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
-      if (span.innerText.includes("People also search for") || validInOtherLanguage) {
+      if (span.innerText.toLowerCase().includes("people also search for") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           removedDivAlready = true;
@@ -362,9 +362,9 @@ const removePeopleAlsoSearchFor = () => {
     if (!removedDivAlready) {
       let formattedStrings = div.querySelectorAll("yt-formatted-string");
       [...formattedStrings].forEach((string) => {
-        let validInOtherLanguage = AdapterFR.PeopleAlsoSearchFor.some(translation => { return (string.textContent.includes(translation)) });
+        let validInOtherLanguage = AdapterFR.PeopleAlsoSearchFor.some(translation => { return (string.textContent.toLowerCase().includes(translation.toLowerCase())) });
 
-        if (string.textContent.includes("People also search for") || validInOtherLanguage) {
+        if (string.textContent.toLowerCase().includes("people also search for") || validInOtherLanguage) {
           try {
             if (div.firstChild) { div.parentNode.removeChild(div) }
             updateSectionsRemoveCount("removePeopleAlsoSearchFor");
@@ -397,9 +397,9 @@ const removeShortsRemixingThisVideo = () => {
 
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
-      let validInOtherLanguage = AdapterFR.ShortsRemixingThisVideo.some(translation => { return (span.innerText.includes(translation)) });
+      let validInOtherLanguage = AdapterFR.ShortsRemixingThisVideo.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
-      if (span.innerText.includes("Shorts remixing this video") || validInOtherLanguage) {
+      if (span.innerText.toLowerCase().includes("shorts remixing this video") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeShortsRemixingThisVideo");
@@ -463,7 +463,9 @@ const removeNews = () => {
   allShelfRenderersArray.forEach(div => {
     let spans = document.querySelectorAll("span");
     [...spans].forEach(span => {
-      if (span.innerText.includes("news")) {
+      let validInOtherLanguage = AdapterFR.news.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
+
+      if (span.innerText.toLowerCase().includes("news") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeNews");
@@ -488,9 +490,9 @@ const removeForYouFromChannel = () => {
     let spans = document.querySelectorAll("span");
     [...spans].forEach(span => {
       
-      let validInOtherLanguage = AdapterFR.LatestPostsFrom.some(translation => { return (span.innerText.includes(translation)) });
+      let validInOtherLanguage = AdapterFR.LatestPostsFrom.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
-      if (span.innerText.includes("For You") || validInOtherLanguage) {
+      if (span.innerText.toLowerCase().includes("for you") || validInOtherLanguage) {
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
           updateSectionsRemoveCount("removeForYouFromChannel");
