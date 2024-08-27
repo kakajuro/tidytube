@@ -3,7 +3,7 @@
 Clone the project
 
 ```bash
-  https://github.com/kakajuro/tidytube my-project
+  git clone https://github.com/kakajuro/tidytube my-project
 ```
 
 Go to the project directory
