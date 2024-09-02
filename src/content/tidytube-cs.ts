@@ -496,11 +496,22 @@ const removePopups = () => {
   let popupItems = document.querySelector("ytd-popup-container")?.childNodes;
   popupItems ? popupItemsArray = [...popupItems] : null;
 
-  popupItemsArray?.forEach(popupItem => {
+  console.log(popupItemsArray)
 
-    let toRemove = !(popupItem.nodeName.toLowerCase() == "tp-yt-iron-dropdown")
+  popupItemsArray?.forEach((popupItem:ChildNode) => {
+    
+    let skippedNode;
 
-    if (toRemove) {
+    // Check if the node isn't a Youtube Search Filter menu
+    popupItem.childNodes.forEach(node => {
+      if (node.nodeName.toLowerCase() == "ytd-search-filter-options-dialog-renderer") {
+        skippedNode = true;
+      }
+    });
+    
+    (popupItem.nodeName.toLowerCase() == "tp-yt-iron-dropdown") ? skippedNode = true : null;
+
+    if (!skippedNode) {
       popupItem.parentNode.removeChild(popupItem);
       updateSectionsRemoveCount("removePopups");
       handleSectionRemovedChange();
