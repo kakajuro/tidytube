@@ -24,7 +24,8 @@ let defaults:pageChange =  {
   "removeFeaturedBanners": 0,
   "removePopups": 0,
   "removeNews": 0,
-  "removeForYouFromChannel": 0
+  "removeForYouFromChannel": 0,
+  "autoDisableAutoplay": 0
 }
 
 export async function getPageChangeStore():Promise<pageChange> {
@@ -130,6 +131,10 @@ export async function incremementPageChangeStore(field:string) {
     case "removeShortsFromChannel":
       let newRemoveShortsFromChannel = pageChangeStore.removeShortsFromChannel + 1;
       updatePageChangeStore({"removeShortsFromChannel": newRemoveShortsFromChannel});
+      break;
+    case "autoDisableAutoplay":
+      let newAutoDisableAutoplay = pageChangeStore.autoDisableAutoplay + 1;
+      updatePageChangeStore({"autoDisableAutoplay": newAutoDisableAutoplay});
       break;
     default:
       console.warn("Field not found when updating page change data");
