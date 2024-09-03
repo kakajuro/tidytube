@@ -1,7 +1,6 @@
 {
   "name": "tidytube",
-  "version": "0.0.1",
-  "description": "",
+  "version": "1.0",
   "author": "kakajuro",
   "scripts": {
     "code:validate": "svelte-check",
