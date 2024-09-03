@@ -132,6 +132,10 @@ export async function incremementPageChangeStore(field:string) {
       let newRemoveShortsFromChannel = pageChangeStore.removeShortsFromChannel + 1;
       updatePageChangeStore({"removeShortsFromChannel": newRemoveShortsFromChannel});
       break;
+    case "autoDisableAutoplay":
+      let newAutoDisableAutoplay = pageChangeStore.autoDisableAutoplay + 1;
+      updatePageChangeStore({"autoDisableAutoplay": newAutoDisableAutoplay});
+      break;
     default:
       console.warn("Field not found when updating page change data");
       break;

@@ -44,6 +44,7 @@
   let removePopupsToggle;
   let removeNewsToggle;
   let removeForYouFromChannelPageToggle;
+  let autoDisableAutoplayToggle;
 
   let disableTelemetryToggle;
 
@@ -78,6 +79,7 @@
     removePopupsToggle = settings.removePopups;
     removeNewsToggle = settings.removeNews;
     removeForYouFromChannelPageToggle = settings.removeForYouFromChannel;
+    autoDisableAutoplayToggle = settings.autoDisableAutoplay;
 
     disableTelemetryToggle = settings.disableTelemetry;
 
@@ -235,6 +237,10 @@
         removeNewChannelsFromSearchToggle = !removeShortsFromChannelToggle;
         setSettings({"removeShortsFromChannel": removeShortsFromChannelToggle});
         break;
+      case "autoDisableAutoplay":
+        autoDisableAutoplayToggle = !autoDisableAutoplayToggle;
+        setSettings({"autoDisableAutoplay": autoDisableAutoplayToggle});
+        break;
       case "disableTelemetry":
         disableTelemetryToggle = !disableTelemetryToggle;
         setSettings({"disableTelemetry": disableTelemetryToggle});
@@ -307,6 +313,13 @@
       handleChange={() => handleSettingsChanged("removeNews")}
       optionName="Remove News Sections"
       optionsDesc="Remove the news sections from appearing on the homepage"
+    />
+    <OptionsCard
+      {darkMode}
+      toggle={autoDisableAutoplayToggle}
+      handleChange={() => handleSettingsChanged("autoDisableAutoplay")}
+      optionName="Auto Disable Autoplay"
+      optionsDesc="Automatically disable autoplay if it is enabled"
     />
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Shorts</h2>
