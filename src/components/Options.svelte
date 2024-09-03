@@ -317,6 +317,7 @@
     <OptionsCard
       {darkMode}
       toggle={autoDisableAutoplayToggle}
+      newFeatureBadge={true}
       handleChange={() => handleSettingsChanged("autoDisableAutoplay")}
       optionName="Auto Disable Autoplay"
       optionsDesc="Automatically disable autoplay if it is enabled"
