@@ -8,6 +8,9 @@ import type { settingsType } from "../types/types";
 
 import { AdapterFR, AdapterNL, AdapterPT, AdapterPT_BR, AdapterRU, AdapterDE, AdapterES } from "../util/languageAdapter";
 
+// Page runtime vars
+let autoPlaySet = false;
+
 // General remove element function
 const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:string, type?:string, customSectionUpdates?:Function):number => {
 
@@ -623,6 +626,26 @@ const removeShortsFromChannel = () => {
 
 }
 
+// Auto disable autoplay
+const autoDisableAutoplay = () => {
+
+  let autoPlayButtonElement = document.querySelector('[data-tooltip-target-id="ytp-autonav-toggle-button"]') as HTMLElement;
+  let autoPlayButtonLabel = document.getElementsByClassName("ytp-autonav-toggle-button")[0];
+
+  // If autoplay is checked
+  if (autoPlayButtonLabel.attributes.getNamedItem("aria-checked").value === "true") {
+
+    if (!autoPlaySet) {
+      autoPlayButtonElement.click();
+      updateSectionsRemoveCount("autoDisableAutoplay");
+      handleSectionRemovedChange();
+      autoPlaySet = true;
+    }
+    
+  }
+
+}
+
 // Remove broken loading spinners from search when page loaded
 // Sometimes the loading spinner at the top of the search page will stay on screen
 // without loading new content so this will remove it if it stays there
@@ -755,6 +778,8 @@ async function runExtension() {
 
   // Remove Shorts from channel pages
   if (settings.removeShortsFromChannel) removeShortsFromChannel();
+
+  if (settings.autoDisableAutoplay) autoDisableAutoplay();
 
   // Handle removal of broken loading spinners
   removeSpinnerFromSearch();

@@ -320,7 +320,7 @@
       newFeatureBadge={true}
       handleChange={() => handleSettingsChanged("autoDisableAutoplay")}
       optionName="Auto Disable Autoplay"
-      optionsDesc="Automatically disable autoplay if it is enabled"
+      optionsDesc="Sets autoplay to always be disabled by default"
     />
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Shorts</h2>
