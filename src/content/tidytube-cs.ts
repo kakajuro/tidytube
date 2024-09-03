@@ -496,8 +496,6 @@ const removePopups = () => {
   let popupItems = document.querySelector("ytd-popup-container")?.childNodes;
   popupItems ? popupItemsArray = [...popupItems] : null;
 
-  console.log(popupItemsArray)
-
   popupItemsArray?.forEach((popupItem:ChildNode) => {
     
     let skippedNode;
