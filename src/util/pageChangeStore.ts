@@ -24,7 +24,8 @@ let defaults:pageChange =  {
   "removeFeaturedBanners": 0,
   "removePopups": 0,
   "removeNews": 0,
-  "removeForYouFromChannel": 0
+  "removeForYouFromChannel": 0,
+  "autoDisableAutoplay": 0
 }
 
 export async function getPageChangeStore():Promise<pageChange> {

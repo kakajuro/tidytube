@@ -30,6 +30,7 @@ let defaults:settingsType = {
   "removeFeaturedBanners": true,
   "removePopups": true,
   "removeForYouFromChannel": false,
+  "autoDisableAutoplay": true,
 
   "disableTelemetry": false
 }

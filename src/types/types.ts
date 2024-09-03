@@ -26,6 +26,7 @@ export interface settingsType {
   "removePopups": boolean,
   "removeNews": boolean,
   "removeForYouFromChannel": boolean,
+  "autoDisableAutoplay": boolean,
 
   "disableTelemetry": boolean
 }
@@ -52,7 +53,8 @@ export interface pageChange {
   "removeFeaturedBanners": number,
   "removePopups": number,
   "removeNews": number,
-  "removeForYouFromChannel": number
+  "removeForYouFromChannel": number,
+  "autoDisableAutoplay": number
 }
 
 export interface tabData {
