@@ -211,6 +211,13 @@ const sendPageUpdates = async () => {
   let pageChangeData = await getPageChangeStore();
   console.log("Sending page change data...");
 
+  // Clean page change data of null values
+  for (const [key, value] of Object.entries(pageChangeData)) {
+    if (value === null) {
+      pageChangeData[key] = 0;
+    }
+  }
+
   if (process.env.NODE_ENV == "production") {
     let API_URL = process.env.API_URL;
 
