@@ -45,6 +45,7 @@
   let removeNewsToggle;
   let removeForYouFromChannelPageToggle;
   let autoDisableAutoplayToggle;
+  let removeRecommendedTopicsFromSearchToggle;
 
   let disableTelemetryToggle;
 
@@ -80,6 +81,7 @@
     removeNewsToggle = settings.removeNews;
     removeForYouFromChannelPageToggle = settings.removeForYouFromChannel;
     autoDisableAutoplayToggle = settings.autoDisableAutoplay;
+    removeRecommendedTopicsFromSearchToggle = settings.removeRecommendedTopicsFromSearch;
 
     disableTelemetryToggle = settings.disableTelemetry;
 
@@ -236,6 +238,10 @@
       case "removeShortsFromChannel":
         removeNewChannelsFromSearchToggle = !removeShortsFromChannelToggle;
         setSettings({"removeShortsFromChannel": removeShortsFromChannelToggle});
+        break;
+      case "removeRecommendedTopicsFromSearch":
+        removeRecommendedTopicsFromSearchToggle = !removeRecommendedTopicsFromSearchToggle;
+        setSettings({"removeRecommendedTopicsFromSearch": removeRecommendedTopicsFromSearchToggle});
         break;
       case "autoDisableAutoplay":
         autoDisableAutoplayToggle = !autoDisableAutoplayToggle;
@@ -452,6 +458,14 @@
       handleChange={() => handleSettingsChanged("removePeopleAlsoSearchFor")}
       optionName="Remove <em>People Also Search For</em>"
       optionsDesc="Removes videos people also search for <br /> from appearing in the search page"
+    />
+    <OptionsCard
+      {darkMode}
+      toggle={removeRecommendedTopicsFromSearchToggle}
+      newFeatureBadge={true}
+      handleChange={() => handleSettingsChanged("removeRecommendedTopicsFromSearch")}
+      optionName="Remove recommended topics from search"
+      optionsDesc="Removes recommended topics from appearing in the search page e.g. <em>Lofi hiphop &#10024;</em>"
     />
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Other</h2>
