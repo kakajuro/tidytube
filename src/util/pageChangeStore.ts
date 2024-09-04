@@ -18,6 +18,7 @@ let defaults:pageChange =  {
   "removePeopleAlsoWatchedFromSearch": 0,
   "removeFromRelatedSearches": 0,
   "removePeopleAlsoSearchFor": 0,
+  "removeRecommendedTopicsFromSearch": 0,
 
   "removeAdsFromRecommendations": 0,
   "removeAdCompanionSlots": 0,
@@ -131,6 +132,10 @@ export async function incremementPageChangeStore(field:string) {
     case "removeShortsFromChannel":
       let newRemoveShortsFromChannel = pageChangeStore.removeShortsFromChannel + 1;
       updatePageChangeStore({"removeShortsFromChannel": newRemoveShortsFromChannel});
+      break;
+    case "removeRecommendedTopicsFromSearch":
+      let newRemoveRecommendedTopicsFromSearch = pageChangeStore.removeRecommendedTopicsFromSearch + 1;
+      updatePageChangeStore({"removeRecommendedTopicsFromSearch": newRemoveRecommendedTopicsFromSearch});
       break;
     case "autoDisableAutoplay":
       let newAutoDisableAutoplay = pageChangeStore.autoDisableAutoplay + 1;
