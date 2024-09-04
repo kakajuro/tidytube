@@ -19,6 +19,7 @@ export interface settingsType {
   "removePeopleAlsoWatchedFromSearch": boolean,
   "removeFromRelatedSearches": boolean,
   "removePeopleAlsoSearchFor": boolean,
+  "removeRecommendedTopicsFromSearch": boolean,
 
   "removeAdsFromRecommendations": boolean,
   "removeAdCompanionSlots": boolean,
@@ -47,6 +48,7 @@ export interface pageChange {
   "removePeopleAlsoWatchedFromSearch": number,
   "removeFromRelatedSearches": number,
   "removePeopleAlsoSearchFor": number,
+  "removeRecommendedTopicsFromSearch": boolean,
 
   "removeAdsFromRecommendations": number,
   "removeAdCompanionSlots": number,
