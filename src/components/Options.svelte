@@ -465,7 +465,7 @@
       newFeatureBadge={true}
       handleChange={() => handleSettingsChanged("removeRecommendedTopicsFromSearch")}
       optionName="Remove recommended topics from search"
-      optionsDesc="Removes recommended topics from appearing in the search page e.g. <em>Lofi hiphop &#10024;</em>"
+      optionsDesc="Removes recommended topics from appearing in the search page e.g. <em>Christmas Lofi hiphop &#10024;</em>"
     />
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Other</h2>

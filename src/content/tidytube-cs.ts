@@ -626,6 +626,34 @@ const removeShortsFromChannel = () => {
 
 }
 
+// Remove recommended topics from search
+const removeRecommendedTopicsFromSearch = () => {
+
+  const allShelfRenderers = document.querySelectorAll("ytd-shelf-renderer");
+  const allShelfRenderersArray = [...allShelfRenderers];
+
+  allShelfRenderersArray.forEach(div => {
+
+    let spans = div.querySelectorAll("span");
+    [...spans].forEach((span) => {
+
+      if (span.innerText.toLowerCase().includes("✨")) {
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount("removeRecommendedTopicsFromSearch");
+          handleSectionRemovedChange();
+
+          console.log("Recommended topic removed from search");
+        } catch (error) {
+          console.log(`Error removing latest sections`);
+        }
+      }
+    });
+
+  });
+
+}
+
 // Auto disable autoplay
 const autoDisableAutoplay = () => {
 
@@ -779,6 +807,10 @@ async function runExtension() {
   // Remove Shorts from channel pages
   if (settings.removeShortsFromChannel) removeShortsFromChannel();
 
+  // Remove recommended topics from search
+  if (settings.removeRecommendedTopicsFromSearch) removeRecommendedTopicsFromSearch();
+
+  // Auto disable autoplay
   if (settings.autoDisableAutoplay) autoDisableAutoplay();
 
   // Handle removal of broken loading spinners
