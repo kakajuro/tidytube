@@ -626,22 +626,54 @@ const removeShortsFromChannel = () => {
 
 }
 
+// Remove recommended topics from search
+const removeRecommendedTopicsFromSearch = () => {
+
+  const allShelfRenderers = document.querySelectorAll("ytd-shelf-renderer");
+  const allShelfRenderersArray = [...allShelfRenderers];
+
+  allShelfRenderersArray.forEach(div => {
+
+    let spans = div.querySelectorAll("span");
+    [...spans].forEach((span) => {
+
+      if (span.innerText.toLowerCase().includes("✨")) {
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount("removeRecommendedTopicsFromSearch");
+          handleSectionRemovedChange();
+
+          console.log("Recommended topic removed from search");
+        } catch (error) {
+          console.log(`Error removing latest sections`);
+        }
+      }
+    });
+
+  });
+
+}
+
 // Auto disable autoplay
 const autoDisableAutoplay = () => {
 
-  let autoPlayButtonElement = document.querySelector('[data-tooltip-target-id="ytp-autonav-toggle-button"]') as HTMLElement;
-  let autoPlayButtonLabel = document.getElementsByClassName("ytp-autonav-toggle-button")[0];
+  if (window.location.href.includes("https://www.youtube.com/watch")) {
 
-  // If autoplay is checked
-  if (autoPlayButtonLabel.attributes.getNamedItem("aria-checked").value === "true") {
+    let autoPlayButtonElement = document.querySelector('[data-tooltip-target-id="ytp-autonav-toggle-button"]') as HTMLElement;
+    let autoPlayButtonLabel = document.getElementsByClassName("ytp-autonav-toggle-button")[0];
 
-    if (!autoPlaySet) {
-      autoPlayButtonElement.click();
-      updateSectionsRemoveCount("autoDisableAutoplay");
-      handleSectionRemovedChange();
-      autoPlaySet = true;
+    // If autoplay is checked
+    if (autoPlayButtonLabel.attributes.getNamedItem("aria-checked").value === "true") {
+
+      if (!autoPlaySet) {
+        autoPlayButtonElement.click();
+        updateSectionsRemoveCount("autoDisableAutoplay");
+        handleSectionRemovedChange();
+        autoPlaySet = true;
+      }
+      
     }
-    
+
   }
 
 }
@@ -779,6 +811,10 @@ async function runExtension() {
   // Remove Shorts from channel pages
   if (settings.removeShortsFromChannel) removeShortsFromChannel();
 
+  // Remove recommended topics from search
+  if (settings.removeRecommendedTopicsFromSearch) removeRecommendedTopicsFromSearch();
+
+  // Auto disable autoplay
   if (settings.autoDisableAutoplay) autoDisableAutoplay();
 
   // Handle removal of broken loading spinners

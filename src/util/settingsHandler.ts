@@ -23,6 +23,7 @@ let defaults:settingsType = {
   "removePeopleAlsoWatchedFromSearch": true,
   "removeFromRelatedSearches": true,
   "removePeopleAlsoSearchFor": true,
+  "removeRecommendedTopicsFromSearch": true,
   "removeNews": true,
 
   "removeAdsFromRecommendations": true,
