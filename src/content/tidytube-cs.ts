@@ -657,19 +657,23 @@ const removeRecommendedTopicsFromSearch = () => {
 // Auto disable autoplay
 const autoDisableAutoplay = () => {
 
-  let autoPlayButtonElement = document.querySelector('[data-tooltip-target-id="ytp-autonav-toggle-button"]') as HTMLElement;
-  let autoPlayButtonLabel = document.getElementsByClassName("ytp-autonav-toggle-button")[0];
+  if (window.location.href.includes("https://www.youtube.com/watch")) {
 
-  // If autoplay is checked
-  if (autoPlayButtonLabel.attributes.getNamedItem("aria-checked").value === "true") {
+    let autoPlayButtonElement = document.querySelector('[data-tooltip-target-id="ytp-autonav-toggle-button"]') as HTMLElement;
+    let autoPlayButtonLabel = document.getElementsByClassName("ytp-autonav-toggle-button")[0];
 
-    if (!autoPlaySet) {
-      autoPlayButtonElement.click();
-      updateSectionsRemoveCount("autoDisableAutoplay");
-      handleSectionRemovedChange();
-      autoPlaySet = true;
+    // If autoplay is checked
+    if (autoPlayButtonLabel.attributes.getNamedItem("aria-checked").value === "true") {
+
+      if (!autoPlaySet) {
+        autoPlayButtonElement.click();
+        updateSectionsRemoveCount("autoDisableAutoplay");
+        handleSectionRemovedChange();
+        autoPlaySet = true;
+      }
+      
     }
-    
+
   }
 
 }
