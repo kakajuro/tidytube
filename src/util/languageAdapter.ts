@@ -102,3 +102,42 @@ export const AdapterES:LanguageAdapter = {
   ShortsRemixingThisVideo: ["Shorts con audio de este vídeo", "Shorts que recrean este video"],
   news: ["noticias"]
 }
+
+export const AdapterIT:LanguageAdapter = {
+  ChannelsNewToYou: ["Nuovi canali per te"],
+  LatestPostsFrom: ["Ultimi post di"],
+  LatestFrom: ["Le novità di"],
+  ForYou: ["Per te"],
+  FromRelatedSearches: ["Dalle ricerche correlate"],
+  PeopleAlsoSearchFor: ["Ricerche correlate"],
+  PeopleAlsoWatched: ["Gli utenti hanno guardato anche"],
+  PreviouslyWatched: ["Guardati in precedenza"],
+  ShortsRemixingThisVideo: ["Short con remix di questo video"],
+  news: ["notizia"]
+}
+
+export const AdapterJP:LanguageAdapter = {
+  ChannelsNewToYou: ["未視聴のチャンネル"],
+  LatestPostsFrom: ["からの最新の投稿"],
+  LatestFrom: ["の最新の動画をお見逃しなく"],
+  ForYou: ["おすすめ"],
+  FromRelatedSearches: ["関連する検索から"],
+  PeopleAlsoSearchFor: ["他の人はこちらも検索"],
+  PeopleAlsoWatched: ["他の人はこちらも視聴しています"],
+  PreviouslyWatched: ["前に再生した動画"],
+  ShortsRemixingThisVideo: ["この動画をリミックスしたショート動画"],
+  news: ["ニュース", "便り"]
+}
+
+export const AdapterKO:LanguageAdapter = {
+  ChannelsNewToYou: ["새로운 맞춤 채널"],
+  LatestPostsFrom: ["의 최신 게시물"],
+  LatestFrom: ["의 최신 동영상"],
+  ForYou: ["추천"],
+  FromRelatedSearches: ["관련 검색어의 검색결과"],
+  PeopleAlsoSearchFor: ["함께 검색한 항목"],
+  PeopleAlsoWatched: ["관련 동영상"],
+  PreviouslyWatched: ["이전에 시청한 동영상"],
+  ShortsRemixingThisVideo: ["이 동영상을 리믹스한 Shorts 동영상"],
+  news: ["소식", "새로운 보도", "별다른 일"]
+}
