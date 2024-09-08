@@ -115,3 +115,16 @@ export const AdapterIT:LanguageAdapter = {
   ShortsRemixingThisVideo: ["Short con remix di questo video"],
   news: ["notizia"]
 }
+
+export const AdapterJP:LanguageAdapter = {
+  ChannelsNewToYou: ["未視聴のチャンネル"],
+  LatestPostsFrom: ["からの最新の投稿"],
+  LatestFrom: ["の最新の動画をお見逃しなく"],
+  ForYou: ["おすすめ"],
+  FromRelatedSearches: ["関連する検索から"],
+  PeopleAlsoSearchFor: ["他の人はこちらも検索"],
+  PeopleAlsoWatched: ["他の人はこちらも視聴しています"],
+  PreviouslyWatched: ["前に再生した動画"],
+  ShortsRemixingThisVideo: ["この動画をリミックスしたショート動画"],
+  news: ["ニュース", "便り"]
+}
