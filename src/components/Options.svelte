@@ -427,7 +427,7 @@
     <OptionsCard
       {darkMode}
       toggle={removePreviouslyWatchedFromSearchToggle}
-      handleChange={() => handleSettingsChanged("removePreviouslyWatchedFromSearchToggle")}
+      handleChange={() => handleSettingsChanged("removePreviouslyWatchedFromSearch")}
       optionName="Remove <em>Previously Watched</em>"
       optionsDesc="Removes previously watched videos <br /> from appearing in the search page"
     />
