@@ -102,3 +102,16 @@ export const AdapterES:LanguageAdapter = {
   ShortsRemixingThisVideo: ["Shorts con audio de este vídeo", "Shorts que recrean este video"],
   news: ["noticias"]
 }
+
+export const AdapterIT:LanguageAdapter = {
+  ChannelsNewToYou: ["Nuovi canali per te"],
+  LatestPostsFrom: ["Ultimi post di"],
+  LatestFrom: ["Le novità di"],
+  ForYou: ["Per te"],
+  FromRelatedSearches: ["Dalle ricerche correlate"],
+  PeopleAlsoSearchFor: ["Ricerche correlate"],
+  PeopleAlsoWatched: ["Gli utenti hanno guardato anche"],
+  PreviouslyWatched: ["Guardati in precedenza"],
+  ShortsRemixingThisVideo: ["Short con remix di questo video"],
+  news: ["notizia"]
+}
