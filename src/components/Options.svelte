@@ -408,7 +408,7 @@
       toggle={removeNewChannelsFromSearchToggle}
       handleChange={() => handleSettingsChanged("removeNewChannelsFromSearch")}
       optionName="Remove <em>Channels New To You </em>"
-      optionsDesc="Stops ads from appearing in the search page and homepage (does not block ads during video playback)"
+      optionsDesc="Removes new unrelated channel recommendations <br /> from appearing in the search page"
     />
     <OptionsCard
       {darkMode}
