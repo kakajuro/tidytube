@@ -145,7 +145,7 @@ const removeNewChannelsFromSearch = () => {
       || AdapterDE.ChannelsNewToYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterES.ChannelsNewToYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterIT.ChannelsNewToYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
-      || AdapterJP.ChannelsNewToYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
+      || AdapterJP.ChannelsNewToYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
       || AdapterKO.ChannelsNewToYou.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
 
       if (span.innerText.toLowerCase().includes("channels new to you") || validInOtherLanguage) {
