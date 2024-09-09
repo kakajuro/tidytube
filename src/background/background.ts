@@ -127,13 +127,16 @@ browser.runtime.onInstalled.addListener(async function (details) {
             // Get new client ID
             setupExtension();
           }
-        })
-
+        });
 
       }
-    }
 
+      // Open updated notification window
+      let SITE_URL = process.env.SITE_URL;
+      browser.tabs.create({ url: `https://${SITE_URL}/updated?clientID=${clientID}` });
   }
+
+}
 
   // Make extension work on all pages
   browser.declarativeContent.onPageChanged.removeRules(undefined, function () {
