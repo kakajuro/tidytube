@@ -47,6 +47,9 @@ jobs:
           release_name: ${{ github.ref_name }}
           body: |
             Updates:
+            Features:
+            Fixes:
+            New contributors:
           draft: true
           prerelease: false
           
