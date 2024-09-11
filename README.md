@@ -25,6 +25,7 @@ Also visit the [website](https://tidytube.app)
 - Remove popups and featured banners
 - Remove News Feed sections from the homepage
 - Remove the *For You* section from channels
+- Automatically Disable Autoplay
 
 ### Shorts
 - Remove Shorts from channel pages
@@ -43,6 +44,7 @@ Also visit the [website](https://tidytube.app)
 - Remove *People Also Watched* sections
 - Remove *From Related Searches* sections
 - Remove *People Also Search For* sections
+- Remove recommended topics e.g. <em>Christmas Lofi hiphop &#10024;</em>
 
 ## Building Locally
 See the [CONTRIBUTING.md](CONTRIBUTING.md) file for more information
