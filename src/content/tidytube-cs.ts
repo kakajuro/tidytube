@@ -545,10 +545,17 @@ const removePopups = () => {
   popupItemsArray?.forEach((popupItem:ChildNode) => {
     
     let skippedNode;
+    let ignoreNodes = [
+      "ytd-search-filter-options-dialog-renderer", 
+      "yt-report-form-modal-renderer",
+      "ytd-unified-share-panel-renderer",
+      "ytd-offline-promo-renderer",
+      "ytd-add-to-playlist-renderer"
+    ];
 
-    // Check if the node isn't a Youtube Search Filter menu
+    // Check if the node is one that shouldn't be skipped
     popupItem.childNodes.forEach(node => {
-      if (node.nodeName.toLowerCase() == "ytd-search-filter-options-dialog-renderer") {
+      if (ignoreNodes.indexOf(node.nodeName.toLowerCase()) == -1) {
         skippedNode = true;
       }
     });
