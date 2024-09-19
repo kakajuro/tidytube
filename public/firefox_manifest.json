@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "tidytube - Declutter Youtube",
   "short_name": "tidytube",
-  "version": "1.2",
+  "version": "1.2.1",
   "description": "Streamline your Youtube experience",
   "homepage_url": "https://tidytube.app",
   "icons": {
