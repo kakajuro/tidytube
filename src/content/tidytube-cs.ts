@@ -719,7 +719,7 @@ const autoDisableAutoplay = () => {
     let autoPlayButtonLabel = document.getElementsByClassName("ytp-autonav-toggle-button")[0];
 
     // If autoplay is checked
-    if (autoPlayButtonLabel.attributes.getNamedItem("aria-checked").value === "true") {
+    if (autoPlayButtonLabel?.attributes.getNamedItem("aria-checked").value === "true") {
 
       if (!autoPlaySet) {
         autoPlayButtonElement.click();
