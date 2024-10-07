@@ -141,3 +141,16 @@ export const AdapterKO:LanguageAdapter = {
   ShortsRemixingThisVideo: ["이 동영상을 리믹스한 Shorts 동영상"],
   news: ["소식", "새로운 보도", "별다른 일"]
 }
+
+export const AdapterKK:LanguageAdapter = {
+  ChannelsNewToYou: ["Сізге таңсық арналар"],
+  LatestPostsFrom: ["арнасының жаңа постары"],
+  LatestFrom: ["арнасының жаңа бейнелері"],
+  ForYou: ["Сізге арналған"],
+  FromRelatedSearches: ["Ұқсас сұраулардан"],
+  PeopleAlsoSearchFor: ["Басқалар іздеген бейнелер"],
+  PeopleAlsoWatched: ["Басқалар көрген бейнелер"],
+  PreviouslyWatched: ["Қаралған бейнелер"],
+  ShortsRemixingThisVideo: ["Осы бейне қолданылған қысқа бейнелер"],
+  news: ["жаңалықтар"]
+}
