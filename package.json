@@ -7,10 +7,13 @@
     "code:typecheck": "./node_modules/.bin/tsc --noEmit",
     "app:chrome": "rimraf dist/chrome_dist && cross-env BROWSER='chrome' webpack --config webpack/webpack.prod.js",
     "app:chrome-dev": "cross-env BROWSER='chrome' webpack --config webpack/webpack.dev.js --watch",
+    "app:chrome-tb": "rimraf dist/chrome_dist && cross-env BROWSER='chrome' webpack --config webpack/webpack.testbuild.js",
     "app:edge": "rimraf dist/edge_dist && cross-env BROWSER='edge' webpack --config webpack/webpack.prod.js",
     "app:edge-dev": "cross-env BROWSER='edge' webpack --config webpack/webpack.dev.js --watch",
+    "app:edge-tb": "rimraf dist/edge_dist && cross-env BROWSER='edge' webpack --config webpack/webpack.testbuild.js",
     "app:firefox": "rimraf dist/firefox_dist && cross-env BROWSER='firefox' webpack --config webpack/webpack.prod.js",
     "app:firefox-dev": "cross-env BROWSER='firefox' webpack --config webpack/webpack.dev.js --watch",
+    "app:firefox-tb": "rimraf dist/firefox_dist && cross-env BROWSER='firefox' webpack --config webpack/webpack.testbuild.js",
     "build:all": "node packageExtensions.js"
   },
   "devDependencies": {
@@ -56,5 +59,6 @@
     "webpack-cli": "^4.4.0",
     "whatwg-fetch": "^3.0.0",
     "zip-dir": "^2.0.0"
-  }
+  },
+  "dependencies": {}
 }
