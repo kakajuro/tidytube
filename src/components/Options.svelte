@@ -323,7 +323,6 @@
     <OptionsCard
       {darkMode}
       toggle={autoDisableAutoplayToggle}
-      newFeatureBadge={true}
       handleChange={() => handleSettingsChanged("autoDisableAutoplay")}
       optionName="Auto Disable Autoplay"
       optionsDesc="Sets autoplay to always be disabled by default"
@@ -462,7 +461,6 @@
     <OptionsCard
       {darkMode}
       toggle={removeRecommendedTopicsFromSearchToggle}
-      newFeatureBadge={true}
       handleChange={() => handleSettingsChanged("removeRecommendedTopicsFromSearch")}
       optionName="Remove recommended topics from search"
       optionsDesc="Removes recommended topics from appearing in the search page e.g. <em>Christmas Lofi hiphop &#10024;</em>"
