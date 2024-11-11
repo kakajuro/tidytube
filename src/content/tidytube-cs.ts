@@ -112,10 +112,16 @@ const removeAdsFromRecommendations = () => {
   const adSections = document.querySelectorAll('ytd-ad-slot-renderer');
   const adSectionsArray = [...adSections];
 
+  const videos = Array.from(document.querySelectorAll('ytd-rich-item-renderer')).reverse();
+  let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
+  // Fix - videos do not fit the full available space
+  randomVideoElement.getElementsByTagName("div")[0].style.minWidth = "100%";
+  randomVideoElement.getElementsByTagName("div")[0].getElementsByTagName("div")[0].style.minWidth = "100%";
+
   adSectionsArray.forEach(adSection => {
 
     try {
-      adSection.parentNode.removeChild(adSection);
+      adSection.parentNode.replaceChild(randomVideoElement, adSection);
 
       updateSectionsRemoveCount("removeAdsFromRecommendations");
       handleSectionRemovedChange();
