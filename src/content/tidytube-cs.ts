@@ -65,7 +65,7 @@ const removeShortsWhileWatching = () => {
 
     const elementsToRemove = reelShelves || richSections || richShelves;
 
-    const shortsElementsArray = elementsToRemove ? [...reelShelves, ...richSections, ...richShelves].filter(e => e) : null;
+    const shortsElementsArray = elementsToRemove ? [...reelShelves, ...richSections, ...richShelves] : null;
 
     shortsElementsArray?.forEach(shortsElement => {
       try {
@@ -113,15 +113,20 @@ const removeAdsFromRecommendations = () => {
   const adSectionsArray = [...adSections];
 
   const videos = Array.from(document.querySelectorAll('ytd-rich-item-renderer')).reverse();
-  let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
-  // Fix - videos do not fit the full available space
-  randomVideoElement.getElementsByTagName("div")[0].style.minWidth = "100%";
-  randomVideoElement.getElementsByTagName("div")[0].getElementsByTagName("div")[0].style.minWidth = "100%";
 
   adSectionsArray.forEach(adSection => {
 
     try {
-      adSection.parentNode.replaceChild(randomVideoElement, adSection);
+      if (window.location.href === "https://www.youtube.com/") {
+
+        let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
+        randomVideoElement.getElementsByTagName("div")[0].style.width = "100%";
+        randomVideoElement.getElementsByTagName("div")[0].getElementsByTagName("div")[0].style.minWidth = "100%";
+
+        adSection.parentNode.replaceChild(randomVideoElement, adSection);
+      } else {
+        adSection.parentElement.removeChild(adSection);
+      }
 
       updateSectionsRemoveCount("removeAdsFromRecommendations");
       handleSectionRemovedChange();
