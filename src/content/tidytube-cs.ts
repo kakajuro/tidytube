@@ -107,6 +107,8 @@ const preventShortsPlayback = () => {
   }
 }
 
+// 
+
 // Remove ad slots on search page
 const removeAdsFromRecommendations = () => {
   const adSections = document.querySelectorAll('ytd-ad-slot-renderer');
@@ -116,10 +118,17 @@ const removeAdsFromRecommendations = () => {
 
   adSectionsArray.forEach(adSection => {
 
+    let randomVideoValid = false;
+    let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
+
     try {
       if (window.location.href === "https://www.youtube.com/") {
+        
+        while (!randomVideoValid) {
+          randomVideoValid = randomVideoElement.querySelectorAll("ytd-mini-game-card-view-model").length > 0 ? false : true
+          randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
+        }
 
-        let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
         randomVideoElement.getElementsByTagName("div")[0].style.width = "100%";
         randomVideoElement.getElementsByTagName("div")[0].getElementsByTagName("div")[0].style.minWidth = "100%";
 
