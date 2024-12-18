@@ -18,6 +18,7 @@ import {
   AdapterJP,
   AdapterKO,
   AdapterKK } from "../util/languageAdapter";
+import { element } from "svelte/internal";
 
 // Page runtime vars
 let autoPlaySet = false;
@@ -107,27 +108,23 @@ const preventShortsPlayback = () => {
   }
 }
 
-// 
-
 // Remove ad slots on search page
 const removeAdsFromRecommendations = () => {
+  // class shortsLockupViewModelHost
   const adSections = document.querySelectorAll('ytd-ad-slot-renderer');
   const adSectionsArray = [...adSections];
 
-  const videos = Array.from(document.querySelectorAll('ytd-rich-item-renderer')).reverse();
+  const videos = Array.from(document.querySelectorAll('ytd-rich-item-renderer'))
+  .reverse()
+  .filter(element => element.getElementsByTagName("ytm-shorts-lockup-view-model-v2").length === 0)
+  .filter(element => element.getElementsByTagName("ytd-mini-game-card-view-model").length === 0)
 
   adSectionsArray.forEach(adSection => {
 
-    let randomVideoValid = false;
     let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
 
     try {
       if (window.location.href === "https://www.youtube.com/") {
-        
-        while (!randomVideoValid) {
-          randomVideoValid = randomVideoElement.querySelectorAll("ytd-mini-game-card-view-model").length > 0 ? false : true
-          randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
-        }
 
         randomVideoElement.getElementsByTagName("div")[0].style.width = "100%";
         randomVideoElement.getElementsByTagName("div")[0].getElementsByTagName("div")[0].style.minWidth = "100%";
