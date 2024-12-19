@@ -126,10 +126,9 @@ const removeAdsFromRecommendations = () => {
     try {
       if (window.location.href === "https://www.youtube.com/") {
 
-        randomVideoElement.getElementsByTagName("div")[0].style.width = "100%";
-        randomVideoElement.getElementsByTagName("div")[0].getElementsByTagName("div")[0].style.minWidth = "100%";
-
+        randomVideoElement.querySelectorAll("div#content")[0].parentElement.style.minWidth = "100%";
         adSection.parentNode.replaceChild(randomVideoElement, adSection);
+
       } else {
         adSection.parentElement.removeChild(adSection);
       }
