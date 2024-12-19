@@ -3,7 +3,7 @@ import { browser } from "webextension-polyfill-ts";
 import { getExtensionRunning } from "../util/extensionRunning";
 import { getSettings } from "../util/settingsHandler";
 import { getSectionsRemovedPage, getSectionsRemovedTotal, setSectionsRemovedPage, setSectionsRemovedTotal } from "../util/sectionsRemoved";
-import { incremementPageChangeStore } from "../util/pageChangeStore";
+import { incrementPageChangeStore } from "../util/pageChangeStore";
 import type { settingsType } from "../types/types";
 
 import { 
@@ -18,7 +18,6 @@ import {
   AdapterJP,
   AdapterKO,
   AdapterKK } from "../util/languageAdapter";
-import { element } from "svelte/internal";
 
 // Page runtime vars
 let autoPlaySet = false;
@@ -740,6 +739,33 @@ const removeRecommendedTopicsFromSearch = () => {
 
 }
 
+// Remove Explore More sections from search
+const removeExploreMoreFromSearch = () => {
+  const allShelfRenderers = document.querySelectorAll("ytd-shelf-renderer");
+  const allShelfRenderersArray = [...allShelfRenderers];
+
+  allShelfRenderersArray.forEach(div => {
+
+    let spans = div.querySelectorAll("span");
+    [...spans].forEach((span) => {
+
+      if (span.innerText.toLowerCase().includes("explore more")) {
+        
+        try {
+          if (div.firstChild) { div.parentNode.removeChild(div) }
+          updateSectionsRemoveCount("removeExploreMoreFromSearch");
+          handleSectionRemovedChange();
+
+          console.log("Explore more section removed");
+        } catch (error) {
+          console.log(`Error removing latest sections`);
+        }
+      }
+    });
+
+  });
+}
+
 // Auto disable autoplay
 const autoDisableAutoplay = () => {
 
@@ -811,7 +837,7 @@ const updateSectionsRemoveCount = async (type:string) => {
   setSectionsRemovedPage(newSectionsRemovedPage);
   setSectionsRemovedTotal(newSectionsRemovedTotal);
 
-  await incremementPageChangeStore(type);
+  await incrementPageChangeStore(type);
 
   browser.runtime.sendMessage("BGupdateTabStore");
 }
@@ -899,6 +925,9 @@ async function runExtension() {
 
   // Remove recommended topics from search
   if (settings.removeRecommendedTopicsFromSearch) removeRecommendedTopicsFromSearch();
+
+  // Remove Explore More sections from search
+  if (settings.removeExploreMoreFromSearch) removeExploreMoreFromSearch();
 
   // Auto disable autoplay
   if (settings.autoDisableAutoplay) autoDisableAutoplay();

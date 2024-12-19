@@ -49,7 +49,7 @@ export async function getPageChangeStore():Promise<pageChange> {
 
 }
 
-export async function incremementPageChangeStore(field:string) {
+export async function incrementPageChangeStore(field:string) {
 
   let pageChangeStore = await getPageChangeStore();
 
@@ -137,6 +137,10 @@ export async function incremementPageChangeStore(field:string) {
     case "removeRecommendedTopicsFromSearch":
       let newRemoveRecommendedTopicsFromSearch = pageChangeStore.removeRecommendedTopicsFromSearch + 1;
       updatePageChangeStore({"removeRecommendedTopicsFromSearch": newRemoveRecommendedTopicsFromSearch});
+      break;
+    case "removeExploreMoreFromSearch":
+      let newRemoveExploreMoreFromSearch = pageChangeStore.removeExploreMoreFromSearch + 1;
+      updatePageChangeStore({"removeExploreMoreFromSearch": newRemoveExploreMoreFromSearch});
       break;
     case "autoDisableAutoplay":
       let newAutoDisableAutoplay = pageChangeStore.autoDisableAutoplay + 1;
