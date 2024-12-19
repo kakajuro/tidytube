@@ -37,6 +37,7 @@
   let removePeopleAlsoWatchedFromSearchToggle;
   let removeFromRelatedSearchedToggle;
   let removePeopleAlsoSearchForToggle;
+  let removeExploreMoreFromSearchToggle;
 
   let removeAdsFromRecommendationsToggle;
   let removeAdCompanionSlotsToggle;
@@ -73,6 +74,7 @@
     removePeopleAlsoWatchedFromSearchToggle = settings.removePeopleAlsoWatchedFromSearch;
     removeFromRelatedSearchedToggle = settings.removeFromRelatedSearches;
     removePeopleAlsoSearchForToggle = settings.removePeopleAlsoSearchFor;
+    removeExploreMoreFromSearchToggle = settings.removeExploreMoreFromSearch;
 
     removeAdsFromRecommendationsToggle = settings.removeAdsFromRecommendations;
     removeAdCompanionSlotsToggle = settings.removeAdCompanionSlots;
@@ -242,6 +244,10 @@
       case "removeRecommendedTopicsFromSearch":
         removeRecommendedTopicsFromSearchToggle = !removeRecommendedTopicsFromSearchToggle;
         setSettings({"removeRecommendedTopicsFromSearch": removeRecommendedTopicsFromSearchToggle});
+        break;
+      case "removeExploreMoreFromSearch":
+        removeExploreMoreFromSearchToggle = !removeExploreMoreFromSearchToggle;
+        setSettings({"removeExploreMoreFromSearch": removeExploreMoreFromSearchToggle});
         break;
       case "autoDisableAutoplay":
         autoDisableAutoplayToggle = !autoDisableAutoplayToggle;
@@ -464,6 +470,14 @@
       handleChange={() => handleSettingsChanged("removeRecommendedTopicsFromSearch")}
       optionName="Remove recommended topics from search"
       optionsDesc="Removes recommended topics from appearing in the search page e.g. <em>Christmas Lofi hiphop &#10024;</em>"
+    />
+    <OptionsCard 
+      {darkMode}
+      toggle={removeExploreMoreFromSearchToggle}
+      handleChange={() => handleSettingsChanged("removeExploreMoreFromSearch")}
+      optionName="Remove <em>Explore More</em>"
+      optionsDesc="Removes the explore more suggested videos from appearing in the search page"
+      newFeatureBadge={true}
     />
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Other</h2>

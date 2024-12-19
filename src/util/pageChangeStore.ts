@@ -19,6 +19,7 @@ let defaults:pageChange =  {
   "removeFromRelatedSearches": 0,
   "removePeopleAlsoSearchFor": 0,
   "removeRecommendedTopicsFromSearch": 0,
+  "removeExploreMoreFromSearch": 0,
 
   "removeAdsFromRecommendations": 0,
   "removeAdCompanionSlots": 0,
