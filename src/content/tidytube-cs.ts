@@ -110,7 +110,7 @@ const preventShortsPlayback = () => {
 
 // Remove ad slots on search page
 const removeAdsFromRecommendations = () => {
-  // class shortsLockupViewModelHost
+
   const adSections = document.querySelectorAll('ytd-ad-slot-renderer');
   const adSectionsArray = [...adSections];
 
@@ -126,7 +126,7 @@ const removeAdsFromRecommendations = () => {
     try {
       if (window.location.href === "https://www.youtube.com/") {
 
-        randomVideoElement.querySelectorAll("div#content")[0].parentElement.style.minWidth = "100%";
+        randomVideoElement.querySelectorAll("div#content")[0].parentElement.style.width = "100%";
         adSection.parentNode.replaceChild(randomVideoElement, adSection);
 
       } else {
