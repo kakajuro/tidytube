@@ -749,7 +749,20 @@ const removeExploreMoreFromSearch = () => {
     let spans = div.querySelectorAll("span");
     [...spans].forEach((span) => {
 
-      if (span.innerText.toLowerCase().includes("explore more")) {
+      let validInOtherLanguage 
+      = AdapterFR.ExploreMore.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterNL.ExploreMore.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT.ExploreMore.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterPT_BR.ExploreMore.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterRU.ExploreMore.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterDE.ExploreMore.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterES.ExploreMore.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterIT.ExploreMore.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterJP.ExploreMore.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterKO.ExploreMore.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) })
+      || AdapterKK.ExploreMore.some(translation => { return (span.innerText.toLowerCase().includes(translation.toLowerCase())) });
+
+      if (span.innerText.toLowerCase().includes("explore more") || validInOtherLanguage) {
         
         try {
           if (div.firstChild) { div.parentNode.removeChild(div) }
