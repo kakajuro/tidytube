@@ -20,6 +20,7 @@ export interface settingsType {
   "removeFromRelatedSearches": boolean,
   "removePeopleAlsoSearchFor": boolean,
   "removeRecommendedTopicsFromSearch": boolean,
+  "removeExploreMoreFromSearch": boolean,
 
   "removeAdsFromRecommendations": boolean,
   "removeAdCompanionSlots": boolean,
@@ -49,6 +50,7 @@ export interface pageChange {
   "removeFromRelatedSearches": number,
   "removePeopleAlsoSearchFor": number,
   "removeRecommendedTopicsFromSearch": number,
+  "removeExploreMoreFromSearch": number,
 
   "removeAdsFromRecommendations": number,
   "removeAdCompanionSlots": number,

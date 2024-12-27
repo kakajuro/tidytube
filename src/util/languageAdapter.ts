@@ -9,7 +9,8 @@ interface LanguageAdapter {
   PeopleAlsoWatched: string[],
   PreviouslyWatched: string[],
   ShortsRemixingThisVideo: string[],
-  news: string[]
+  news: string[],
+  ExploreMore: string[]
 }
 
 export const AdapterFR:LanguageAdapter = {
@@ -22,7 +23,8 @@ export const AdapterFR:LanguageAdapter = {
   PeopleAlsoWatched: ["Les internautes ont aussi regardé"],
   PreviouslyWatched: ["Regardées précédemment"],
   ShortsRemixingThisVideo: ["Shorts utilisant l'audio de cette vidéo"],
-  news: ["news", "nouvelles"]
+  news: ["news", "nouvelles"],
+  ExploreMore: ["Voir plus"],
 }
 
 export const AdapterNL:LanguageAdapter = {
@@ -35,7 +37,8 @@ export const AdapterNL:LanguageAdapter = {
   PeopleAlsoWatched: ["Anderen keken ook naar"],
   PreviouslyWatched: ["Eerder bekeken"],
   ShortsRemixingThisVideo: ["Shorts die deze video opnieuw mixen"],
-  news: ["nieuws"]
+  news: ["nieuws"],
+  ExploreMore: ["Anderen keken ook naar"],
 }
 
 export const AdapterPT_BR:LanguageAdapter = {
@@ -48,7 +51,8 @@ export const AdapterPT_BR:LanguageAdapter = {
   PeopleAlsoWatched: ["Outros usuários também assistiram"],
   PreviouslyWatched: ["Assistidos anteriormente"],
   ShortsRemixingThisVideo: ["Shorts que remixam esse vídeo"],
-  news: ["notícias", "notícia"]
+  news: ["notícias", "notícia"],
+  ExploreMore: ["Descoberta avançada"],
 }
 
 export const AdapterPT:LanguageAdapter = {
@@ -61,7 +65,8 @@ export const AdapterPT:LanguageAdapter = {
   PeopleAlsoWatched: ["As pessoas também viram"],
   PreviouslyWatched: ["Já vistos"],
   ShortsRemixingThisVideo: ["Vídeos curtos que fazem remixes deste vídeo"],
-  news: ["notícias", "notícia"]
+  news: ["notícias", "notícia"],
+  ExploreMore: ["Explorar mais"],
 }
 
 export const AdapterRU:LanguageAdapter = {
@@ -74,7 +79,8 @@ export const AdapterRU:LanguageAdapter = {
   PeopleAlsoWatched: ["Другие видео, которые посмотрели зрители"],
   PreviouslyWatched: ["Просмотренные видео"],
   ShortsRemixingThisVideo: ["Shorts с этим видео"],
-  news: ["новости"]
+  news: ["новости"],
+  ExploreMore: ["изучить больше"], //
 }
 
 export const AdapterDE:LanguageAdapter = {
@@ -87,7 +93,8 @@ export const AdapterDE:LanguageAdapter = {
   PeopleAlsoWatched: ["Nutzer haben auch gesehen"],
   PreviouslyWatched: ["Schon angesehen"],
   ShortsRemixingThisVideo: ["Shorts-Remixe mit diesem Video"],
-  news: ["Nachricht", "Nachrichten", "Neuigkeiten", "die Nachricht", "die Nachrichten", "die Neuigkeiten"]
+  news: ["Nachricht", "Nachrichten", "Neuigkeiten", "die Nachricht", "die Nachrichten", "die Neuigkeiten"],
+  ExploreMore: ["Mehr entdecken"],
 }
 
 export const AdapterES:LanguageAdapter = {
@@ -100,7 +107,8 @@ export const AdapterES:LanguageAdapter = {
   PeopleAlsoWatched: ["Los usuarios también han visto", "Las personas también vieron"],
   PreviouslyWatched: ["Vistos anteriormente"],
   ShortsRemixingThisVideo: ["Shorts con audio de este vídeo", "Shorts que recrean este video"],
-  news: ["noticias"]
+  news: ["noticias"],
+  ExploreMore: ["Explorar más"],
 }
 
 export const AdapterIT:LanguageAdapter = {
@@ -113,7 +121,8 @@ export const AdapterIT:LanguageAdapter = {
   PeopleAlsoWatched: ["Gli utenti hanno guardato anche"],
   PreviouslyWatched: ["Guardati in precedenza"],
   ShortsRemixingThisVideo: ["Short con remix di questo video"],
-  news: ["notizia"]
+  news: ["notizia"],
+  ExploreMore: ["Esplora altro"],
 }
 
 export const AdapterJP:LanguageAdapter = {
@@ -126,7 +135,8 @@ export const AdapterJP:LanguageAdapter = {
   PeopleAlsoWatched: ["他の人はこちらも視聴しています"],
   PreviouslyWatched: ["前に再生した動画"],
   ShortsRemixingThisVideo: ["この動画をリミックスしたショート動画"],
-  news: ["ニュース", "便り"]
+  news: ["ニュース", "便り"],
+  ExploreMore: ["もっと見る"],
 }
 
 export const AdapterKO:LanguageAdapter = {
@@ -139,7 +149,8 @@ export const AdapterKO:LanguageAdapter = {
   PeopleAlsoWatched: ["관련 동영상"],
   PreviouslyWatched: ["이전에 시청한 동영상"],
   ShortsRemixingThisVideo: ["이 동영상을 리믹스한 Shorts 동영상"],
-  news: ["소식", "새로운 보도", "별다른 일"]
+  news: ["소식", "새로운 보도", "별다른 일"],
+  ExploreMore: ["더 둘러보기"],
 }
 
 export const AdapterKK:LanguageAdapter = {
@@ -152,5 +163,6 @@ export const AdapterKK:LanguageAdapter = {
   PeopleAlsoWatched: ["Басқалар көрген бейнелер"],
   PreviouslyWatched: ["Қаралған бейнелер"],
   ShortsRemixingThisVideo: ["Осы бейне қолданылған қысқа бейнелер"],
-  news: ["жаңалықтар"]
+  news: ["жаңалықтар"],
+  ExploreMore: ["Көбірек бейне"],
 }
