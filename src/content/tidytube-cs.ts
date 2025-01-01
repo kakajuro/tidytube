@@ -111,8 +111,17 @@ const preventShortsPlayback = () => {
 // Remove ad slots on search page
 const removeAdsFromRecommendations = () => {
 
-  const adSections = document.querySelectorAll('ytd-ad-slot-renderer');
-  const adSectionsArray = [...adSections];
+  let adSectionsArray:Array<Element> = [];
+
+  if (window.location.href === "https://www.youtube.com/") {
+    document.querySelectorAll("ytd-ad-slot-renderer")
+    .forEach(adSection => {
+      adSectionsArray.push(adSection.parentNode.parentNode as Element);
+    });
+  } else {
+    let adSections = document.querySelectorAll('ytd-ad-slot-renderer');
+    adSectionsArray = [...adSections];
+  }
 
   const videos = Array.from(document.querySelectorAll('ytd-rich-item-renderer'))
   .reverse()
@@ -127,10 +136,10 @@ const removeAdsFromRecommendations = () => {
     try {
       if (window.location.href === "https://www.youtube.com/") {
 
-        console.log(randomVideoElement.querySelectorAll("div#content").length);
-        let elementToExpand = randomVideoElement.querySelectorAll("div#content")[0].children[0] as HTMLElement;
-        elementToExpand.style.width = "100%";
-        adSection.parentNode.replaceChild(randomVideoElement, adSection);
+        let contentDiv = randomVideoElement.querySelectorAll("div#content")[0] as HTMLElement;
+        contentDiv.style.width = "100%";
+
+        adSection.replaceWith(randomVideoElement);
 
       } else {
         adSection.parentElement.removeChild(adSection);
