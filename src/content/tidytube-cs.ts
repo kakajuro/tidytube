@@ -18,6 +18,7 @@ import {
   AdapterJP,
   AdapterKO,
   AdapterKK } from "../util/languageAdapter";
+import { element } from "svelte/internal";
 
 // Page runtime vars
 let autoPlaySet = false;
@@ -117,6 +118,7 @@ const removeAdsFromRecommendations = () => {
   .reverse()
   .filter(element => element.getElementsByTagName("ytm-shorts-lockup-view-model-v2").length === 0)
   .filter(element => element.getElementsByTagName("ytd-mini-game-card-view-model").length === 0)
+  .filter(element => element.getElementsByTagName("ytd-post-renderer").length === 0)
 
   adSectionsArray.forEach(adSection => {
 
@@ -125,7 +127,9 @@ const removeAdsFromRecommendations = () => {
     try {
       if (window.location.href === "https://www.youtube.com/") {
 
-        randomVideoElement.querySelectorAll("div#content")[0].parentElement.style.width = "100%";
+        console.log(randomVideoElement.querySelectorAll("div#content").length);
+        let elementToExpand = randomVideoElement.querySelectorAll("div#content")[0].children[0] as HTMLElement;
+        elementToExpand.style.width = "100%";
         adSection.parentNode.replaceChild(randomVideoElement, adSection);
 
       } else {
