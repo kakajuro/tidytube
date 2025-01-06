@@ -131,10 +131,10 @@ const removeAdsFromRecommendations = () => {
 
   adSectionsArray.forEach(adSection => {
 
-    let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
-
     try {
       if (window.location.href === "https://www.youtube.com/") {
+
+        let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
 
         let contentDiv = randomVideoElement.querySelectorAll("div#content")[0] as HTMLElement;
         contentDiv.style.width = "100%";
