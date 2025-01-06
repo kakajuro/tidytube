@@ -294,5 +294,7 @@ browser.alarms.onAlarm.addListener(alarmInfo => {
 browser.runtime.onMessage.addListener((msg, sender) => {
   if (msg === "BGupdateTabStore") {
     tabStoreUpdate();
+  } else if (msg === "getTabID") {
+    return Promise.resolve(sender.tab.id);
   }
 })

@@ -22,6 +22,9 @@ import { element } from "svelte/internal";
 
 // Page runtime vars
 let autoPlaySet = false;
+let adReplacedStore = {};
+let currentTabID = (async () => await browser.runtime.sendMessage("getTabID")
+  .then(tabID => { return tabID }));
 
 // General remove element function
 const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:string, type?:string, customSectionUpdates?:Function):number => {
@@ -131,15 +134,37 @@ const removeAdsFromRecommendations = () => {
 
   adSectionsArray.forEach(adSection => {
 
-    let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
-
     try {
       if (window.location.href === "https://www.youtube.com/") {
 
-        let contentDiv = randomVideoElement.querySelectorAll("div#content")[0] as HTMLElement;
-        contentDiv.style.width = "100%";
+        let currentAdSectionIndex = [...adSection.parentElement.children].indexOf(adSection);
 
-        adSection.replaceWith(randomVideoElement);
+        let adSectionStoreIndex = `${currentTabID}|${currentAdSectionIndex}`;
+
+        console.log(Object.keys(adReplacedStore));
+
+        if (adSectionStoreIndex in adReplacedStore) {
+          console.log("ALREADY FOUND: " + adSectionStoreIndex);
+
+          let replacementNode = adReplacedStore[adSectionStoreIndex];
+          let tempDiv = document.createElement("div");
+          tempDiv.innerHTML = replacementNode;
+
+          // Styles not maintained - perhaps hard code a new element
+          adSection.replaceWith(tempDiv);
+          
+        } else {
+
+          console.log(adSectionStoreIndex + " IS NEW!");
+          let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
+
+          let contentDiv = randomVideoElement.querySelectorAll("div#content")[0] as HTMLElement;
+          contentDiv.style.width = "100%";
+
+          adSection.replaceWith(randomVideoElement);
+          adReplacedStore[adSectionStoreIndex] = randomVideoElement.outerHTML;
+
+        }
 
       } else {
         adSection.parentElement.removeChild(adSection);
