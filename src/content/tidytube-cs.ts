@@ -18,7 +18,6 @@ import {
   AdapterJP,
   AdapterKO,
   AdapterKK } from "../util/languageAdapter";
-import { element } from "svelte/internal";
 
 // Page runtime vars
 let autoPlaySet = false;
