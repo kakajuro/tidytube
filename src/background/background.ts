@@ -134,19 +134,10 @@ browser.runtime.onInstalled.addListener(async function (details) {
       // Open updated notification window
       let SITE_URL = process.env.SITE_URL;
       browser.tabs.create({ url: `https://${SITE_URL}/updated?clientID=${clientID}` });
+    }
+
   }
 
-}
-
-  // Make extension work on all pages
-  browser.declarativeContent.onPageChanged.removeRules(undefined, function () {
-    browser.declarativeContent.onPageChanged.addRules([
-      {
-        conditions: [new browser.declarativeContent.PageStateMatcher({})],
-        actions: [new browser.declarativeContent.ShowPageAction()],
-      },
-    ]);
-  }); 
 });
 
 // Tab reload event

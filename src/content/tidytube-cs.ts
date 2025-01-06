@@ -110,23 +110,35 @@ const preventShortsPlayback = () => {
 // Remove ad slots on search page
 const removeAdsFromRecommendations = () => {
 
-  const adSections = document.querySelectorAll('ytd-ad-slot-renderer');
-  const adSectionsArray = [...adSections];
+  let adSectionsArray:Array<Element> = [];
+
+  if (window.location.href === "https://www.youtube.com/") {
+    document.querySelectorAll("ytd-ad-slot-renderer")
+    .forEach(adSection => {
+      adSectionsArray.push(adSection.parentNode.parentNode as Element);
+    });
+  } else {
+    let adSections = document.querySelectorAll('ytd-ad-slot-renderer');
+    adSectionsArray = [...adSections];
+  }
 
   const videos = Array.from(document.querySelectorAll('ytd-rich-item-renderer'))
   .reverse()
   .filter(element => element.getElementsByTagName("ytm-shorts-lockup-view-model-v2").length === 0)
   .filter(element => element.getElementsByTagName("ytd-mini-game-card-view-model").length === 0)
+  .filter(element => element.getElementsByTagName("ytd-post-renderer").length === 0)
 
   adSectionsArray.forEach(adSection => {
-
-    let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
 
     try {
       if (window.location.href === "https://www.youtube.com/") {
 
-        randomVideoElement.querySelectorAll("div#content")[0].parentElement.style.width = "100%";
-        adSection.parentNode.replaceChild(randomVideoElement, adSection);
+        let randomVideoElement = videos[Math.floor(Math.random() * videos.length)];
+
+        let contentDiv = randomVideoElement.querySelectorAll("div#content")[0] as HTMLElement;
+        contentDiv.style.width = "100%";
+
+        adSection.replaceWith(randomVideoElement);
 
       } else {
         adSection.parentElement.removeChild(adSection);
