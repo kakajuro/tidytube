@@ -82,7 +82,6 @@ const removeShortsWhileWatching = () => {
   }
 }
 
-
 // Remove Shorts on search page
 const removeShortsFromSearch = () => {
   if (window.location.href.includes("https://www.youtube.com/results")) {
@@ -116,7 +115,11 @@ const removeAdsFromRecommendations = () => {
   if (window.location.href === "https://www.youtube.com/") {
     document.querySelectorAll("ytd-ad-slot-renderer")
     .forEach(adSection => {
-      adSectionsArray.push(adSection.parentNode.parentNode as Element);
+      if (adSection.parentNode.parentNode.nodeName.toLowerCase() == "ytd-rich-item-renderer") {
+        adSectionsArray.push(adSection.parentNode.parentNode as Element);
+      } else {
+        adSectionsArray.push(adSection.parentNode as Element);
+      }
     });
   } else {
     let adSections = document.querySelectorAll('ytd-ad-slot-renderer');
