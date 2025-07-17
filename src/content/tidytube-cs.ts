@@ -82,6 +82,22 @@ const removeShortsWhileWatching = () => {
   }
 }
 
+// Remove empty sections on the homepage
+const removeEmptySpots = () => {
+  if (window.location.href == "https://www.youtube.com/") {
+    let elements = document.querySelectorAll("ytd-rich-item-renderer");
+
+    elements.forEach(videoElement => {
+      if (videoElement.querySelector("div") && videoElement.querySelector("div:first-of-type").id == "content") {
+        ;
+      } else {
+        videoElement.parentElement.removeChild(videoElement);
+        console.log("Cleaned an empty space!");
+      }
+    });
+  }
+}
+
 // Remove Shorts on search page
 const removeShortsFromSearch = () => {
   if (window.location.href.includes("https://www.youtube.com/results")) {
@@ -157,6 +173,8 @@ const removeAdsFromRecommendations = () => {
     }
 
   });
+
+  removeEmptySpots();
 }
 
 // Remove "Channels new to you" from search
