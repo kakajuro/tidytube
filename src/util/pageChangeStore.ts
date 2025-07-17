@@ -19,6 +19,7 @@ let defaults:pageChange =  {
   "removeFromRelatedSearches": 0,
   "removePeopleAlsoSearchFor": 0,
   "removeRecommendedTopicsFromSearch": 0,
+  "removeAIsummaries": 0,
   "removeExploreMoreFromSearch": 0,
 
   "removeAdsFromRecommendations": 0,
@@ -141,6 +142,10 @@ export async function incrementPageChangeStore(field:string) {
     case "removeExploreMoreFromSearch":
       let newRemoveExploreMoreFromSearch = pageChangeStore.removeExploreMoreFromSearch + 1;
       updatePageChangeStore({"removeExploreMoreFromSearch": newRemoveExploreMoreFromSearch});
+      break;
+    case "removeAIsummaries":
+      let newRemoveAIsummaries = pageChangeStore.removeAIsummaries + 1;
+      updatePageChangeStore({"removeAIsummaries": newRemoveAIsummaries});
       break;
     case "autoDisableAutoplay":
       let newAutoDisableAutoplay = pageChangeStore.autoDisableAutoplay + 1;

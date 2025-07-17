@@ -29,6 +29,7 @@ export interface settingsType {
   "removeNews": boolean,
   "removeForYouFromChannel": boolean,
   "autoDisableAutoplay": boolean,
+  "removeAIsummaries": boolean
 
   "disableTelemetry": boolean
 }
@@ -58,6 +59,7 @@ export interface pageChange {
   "removePopups": number,
   "removeNews": number,
   "removeForYouFromChannel": number,
+  "removeAIsummaries": number,
   "autoDisableAutoplay": number
 }
 

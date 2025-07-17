@@ -82,6 +82,21 @@ const removeShortsWhileWatching = () => {
   }
 }
 
+// Remove empty sections on the homepage
+const removeEmptySpots = () => {
+  if (window.location.href == "https://www.youtube.com/") {
+    let elements = document.querySelectorAll("ytd-rich-item-renderer");
+
+    elements.forEach(videoElement => {
+      if (videoElement.querySelector("div") && videoElement.querySelector("div:first-of-type").id == "content") {
+        ;
+      } else {
+        videoElement.parentElement.removeChild(videoElement);
+        console.log("Cleaned an empty space!");
+      }
+    });
+  }
+}
 
 // Remove Shorts on search page
 const removeShortsFromSearch = () => {
@@ -116,7 +131,11 @@ const removeAdsFromRecommendations = () => {
   if (window.location.href === "https://www.youtube.com/") {
     document.querySelectorAll("ytd-ad-slot-renderer")
     .forEach(adSection => {
-      adSectionsArray.push(adSection.parentNode.parentNode as Element);
+      if (adSection.parentNode.parentNode.nodeName.toLowerCase() == "ytd-rich-item-renderer") {
+        adSectionsArray.push(adSection.parentNode.parentNode as Element);
+      } else {
+        adSectionsArray.push(adSection.parentNode as Element);
+      }
     });
   } else {
     let adSections = document.querySelectorAll('ytd-ad-slot-renderer');
@@ -154,6 +173,8 @@ const removeAdsFromRecommendations = () => {
     }
 
   });
+
+  removeEmptySpots();
 }
 
 // Remove "Channels new to you" from search
@@ -841,6 +862,11 @@ const removeSpinnerFromSearch = () => {
 
 }
 
+// Remove AI summaries
+const removeAIsummaries = () => {
+  generalRemoveElement("ytd-expandable-metadata-renderer[has-video-summary]", "Removed AI summary", "Error removing AI summary", "removeAIsummaries");
+}
+
 // Handle sections remove change
 const handleSectionRemovedChange = (type?:String) => {
   if (type === "Page") {
@@ -954,6 +980,9 @@ async function runExtension() {
 
   // Remove Explore More sections from search
   if (settings.removeExploreMoreFromSearch) removeExploreMoreFromSearch();
+
+  // Remove AI summaries
+  if (settings.removeAIsummaries) removeAIsummaries();
 
   // Auto disable autoplay
   if (settings.autoDisableAutoplay) autoDisableAutoplay();

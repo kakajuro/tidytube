@@ -46,6 +46,7 @@
   let removeNewsToggle;
   let removeForYouFromChannelPageToggle;
   let autoDisableAutoplayToggle;
+  let removeAISummariesToggle;
   let removeRecommendedTopicsFromSearchToggle;
 
   let disableTelemetryToggle;
@@ -83,6 +84,7 @@
     removeNewsToggle = settings.removeNews;
     removeForYouFromChannelPageToggle = settings.removeForYouFromChannel;
     autoDisableAutoplayToggle = settings.autoDisableAutoplay;
+    removeAISummariesToggle = settings.removeAIsummaries;
     removeRecommendedTopicsFromSearchToggle = settings.removeRecommendedTopicsFromSearch;
 
     disableTelemetryToggle = settings.disableTelemetry;
@@ -249,6 +251,10 @@
         removeExploreMoreFromSearchToggle = !removeExploreMoreFromSearchToggle;
         setSettings({"removeExploreMoreFromSearch": removeExploreMoreFromSearchToggle});
         break;
+      case "removeAIsummaries":
+        removeAISummariesToggle = !removeAISummariesToggle;
+        setSettings({"removeAIsummaries": removeAISummariesToggle});
+        break;
       case "autoDisableAutoplay":
         autoDisableAutoplayToggle = !autoDisableAutoplayToggle;
         setSettings({"autoDisableAutoplay": autoDisableAutoplayToggle});
@@ -332,6 +338,14 @@
       handleChange={() => handleSettingsChanged("autoDisableAutoplay")}
       optionName="Auto Disable Autoplay"
       optionsDesc="Sets autoplay to always be disabled by default"
+    />
+    <OptionsCard
+      {darkMode}
+      toggle={removeAISummariesToggle}
+      handleChange={() => handleSettingsChanged("removeAIsummaries")}
+      optionName="Remove AI summaries"
+      optionsDesc="Stops AI summaries showing up when searching for videos and under the description box"
+      newFeatureBadge={true}
     />
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Shorts</h2>
@@ -471,13 +485,12 @@
       optionName="Remove recommended topics from search"
       optionsDesc="Removes recommended topics from appearing in the search page e.g. <em>Christmas Lofi hiphop &#10024;</em>"
     />
-    <OptionsCard 
+    <OptionsCard
       {darkMode}
       toggle={removeExploreMoreFromSearchToggle}
       handleChange={() => handleSettingsChanged("removeExploreMoreFromSearch")}
       optionName="Remove <em>Explore More</em>"
       optionsDesc="Removes the explore more suggested videos from appearing in the search page"
-      newFeatureBadge={true}
     />
   </div>
   <h2 class="font-semibold text-3xl mt-4 pb-4" class:text-white={darkMode}>Other</h2>
