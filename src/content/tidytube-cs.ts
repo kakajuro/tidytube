@@ -864,7 +864,6 @@ const removeSpinnerFromSearch = () => {
 
 // Remove AI summaries
 const removeAIsummaries = () => {
-  console.log("here")
   generalRemoveElement("ytd-expandable-metadata-renderer[has-video-summary]", "Removed AI summary", "Error removing AI summary", "removeAIsummaries");
 }
 
