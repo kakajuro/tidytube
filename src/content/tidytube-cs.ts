@@ -862,6 +862,12 @@ const removeSpinnerFromSearch = () => {
 
 }
 
+// Remove AI summaries
+const removeAIsummaries = () => {
+  console.log("here")
+  generalRemoveElement("ytd-expandable-metadata-renderer[has-video-summary]", "Removed AI summary", "Error removing AI summary", "removeAIsummaries");
+}
+
 // Handle sections remove change
 const handleSectionRemovedChange = (type?:String) => {
   if (type === "Page") {
@@ -975,6 +981,9 @@ async function runExtension() {
 
   // Remove Explore More sections from search
   if (settings.removeExploreMoreFromSearch) removeExploreMoreFromSearch();
+
+  // Remove AI summaries
+  if (settings.removeAIsummaries) removeAIsummaries();
 
   // Auto disable autoplay
   if (settings.autoDisableAutoplay) autoDisableAutoplay();

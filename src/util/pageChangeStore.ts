@@ -143,6 +143,10 @@ export async function incrementPageChangeStore(field:string) {
       let newRemoveExploreMoreFromSearch = pageChangeStore.removeExploreMoreFromSearch + 1;
       updatePageChangeStore({"removeExploreMoreFromSearch": newRemoveExploreMoreFromSearch});
       break;
+    case "removeAIsummaries":
+      let newRemoveAIsummaries = pageChangeStore.removeAIsummaries + 1;
+      updatePageChangeStore({"removeAIsummaries": newRemoveAIsummaries});
+      break;
     case "autoDisableAutoplay":
       let newAutoDisableAutoplay = pageChangeStore.autoDisableAutoplay + 1;
       updatePageChangeStore({"autoDisableAutoplay": newAutoDisableAutoplay});
