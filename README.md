@@ -26,6 +26,7 @@ Also visit the [website](https://tidytube.app)
 - Remove News Feed sections from the homepage
 - Remove the *For You* section from channels
 - Automatically Disable Autoplay
+- Remove AI Summaries
 
 ### Shorts
 - Remove Shorts from channel pages
