@@ -56,7 +56,7 @@ const generalRemoveElement = (elementName:string, sucessMsg:string, errorMsg:str
 
 // Remove shorts that appear next to playing videos
 const removeShortsWhileWatching = () => {
-  if (window.location.href.includes("https://www.youtube.com/watch")) {
+  if (window.location.href.includes("https://www.youtube.com/watch") || window.location.href.includes("https://www.youtube.com/live")) {
 
     const watchNextTab = document.querySelector('ytd-watch-next-secondary-results-renderer');
     const reelShelves = watchNextTab?.querySelectorAll('ytd-reel-shelf-renderer');
